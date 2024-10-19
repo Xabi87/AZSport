@@ -24,8 +24,9 @@
         }
         #app-wrapper {
             position: relative;
-            background: url('./images/background.png') no-repeat center center fixed;
-            background-size: cover;
+            /* Removed background styles */
+            /* background: url('./images/background.png') no-repeat center center fixed;
+            background-size: cover; */
             overflow: hidden;
         }
         #app {
@@ -37,7 +38,8 @@
             z-index: 1; /* Ensure content is above the pseudo-element */
         }
 
-        #app-wrapper::before {
+        /* Removed #app-wrapper::before styles */
+        /* #app-wrapper::before {
             content: '';
             position: absolute;
             top: -5%;
@@ -51,7 +53,7 @@
             background-size: cover;
             background-blend-mode: overlay;
             animation: zoomBackground 30s infinite;
-            z-index: 0; /* Place behind #app content but above the background */
+            z-index: 0;
         }
 
         @keyframes zoomBackground {
@@ -64,7 +66,7 @@
             100% {
                 transform: scale(1);
             }
-        }
+        } */
 
         /* Logo and Navigation */
         .logo, .nav-circle {
@@ -314,9 +316,9 @@
                 height: 140px;
             }
             /* Disable background animation on mobile for performance */
-            #app-wrapper::before {
+            /* #app-wrapper::before {
                 animation: none;
-            }
+            } */
         }
 
         /* Prevent body scroll when menu is open */
@@ -557,7 +559,8 @@
                     menuOpen, navItems, products, getMenuItemStyle, toggleMenu, getItemStyle,
                     handleMouseWheel, startDrag, endDrag, onDrag, showProductDetails, closeModal,
                     activeIndex, showModal, selectedProduct, autoplay, toggleAutoplay,
-                    pauseAutoplay, resumeAutoplay, closeMenu, scrollToSection, addToCart
+                    pauseAutoplay, resumeAutoplay, closeMenu, scrollToSection, addToCart,
+                    rotateCarousel
                 };
             }
         }).mount('#app');
