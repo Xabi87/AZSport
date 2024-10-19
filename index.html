@@ -215,23 +215,36 @@
 
         /* Responsive Design */
         @media (max-width: 768px) {
+            /* Radial Menu adjustments for mobile */
             .radial-menu {
                 width: 100%;
                 height: auto;
                 flex-direction: column;
+                align-items: center;
             }
             .menu-item {
                 position: relative;
-                width: 100%;
+                width: 90%;
                 height: auto;
-                border-radius: 0;
+                border-radius: 10px;
                 margin: 10px 0;
                 transform: none !important;
+                background: #333;
+            }
+            .menu-item.show {
+                opacity: 1;
+            }
+            .menu-item i {
+                font-size: 1.2em;
+            }
+            .menu-label {
+                font-size: 1em;
+                margin-top: 5px;
             }
             .nav-circle {
-                width: 60px;
-                height: 60px;
-                font-size: 18px;
+                width: 50px;
+                height: 50px;
+                font-size: 16px;
             }
             /* Adjust the autoplay-toggle for mobile */
             .autoplay-toggle {
@@ -243,26 +256,50 @@
             /* Center logo adjustments for mobile */
             .menu-center-logo {
                 position: relative;
+                top: auto;
+                left: auto;
                 margin-bottom: 20px;
                 animation: none; /* Disable animation on mobile */
                 transform: none;
+            }
+            .menu-center-logo img {
+                width: 70px;
+                height: 70px;
             }
             .menu-center-logo img:hover {
                 transform: none; /* Disable hover effect on mobile */
             }
             /* Carousel adjustments for mobile */
             .product-carousel {
-                height: 440px; /* Adjusted for mobile */
+                height: auto;
+                margin-top: 20px;
+                flex-direction: column;
+                overflow-x: hidden;
+                overflow-y: auto;
+            }
+            .product-carousel::-webkit-scrollbar {
+                display: none;
             }
             .carousel-item {
-                width: 180px;
-                height: 320px;
+                width: 90%;
+                height: auto;
+                position: relative;
+                transform: none !important;
+                opacity: 1 !important;
+                margin: 0 0 20px 0;
+            }
+            .carousel-item.active {
+                transform: none;
+            }
+            .carousel-item:hover {
+                transform: none;
+                box-shadow: 0 4px 10px rgba(0,0,0,0.1);
             }
             .product-image {
-                height: 180px;
+                height: auto;
             }
             .product-info {
-                height: 140px;
+                height: auto;
             }
         }
 
@@ -403,6 +440,9 @@
                 window.addEventListener('resize', updateIsMobile);
 
                 const calculatePosition = (index, totalItems) => {
+                    if (isMobile.value) {
+                        return { transform: 'none' };
+                    }
                     const angle = (360 / totalItems) * index - 90; // Adjusted to start from top
                     const radius = 200;
                     const x = radius * Math.cos((angle * Math.PI) / 180);
@@ -411,15 +451,15 @@
                 };
 
                 const getMenuItemStyle = (index) => {
-                    if (isMobile.value) {
-                        return { transform: 'none' };
-                    }
                     return calculatePosition(index, navItems.value.length);
                 };
 
                 const toggleMenu = () => { menuOpen.value = !menuOpen.value; };
 
                 const getItemStyle = (index) => {
+                    if (isMobile.value) {
+                        return { transform: 'none' };
+                    }
                     const angle = (360 / products.value.length) * index + rotationAngle.value;
                     const zIndex = Math.round((Math.cos((angle * Math.PI) / 180) + 1) * 5);
                     return { transform: `rotateY(${angle}deg) translateZ(300px)`, zIndex };
@@ -428,10 +468,17 @@
                 const rotateCarousel = (direction) => {
                     rotationAngle.value += direction * (360 / products.value.length);
                     rotationAngle.value %= 360;
-                    activeIndex.value = (activeIndex.value + direction + products.value.length) % products.value.length;
+
+                    // Update activeIndex based on rotationAngle
+                    const totalItems = products.value.length;
+                    const rotationStep = 360 / totalItems;
+                    const normalizedRotationAngle = ((rotationAngle.value % 360) + 360) % 360;
+                    const indexFromAngle = Math.round(normalizedRotationAngle / rotationStep) % totalItems;
+                    activeIndex.value = (totalItems - indexFromAngle) % totalItems;
                 };
 
                 const handleMouseWheel = (event) => {
+                    if (isMobile.value) return;
                     event.preventDefault();
                     rotateCarousel(event.deltaY > 0 ? 1 : -1);
                 };
@@ -444,7 +491,7 @@
                 const endDrag = () => { isDragging = false; };
 
                 const onDrag = (event) => {
-                    if (!isDragging) return;
+                    if (!isDragging || isMobile.value) return;
                     const currentX = event.clientX || event.touches[0].clientX;
                     const delta = currentX - startX;
                     if (Math.abs(delta) > 50) {
@@ -466,11 +513,15 @@
 
                 const pauseAutoplay = () => { clearInterval(autoplayInterval); };
 
-                const resumeAutoplay = () => { if (autoplay.value) startAutoplay(); };
+                const resumeAutoplay = () => { if (autoplay.value && !isMobile.value) startAutoplay(); };
 
                 const toggleAutoplay = () => {
                     autoplay.value = !autoplay.value;
-                    autoplay.value ? startAutoplay() : pauseAutoplay();
+                    if (autoplay.value && !isMobile.value) {
+                        startAutoplay();
+                    } else {
+                        pauseAutoplay();
+                    }
                 };
 
                 const closeMenu = () => {
@@ -496,7 +547,19 @@
                     document.body.classList.toggle('menu-open', newValue);
                 });
 
-                onMounted(() => { if (autoplay.value) startAutoplay(); });
+                watch(isMobile, (mobile) => {
+                    if (mobile) {
+                        rotationAngle.value = 0;
+                        activeIndex.value = 0;
+                        pauseAutoplay();
+                    } else {
+                        if (autoplay.value) startAutoplay();
+                    }
+                });
+
+                onMounted(() => { 
+                    if (autoplay.value && !isMobile.value) startAutoplay(); 
+                });
 
                 return {
                     menuOpen, navItems, products, getMenuItemStyle, toggleMenu, getItemStyle,
