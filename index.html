@@ -18,7 +18,11 @@
     <style>
         /* General Styles */
         body, #app {
-            margin: 0; font-family: 'Roboto', sans-serif; background: #f0f0f0; overflow-x: hidden;
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background: url('./images/background.png') no-repeat center center fixed; /* Applied background image */
+            background-size: cover; /* Scales the image to cover the entire background */
+            overflow-x: hidden;
         }
         #app {
             min-height: 100vh; display: flex; flex-direction: column; align-items: center;
@@ -29,7 +33,7 @@
             position: fixed; z-index: 1000; border-radius: 50%; display: flex; align-items: center; justify-content: center;
         }
         .logo {
-            top: 20px; left: 20px; width: 100px; height: 100px; background: #fff; padding: 5px; box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+            top: 20px; left: 20px; width: 100px; height: 100px; background: rgba(255, 255, 255, 0.8); padding: 5px; box-shadow: 0 3px 6px rgba(0,0,0,0.2);
         }
         .nav-circle {
             bottom: 30px; right: 30px; width: 60px; height: 60px; background: #0056b3; cursor: pointer; transition: transform 0.3s, background-color 0.3s; font-size: 18px;
