@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AZ Sports - Circular Navigation Menu</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f0f0f0;
+            overflow-x: hidden;
+        }
+        #app {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .logo {
+            z-index: 1000;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: #ffffff;
+            padding: 5px;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 50%;
+        }
+        .nav-circle {
+            z-index: 1000;
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-color: #0056b3;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+        .nav-circle:hover {
+            transform: scale(1.1);
+            background-color: #007bff;
+        }
+        .nav-items {
+            z-index: 999;
+            position: fixed;
+            bottom: 130px;
+            right: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        .nav-open {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(-20px);
+        }
+        .nav-item {
+            margin: 10px 0;
+            background: #333;
+            color: #fff;
+            padding: 10px 15px;
+            border-radius: 20px;
+            text-align: center;
+            width: 120px;
+            transition: all 0.3s ease;
+        }
+        .nav-item a {
+            text-decoration: none;
+            color: #fff;
+        }
+        .logo.animate {
+            transform: rotate(10deg) scale(1.05);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+        /* Product Carousel Section Styles */
+        .product-carousel {
+            position: relative;
+            width: 100%;
+            height: 500px;
+            perspective: 1500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 100px;
+            overflow: hidden;
+        }
+        .carousel-item {
+            position: absolute;
+            width: 200px;
+            height: 300px;
+            transform-origin: center;
+            transition: transform 1.5s cubic-bezier(0.25, 1, 0.5, 1);
+            transform-style: preserve-3d;
+            border: 2px solid #0056b3;
+            border-radius: 10px;
+            background: #ffffff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .carousel-item.active {
+            transform: scale(1.1);
+            box-shadow: 0 8px 15px rgba(0, 86, 179, 0.4);
+            z-index: 2;
+        }
+        .product-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px 10px 0 0;
+        }
+        .product-info {
+            text-align: center;
+            margin-top: 5px;
+            background-color: #0056b3;
+            color: white;
+            padding: 5px;
+            font-size: 0.9em;
+            border-radius: 0 0 10px 10px;
+        }
+        .product-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: red;
+            color: white;
+            padding: 5px;
+            font-size: 0.8em;
+            border-radius: 5px;
+        }
+        .carousel-controls {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transform: translateY(-50%);
+            padding: 0 5%;
+        }
+        .carousel-button {
+            padding: 10px 15px;
+            background-color: #0056b3;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        .carousel-button:hover {
+            background-color: #007bff;
+        }
+        .carousel-indicators {
+            position: absolute;
+            bottom: 20px;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            width: 100%;
+        }
+        .carousel-indicators span {
+            width: 10px;
+            height: 10px;
+            background-color: #ccc;
+            border-radius: 50%;
+            transition: background-color 0.3s ease;
+        }
+        .carousel-indicators .active-dot {
+            background-color: #0056b3;
+        }
+        /* Modal Styles */
+        .product-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-content {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 500px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- Logo Section -->
+        <div class="logo" :class="{ 'animate': navOpen }">
+            <img src="file:///C:/Users/liamm/Desktop/Website/images/logo2.png" alt="AZ Sports Logo">
+        </div>
+
+        <!-- Circular Navigation Button -->
+        <div class="nav-circle" @click="toggleNav">
+            <span style="color: white; font-size: 24px;"><i class="fas fa-bars"></i></span>
+        </div>
+
+        <!-- Navigation Items -->
+        <div class="nav-items" :class="{ 'nav-open': navOpen }">
+            <div v-for="item in navItems" :key="item.name" class="nav-item">
+                <a :href="item.path">{{ item.name }}</a>
+            </div>
+        </div>
+
+        <!-- Product Carousel Section -->
+        <div class="product-carousel" @wheel="handleMouseWheel" @mousedown="startDrag" @mouseup="endDrag" @mousemove="onDrag" @touchstart="startDrag" @touchend="endDrag" @touchmove="onDrag">
+            <div 
+                class="carousel-item" 
+                v-for="(product, index) in products" 
+                :key="index" 
+                :style="getItemStyle(index)" 
+                :class="{ active: index === activeIndex }"
+                @click="showProductDetails(product)">
+                <div v-if="product.badge" class="product-badge">{{ product.badge }}</div>
+                <img :src="product.image" :alt="product.name" class="product-image">
+                <div class="product-info">
+                    <h3>{{ product.name }}</h3>
+                    <p>{{ product.price }}</p>
+                </div>
+            </div>
+            <div class="carousel-controls">
+                <button class="carousel-button" @click="rotateCarousel(-1)"><i class="fas fa-arrow-left"></i></button>
+                <button class="carousel-button" @click="rotateCarousel(1)"><i class="fas fa-arrow-right"></i></button>
+            </div>
+            <div class="carousel-indicators">
+                <span v-for="(product, index) in products" :key="index" :class="{ 'active-dot': index === activeIndex }"></span>
+            </div>
+        </div>
+
+        <!-- Product Details Modal -->
+        <div v-if="showModal" class="product-modal">
+            <div class="modal-content">
+                <h2>{{ selectedProduct.name }}</h2>
+                <p>{{ selectedProduct.price }}</p>
+                <p>{{ selectedProduct.description }}</p>
+                <button @click="closeModal">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const { createApp, ref, onMounted } = Vue;
+        createApp({
+            setup() {
+                const navOpen = ref(false);
+                const navItems = ref([
+                    { name: 'Home', path: '#home' },
+                    { name: "Men's Collection", path: '#mens-collection' },
+                    { name: "Women's Collection", path: '#womens-collection' },
+                    { name: "Kids' Collection", path: '#kids-collection' },
+                    { name: 'New Arrivals', path: '#new-arrivals' },
+                    { name: 'Sale', path: '#sale' },
+                    { name: 'Contact Us', path: '#contact' },
+                ]);
+
+                const products = ref([
+                    { name: 'Nike Air Zoom Pegasus', price: '$120', image: 'C:/Users/liamm/Desktop/Website/images/product1.jpg', description: 'High-performance running shoes with responsive cushioning.', badge: 'New' },
+                    { name: 'Adidas Ultraboost 21', price: '$180', image: 'https://via.placeholder.com/300x200', description: 'Boost cushioning technology for maximum comfort.' },
+                    { name: 'Puma Running Shoes', price: '$90', image: 'https://via.placeholder.com/300x200', description: 'Lightweight and breathable running shoes for everyday use.', badge: 'On Sale' },
+                    { name: 'Reebok Crossfit Nano', price: '$110', image: 'https://via.placeholder.com/300x200', description: 'Designed for high-intensity crossfit training.' },
+                    { name: 'Under Armour Hovr', price: '$130', image: 'https://via.placeholder.com/300x200', description: 'Provides a zero-gravity feel to maintain energy return.' },
+                ]);
+
+                const rotationAngle = ref(0);
+                const activeIndex = ref(0);
+                const showModal = ref(false);
+                const selectedProduct = ref({});
+                let autoRotateInterval;
+                let isDragging = false;
+                let startX = 0;
+                let currentX = 0;
+
+                function getItemStyle(index) {
+                    const angle = (360 / products.value.length) * index + rotationAngle.value;
+                    const zIndex = Math.round((Math.cos((angle * Math.PI) / 180) + 1) * 5);
+                    return {
+                        transform: `rotateY(${angle}deg) translateZ(300px)`,
+                        zIndex: zIndex
+                    };
+                }
+
+                function toggleNav() {
+                    navOpen.value = !navOpen.value;
+                }
+
+                function rotateCarousel(direction) {
+                    rotationAngle.value += direction * (360 / products.value.length);
+                    rotationAngle.value %= 360;
+                    activeIndex.value = (activeIndex.value + direction + products.value.length) % products.value.length;
+                }
+
+                function handleMouseWheel(event) {
+                    if (event.deltaY > 0) {
+                        rotateCarousel(1);
+                    } else {
+                        rotateCarousel(-1);
+                    }
+                }
+
+                function startDrag(event) {
+                    isDragging = true;
+                    startX = event.clientX || event.touches[0].clientX;
+                }
+
+                function endDrag() {
+                    isDragging = false;
+                }
+
+                function onDrag(event) {
+                    if (!isDragging) return;
+                    currentX = event.clientX || event.touches[0].clientX;
+                    const delta = currentX - startX;
+                    if (Math.abs(delta) > 50) {
+                        rotateCarousel(delta > 0 ? -1 : 1);
+                        startX = currentX;
+                    }
+                }
+
+                function showProductDetails(product) {
+                    selectedProduct.value = product;
+                    showModal.value = true;
+                }
+
+                function closeModal() {
+                    showModal.value = false;
+                }
+
+                function startAutoRotate() {
+                    autoRotateInterval = setInterval(() => {
+                        rotateCarousel(1);
+                    }, 3000);
+                }
+
+                function stopAutoRotate() {
+                    clearInterval(autoRotateInterval);
+                }
+
+                onMounted(() => {
+                    startAutoRotate();
+                });
+
+                return {
+                    navOpen,
+                    navItems,
+                    products,
+                    getItemStyle,
+                    toggleNav,
+                    rotateCarousel,
+                    handleMouseWheel,
+                    startDrag,
+                    endDrag,
+                    onDrag,
+                    showProductDetails,
+                    closeModal,
+                    activeIndex,
+                    showModal,
+                    selectedProduct,
+                    startAutoRotate,
+                    stopAutoRotate
+                };
+            },
+        }).mount('#app');
+    </script>
+</body>
+</html>
