@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AZ Sports - Circular Navigation Menu</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <style>
         body {
@@ -213,7 +213,7 @@
     <div id="app">
         <!-- Logo Section -->
         <div class="logo" :class="{ 'animate': navOpen }">
-            <img src="file:///C:/Users/liamm/Desktop/Website/images/logo2.png" alt="AZ Sports Logo">
+            <img src="https://via.placeholder.com/100" alt="AZ Sports Logo">
         </div>
 
         <!-- Circular Navigation Button -->
@@ -280,18 +280,17 @@
                 ]);
 
                 const products = ref([
-                    { name: 'Nike Air Zoom Pegasus', price: '$120', image: 'C:/Users/liamm/Desktop/Website/images/product1.jpg', description: 'High-performance running shoes with responsive cushioning.', badge: 'New' },
-                    { name: 'Adidas Ultraboost 21', price: '$180', image: 'https://via.placeholder.com/300x200', description: 'Boost cushioning technology for maximum comfort.' },
-                    { name: 'Puma Running Shoes', price: '$90', image: 'https://via.placeholder.com/300x200', description: 'Lightweight and breathable running shoes for everyday use.', badge: 'On Sale' },
-                    { name: 'Reebok Crossfit Nano', price: '$110', image: 'https://via.placeholder.com/300x200', description: 'Designed for high-intensity crossfit training.' },
-                    { name: 'Under Armour Hovr', price: '$130', image: 'https://via.placeholder.com/300x200', description: 'Provides a zero-gravity feel to maintain energy return.' },
+                    { name: 'Nike Air Zoom Pegasus', price: '$120', image: 'https://via.placeholder.com/200x300', description: 'High-performance running shoes with responsive cushioning.', badge: 'New' },
+                    { name: 'Adidas Ultraboost 21', price: '$180', image: 'https://via.placeholder.com/200x300', description: 'Boost cushioning technology for maximum comfort.' },
+                    { name: 'Puma Running Shoes', price: '$90', image: 'https://via.placeholder.com/200x300', description: 'Lightweight and breathable running shoes for everyday use.', badge: 'On Sale' },
+                    { name: 'Reebok Crossfit Nano', price: '$110', image: 'https://via.placeholder.com/200x300', description: 'Designed for high-intensity crossfit training.' },
+                    { name: 'Under Armour Hovr', price: '$130', image: 'https://via.placeholder.com/200x300', description: 'Provides a zero-gravity feel to maintain energy return.' },
                 ]);
 
                 const rotationAngle = ref(0);
                 const activeIndex = ref(0);
                 const showModal = ref(false);
                 const selectedProduct = ref({});
-                let autoRotateInterval;
                 let isDragging = false;
                 let startX = 0;
                 let currentX = 0;
@@ -351,18 +350,11 @@
                     showModal.value = false;
                 }
 
-                function startAutoRotate() {
-                    autoRotateInterval = setInterval(() => {
+                onMounted(() => {
+                    // Autoplay functionality (if needed)
+                    setInterval(() => {
                         rotateCarousel(1);
                     }, 3000);
-                }
-
-                function stopAutoRotate() {
-                    clearInterval(autoRotateInterval);
-                }
-
-                onMounted(() => {
-                    startAutoRotate();
                 });
 
                 return {
@@ -380,9 +372,7 @@
                     closeModal,
                     activeIndex,
                     showModal,
-                    selectedProduct,
-                    startAutoRotate,
-                    stopAutoRotate
+                    selectedProduct
                 };
             },
         }).mount('#app');
