@@ -219,6 +219,7 @@
                 width: 100%;
                 height: auto;
                 flex-direction: column;
+                align-items: center;
             }
             .menu-item {
                 position: relative;
@@ -243,9 +244,15 @@
             /* Center logo adjustments for mobile */
             .menu-center-logo {
                 position: relative;
+                top: auto;
+                left: auto;
                 margin-bottom: 20px;
                 animation: none; /* Disable animation on mobile */
                 transform: none;
+            }
+            .menu-center-logo img {
+                width: 70px;
+                height: 70px;
             }
             .menu-center-logo img:hover {
                 transform: none; /* Disable hover effect on mobile */
