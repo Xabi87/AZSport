@@ -1,289 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Meta and Title -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AZ Sports - Circular Navigation Menu</title>
+    <title>AZ Sports - Radial Navigation Menu</title>
+
+    <!-- External Styles and Scripts -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://unpkg.com/vue@3"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+
+    <!-- Inline Styles -->
     <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f0f0f0;
-            overflow-x: hidden;
+        /* General Styles */
+        body, #app {
+            margin: 0; font-family: Arial, sans-serif; background: #f0f0f0; overflow-x: hidden;
         }
         #app {
-            position: relative;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            min-height: 100vh; display: flex; flex-direction: column; align-items: center;
+        }
+
+        /* Logo and Navigation */
+        .logo, .nav-circle {
+            position: fixed; z-index: 1000; border-radius: 50%; display: flex; align-items: center; justify-content: center;
         }
         .logo {
-            z-index: 1000;
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            background: #ffffff;
-            padding: 5px;
-            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .logo img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            border-radius: 50%;
+            top: 20px; left: 20px; width: 100px; height: 100px; background: #fff; padding: 5px; box-shadow: 0 3px 6px rgba(0,0,0,0.2);
         }
         .nav-circle {
-            z-index: 1000;
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            background-color: #0056b3;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: transform 0.3s ease, background-color 0.3s ease;
+            bottom: 30px; right: 30px; width: 80px; height: 80px; background: #0056b3; cursor: pointer; transition: transform 0.3s, background-color 0.3s;
         }
         .nav-circle:hover {
-            transform: scale(1.1);
-            background-color: #007bff;
+            transform: scale(1.1); background-color: #007bff;
         }
-        .nav-items {
-            z-index: 999;
-            position: fixed;
-            bottom: 130px;
-            right: 30px;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.5s ease, transform 0.5s ease;
+        .logo img {
+            width: 100%; height: 100%; border-radius: 50%; object-fit: contain;
         }
-        .nav-open {
+
+        /* Menu Overlay and Radial Menu */
+        .menu-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1300;
+        }
+        .radial-menu {
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 500px; height: 500px; display: flex; justify-content: center; align-items: center; z-index: 1400;
+        }
+        .menu-item {
+            position: absolute; width: 100px; height: 100px; background: #333; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; opacity: 0; transition: transform 0.5s, opacity 0.5s;
+        }
+        .menu-item.show {
             opacity: 1;
-            pointer-events: auto;
-            transform: translateY(-20px);
         }
-        .nav-item {
-            margin: 10px 0;
-            background: #333;
-            color: #fff;
-            padding: 10px 15px;
-            border-radius: 20px;
-            text-align: center;
-            width: 120px;
-            transition: all 0.3s ease;
-        }
-        .nav-item a {
-            text-decoration: none;
-            color: #fff;
-        }
-        .logo.animate {
-            transform: rotate(10deg) scale(1.05);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-        }
-        /* Product Carousel Section Styles */
+
+        /* Carousel Styles */
         .product-carousel {
-            position: relative;
-            width: 100%;
-            height: 500px;
-            perspective: 1500px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-top: 100px;
-            overflow: hidden;
+            position: relative; width: 100%; max-width: 800px; height: 500px; perspective: 1500px; display: flex; align-items: center; justify-content: center; margin-top: 100px; overflow: hidden; z-index: 1000;
         }
         .carousel-item {
-            position: absolute;
-            width: 180px;
-            height: 270px;
-            transform-origin: center;
-            transition: transform 1.5s cubic-bezier(0.25, 1, 0.5, 1), opacity 1.5s ease;
-            transform-style: preserve-3d;
-            border: 2px solid #0056b3;
-            border-radius: 10px;
-            background: #ffffff;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            opacity: 0.7;
+            position: absolute; width: 180px; height: 270px; transform-origin: center; border: 2px solid #0056b3; border-radius: 10px; background: #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1); opacity: 0.7; transition: transform 1.5s cubic-bezier(0.25,1,0.5,1), opacity 1.5s;
         }
         .carousel-item.active {
-            transform: scale(1.2);
-            box-shadow: 0 8px 15px rgba(0, 86, 179, 0.4);
-            z-index: 2;
-            opacity: 1;
+            transform: translateZ(200px) scale(1.2); box-shadow: 0 8px 15px rgba(0,86,179,0.4); z-index: 2; opacity: 1;
         }
         .product-image {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            border-radius: 10px 10px 0 0;
+            width: 100%; height: 200px; object-fit: cover; border-radius: 10px 10px 0 0;
         }
         .product-info {
-            text-align: center;
-            margin-top: 5px;
-            background-color: #0056b3;
-            color: white;
-            padding: 5px;
-            font-size: 0.9em;
-            border-radius: 0 0 10px 10px;
+            text-align: center; margin-top: 5px; background: #0056b3; color: #fff; padding: 5px; font-size: 0.9em; border-radius: 0 0 10px 10px;
         }
+
+        /* Badge and Modal */
         .product-badge {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            background-color: red;
-            color: white;
-            padding: 8px;
-            font-size: 0.9em;
-            border-radius: 5px;
-            animation: badgePulse 1.5s infinite ease-in-out;
+            position: absolute; top: 10px; left: 10px; background: red; color: #fff; padding: 8px; font-size: 0.9em; border-radius: 5px; animation: badgePulse 1.5s infinite ease-in-out;
         }
         @keyframes badgePulse {
-            0% {
-                transform: scale(1);
-                box-shadow: 0 0 5px rgba(255, 0, 0, 0.4);
-            }
-            50% {
-                transform: scale(1.1);
-                box-shadow: 0 0 15px rgba(255, 0, 0, 0.7);
-            }
-            100% {
-                transform: scale(1);
-                box-shadow: 0 0 5px rgba(255, 0, 0, 0.4);
-            }
+            0%, 100% { transform: scale(1); box-shadow: 0 0 5px rgba(255,0,0,0.4); }
+            50% { transform: scale(1.1); box-shadow: 0 0 15px rgba(255,0,0,0.7); }
         }
-        .carousel-controls {
-            position: absolute;
-            top: 50%;
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transform: translateY(-50%);
-            padding: 0 5%;
-        }
-        .carousel-button {
-            padding: 10px 15px;
-            background-color: #0056b3;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background 0.3s ease;
-        }
-        .carousel-button:hover {
-            background-color: #007bff;
-        }
-        .carousel-indicators {
-            position: absolute;
-            bottom: 20px;
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            width: 100%;
-        }
-        .carousel-indicators span {
-            width: 10px;
-            height: 10px;
-            background-color: #ccc;
-            border-radius: 50%;
-            transition: background-color 0.3s ease;
-        }
-        .carousel-indicators .active-dot {
-            background-color: #0056b3;
-        }
-        /* Rotation Hint Styles */
-        .rotation-hint {
-            position: absolute;
-            bottom: 60px;
-            font-size: 1em;
-            color: #666;
-            background: rgba(255, 255, 255, 0.8);
-            padding: 10px;
-            border-radius: 5px;
-            animation: fadeOut 3s ease-in-out forwards;
-            z-index: 1001;
-        }
-        @keyframes fadeOut {
-            0% { opacity: 1; }
-            80% { opacity: 1; }
-            100% { opacity: 0; }
-        }
-        /* Modal Styles */
         .product-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 2000;
         }
         .modal-content {
-            background: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            width: 80%;
-            max-width: 500px;
-            text-align: center;
+            background: #fff; padding: 20px; border-radius: 10px; width: 80%; max-width: 500px; text-align: center;
         }
+
+        /* Autoplay Toggle */
         .autoplay-toggle {
-            margin-top: 20px;
-            padding: 10px 20px;
-            background-color: #0056b3;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background 0.3s ease;
+            margin-top: 20px; padding: 10px 20px; background: #0056b3; color: #fff; border: none; border-radius: 5px; cursor: pointer; transition: background 0.3s;
         }
         .autoplay-toggle:hover {
-            background-color: #007bff;
+            background: #007bff;
         }
     </style>
 </head>
 <body>
     <div id="app">
-        <!-- Logo Section -->
-        <div class="logo" :class="{ 'animate': navOpen }">
+        <!-- Logo -->
+        <div class="logo">
             <img src="./images/logo2.png" alt="AZ Sports Logo">
         </div>
 
-        <!-- Circular Navigation Button -->
-        <div class="nav-circle" @click="toggleNav">
-            <span style="color: white; font-size: 24px;"><i class="fas fa-bars"></i></span>
+        <!-- Navigation Circle -->
+        <div class="nav-circle" @click="toggleMenu">
+            <i class="fas fa-bars" style="color: white; font-size: 24px;"></i>
         </div>
 
-        <!-- Navigation Items -->
-        <div class="nav-items" :class="{ 'nav-open': navOpen }">
-            <div v-for="item in navItems" :key="item.name" class="nav-item">
-                <a :href="item.path">{{ item.name }}</a>
+        <!-- Menu Overlay -->
+        <div v-if="menuOpen" class="menu-overlay" @click="toggleMenu"></div>
+
+        <!-- Radial Menu -->
+        <div class="radial-menu" v-if="menuOpen">
+            <div v-for="(item, index) in navItems" :key="item.name" :class="['menu-item', { show: menuOpen }]" :style="calculatePosition(index, navItems.length)">
+                <a :href="item.path" style="color: inherit; text-decoration: none;">
+                    <i :class="item.icon"></i>
+                </a>
             </div>
         </div>
 
-        <!-- Product Carousel Section -->
+        <!-- Product Carousel -->
         <div class="product-carousel" @wheel="handleMouseWheel" @mousedown="startDrag" @mouseup="endDrag" @mousemove="onDrag" @touchstart="startDrag" @touchend="endDrag" @touchmove="onDrag" @mouseenter="pauseAutoplay" @mouseleave="resumeAutoplay">
-            <div 
-                class="carousel-item" 
-                v-for="(product, index) in products" 
-                :key="index" 
-                :style="getItemStyle(index)" 
-                :class="{ active: index === activeIndex }"
-                @click="showProductDetails(product)">
+            <div class="carousel-item" v-for="(product, index) in products" :key="index" :style="getItemStyle(index)" :class="{ active: index === activeIndex }" @click="showProductDetails(product)">
                 <div v-if="product.badge" class="product-badge">{{ product.badge }}</div>
                 <img :src="product.image" :alt="product.name" class="product-image">
                 <div class="product-info">
@@ -291,19 +127,16 @@
                     <p>{{ product.price }}</p>
                 </div>
             </div>
-            
-            <div class="carousel-indicators">
-                <span v-for="(product, index) in products" :key="index" :class="{ 'active-dot': index === activeIndex }"></span>
-            </div>
-            <div class="rotation-hint" v-if="showHint">Use mouse wheel or swipe to rotate</div>
         </div>
 
-        <!-- Autoplay Toggle Button -->
-        <button class="autoplay-toggle" @click="toggleAutoplay">{{ autoplay ? 'Pause Autoplay' : 'Start Autoplay' }}</button>
+        <!-- Autoplay Toggle -->
+        <button class="autoplay-toggle" @click="toggleAutoplay">
+            {{ autoplay ? 'Pause Autoplay' : 'Start Autoplay' }}
+        </button>
 
-        <!-- Product Details Modal -->
-        <div v-if="showModal" class="product-modal">
-            <div class="modal-content">
+        <!-- Product Modal -->
+        <div v-if="showModal" class="product-modal" @click="closeModal">
+            <div class="modal-content" @click.stop>
                 <h2>{{ selectedProduct.name }}</h2>
                 <p>{{ selectedProduct.price }}</p>
                 <p>{{ selectedProduct.description }}</p>
@@ -312,19 +145,20 @@
         </div>
     </div>
 
+    <!-- Vue Script -->
     <script>
         const { createApp, ref, onMounted } = Vue;
         createApp({
             setup() {
-                const navOpen = ref(false);
+                const menuOpen = ref(false);
                 const navItems = ref([
-                    { name: 'Home', path: '#home' },
-                    { name: "Men's Collection", path: '#mens-collection' },
-                    { name: "Women's Collection", path: '#womens-collection' },
-                    { name: "Kids' Collection", path: '#kids-collection' },
-                    { name: 'New Arrivals', path: '#new-arrivals' },
-                    { name: 'Sale', path: '#sale' },
-                    { name: 'Contact Us', path: '#contact' },
+                    { name: 'Home', path: '#home', icon: 'fas fa-home' },
+                    { name: "Men's Collection", path: '#mens-collection', icon: 'fas fa-male' },
+                    { name: "Women's Collection", path: '#womens-collection', icon: 'fas fa-female' },
+                    { name: "Kids' Collection", path: '#kids-collection', icon: 'fas fa-child' },
+                    { name: 'New Arrivals', path: '#new-arrivals', icon: 'fas fa-tags' },
+                    { name: 'Sale', path: '#sale', icon: 'fas fa-percent' },
+                    { name: 'Contact Us', path: '#contact', icon: 'fas fa-envelope' },
                 ]);
 
                 const products = ref([
@@ -340,122 +174,81 @@
                 const showModal = ref(false);
                 const selectedProduct = ref({});
                 const autoplay = ref(true);
-                const showHint = ref(true);
                 let autoplayInterval;
                 let isDragging = false;
                 let startX = 0;
-                let currentX = 0;
 
-                function getItemStyle(index) {
+                const calculatePosition = (index, totalItems) => {
+                    const angle = (360 / totalItems) * index;
+                    const radius = 200;
+                    const x = radius * Math.cos((angle * Math.PI) / 180);
+                    const y = radius * Math.sin((angle * Math.PI) / 180);
+                    return { transform: `translate(${x}px, ${y}px)` };
+                };
+
+                const toggleMenu = () => { menuOpen.value = !menuOpen.value; };
+
+                const getItemStyle = (index) => {
                     const angle = (360 / products.value.length) * index + rotationAngle.value;
                     const zIndex = Math.round((Math.cos((angle * Math.PI) / 180) + 1) * 5);
-                    return {
-                        transform: `rotateY(${angle}deg) translateZ(300px)`,
-                        zIndex: zIndex
-                    };
-                }
+                    return { transform: `rotateY(${angle}deg) translateZ(300px)`, zIndex };
+                };
 
-                function toggleNav() {
-                    navOpen.value = !navOpen.value;
-                }
-
-                function rotateCarousel(direction) {
+                const rotateCarousel = (direction) => {
                     rotationAngle.value += direction * (360 / products.value.length);
                     rotationAngle.value %= 360;
                     activeIndex.value = (activeIndex.value + direction + products.value.length) % products.value.length;
-                }
+                };
 
-                function handleMouseWheel(event) {
-                    if (event.deltaY > 0) {
-                        rotateCarousel(1);
-                    } else {
-                        rotateCarousel(-1);
-                    }
-                }
+                const handleMouseWheel = (event) => {
+                    event.preventDefault();
+                    rotateCarousel(event.deltaY > 0 ? 1 : -1);
+                };
 
-                function startDrag(event) {
+                const startDrag = (event) => {
                     isDragging = true;
                     startX = event.clientX || event.touches[0].clientX;
-                }
+                };
 
-                function endDrag() {
-                    isDragging = false;
-                }
+                const endDrag = () => { isDragging = false; };
 
-                function onDrag(event) {
+                const onDrag = (event) => {
                     if (!isDragging) return;
-                    currentX = event.clientX || event.touches[0].clientX;
+                    const currentX = event.clientX || event.touches[0].clientX;
                     const delta = currentX - startX;
                     if (Math.abs(delta) > 50) {
                         rotateCarousel(delta > 0 ? -1 : 1);
                         startX = currentX;
                     }
-                }
+                };
 
-                function showProductDetails(product) {
+                const showProductDetails = (product) => {
                     selectedProduct.value = product;
                     showModal.value = true;
-                }
+                };
 
-                function closeModal() {
-                    showModal.value = false;
-                }
+                const closeModal = () => { showModal.value = false; };
 
-                function startAutoplay() {
-                    autoplayInterval = setInterval(() => {
-                        rotateCarousel(1);
-                    }, 3000);
-                }
+                const startAutoplay = () => {
+                    autoplayInterval = setInterval(() => { rotateCarousel(1); }, 3000);
+                };
 
-                function pauseAutoplay() {
-                    clearInterval(autoplayInterval);
-                }
+                const pauseAutoplay = () => { clearInterval(autoplayInterval); };
 
-                function resumeAutoplay() {
-                    if (autoplay.value) {
-                        startAutoplay();
-                    }
-                }
+                const resumeAutoplay = () => { if (autoplay.value) startAutoplay(); };
 
-                function toggleAutoplay() {
+                const toggleAutoplay = () => {
                     autoplay.value = !autoplay.value;
-                    if (autoplay.value) {
-                        startAutoplay();
-                    } else {
-                        pauseAutoplay();
-                    }
-                }
+                    autoplay.value ? startAutoplay() : pauseAutoplay();
+                };
 
-                onMounted(() => {
-                    if (autoplay.value) {
-                        startAutoplay();
-                    }
-                    setTimeout(() => {
-                        showHint.value = false;
-                    }, 3000);
-                });
+                onMounted(() => { if (autoplay.value) startAutoplay(); });
 
                 return {
-                    navOpen,
-                    navItems,
-                    products,
-                    getItemStyle,
-                    toggleNav,
-                    rotateCarousel,
-                    handleMouseWheel,
-                    startDrag,
-                    endDrag,
-                    onDrag,
-                    showProductDetails,
-                    closeModal,
-                    activeIndex,
-                    showModal,
-                    selectedProduct,
-                    autoplay,
-                    toggleAutoplay,
-                    pauseAutoplay,
-                    resumeAutoplay,
-                    showHint
+                    menuOpen, navItems, products, calculatePosition, toggleMenu, getItemStyle,
+                    handleMouseWheel, startDrag, endDrag, onDrag, showProductDetails, closeModal,
+                    activeIndex, showModal, selectedProduct, autoplay, toggleAutoplay,
+                    pauseAutoplay, resumeAutoplay
                 };
             }
         }).mount('#app');
