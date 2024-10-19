@@ -107,20 +107,22 @@
         }
         .carousel-item {
             position: absolute;
-            width: 200px;
-            height: 300px;
+            width: 180px;
+            height: 270px;
             transform-origin: center;
-            transition: transform 1.5s cubic-bezier(0.25, 1, 0.5, 1);
+            transition: transform 1.5s cubic-bezier(0.25, 1, 0.5, 1), opacity 1.5s ease;
             transform-style: preserve-3d;
             border: 2px solid #0056b3;
             border-radius: 10px;
             background: #ffffff;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            opacity: 0.7;
         }
         .carousel-item.active {
-            transform: scale(1.1);
+            transform: scale(1.2);
             box-shadow: 0 8px 15px rgba(0, 86, 179, 0.4);
             z-index: 2;
+            opacity: 1;
         }
         .product-image {
             width: 100%;
@@ -143,9 +145,24 @@
             left: 10px;
             background-color: red;
             color: white;
-            padding: 5px;
-            font-size: 0.8em;
+            padding: 8px;
+            font-size: 0.9em;
             border-radius: 5px;
+            animation: badgePulse 1.5s infinite ease-in-out;
+        }
+        @keyframes badgePulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 5px rgba(255, 0, 0, 0.4);
+            }
+            50% {
+                transform: scale(1.1);
+                box-shadow: 0 0 15px rgba(255, 0, 0, 0.7);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 5px rgba(255, 0, 0, 0.4);
+            }
         }
         .carousel-controls {
             position: absolute;
@@ -187,6 +204,22 @@
         .carousel-indicators .active-dot {
             background-color: #0056b3;
         }
+        /* Rotation Hint Styles */
+        .rotation-hint {
+            position: absolute;
+            bottom: 60px;
+            font-size: 1em;
+            color: #666;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 10px;
+            border-radius: 5px;
+            animation: fadeOut 3s ease-in-out forwards;
+        }
+        @keyframes fadeOut {
+            0% { opacity: 1; }
+            80% { opacity: 1; }
+            100% { opacity: 0; }
+        }
         /* Modal Styles */
         .product-modal {
             position: fixed;
@@ -206,6 +239,19 @@
             width: 80%;
             max-width: 500px;
             text-align: center;
+        }
+        .autoplay-toggle {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #0056b3;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        .autoplay-toggle:hover {
+            background-color: #007bff;
         }
     </style>
 </head>
@@ -229,7 +275,7 @@
         </div>
 
         <!-- Product Carousel Section -->
-        <div class="product-carousel" @wheel="handleMouseWheel" @mousedown="startDrag" @mouseup="endDrag" @mousemove="onDrag" @touchstart="startDrag" @touchend="endDrag" @touchmove="onDrag">
+        <div class="product-carousel" @wheel="handleMouseWheel" @mousedown="startDrag" @mouseup="endDrag" @mousemove="onDrag" @touchstart="startDrag" @touchend="endDrag" @touchmove="onDrag" @mouseenter="pauseAutoplay" @mouseleave="resumeAutoplay">
             <div 
                 class="carousel-item" 
                 v-for="(product, index) in products" 
@@ -251,7 +297,11 @@
             <div class="carousel-indicators">
                 <span v-for="(product, index) in products" :key="index" :class="{ 'active-dot': index === activeIndex }"></span>
             </div>
+            <div class="rotation-hint" v-if="showHint">Use mouse wheel or swipe to rotate</div>
         </div>
+
+        <!-- Autoplay Toggle Button -->
+        <button class="autoplay-toggle" @click="toggleAutoplay">{{ autoplay ? 'Pause Autoplay' : 'Start Autoplay' }}</button>
 
         <!-- Product Details Modal -->
         <div v-if="showModal" class="product-modal">
@@ -291,6 +341,9 @@
                 const activeIndex = ref(0);
                 const showModal = ref(false);
                 const selectedProduct = ref({});
+                const autoplay = ref(true);
+                const showHint = ref(true);
+                let autoplayInterval;
                 let isDragging = false;
                 let startX = 0;
                 let currentX = 0;
@@ -350,10 +403,37 @@
                     showModal.value = false;
                 }
 
-                onMounted(() => {
-                    // Autoplay functionality (if needed)
-                    setInterval(() => {
+                function startAutoplay() {
+                    autoplayInterval = setInterval(() => {
                         rotateCarousel(1);
+                    }, 3000);
+                }
+
+                function pauseAutoplay() {
+                    clearInterval(autoplayInterval);
+                }
+
+                function resumeAutoplay() {
+                    if (autoplay.value) {
+                        startAutoplay();
+                    }
+                }
+
+                function toggleAutoplay() {
+                    autoplay.value = !autoplay.value;
+                    if (autoplay.value) {
+                        startAutoplay();
+                    } else {
+                        pauseAutoplay();
+                    }
+                }
+
+                onMounted(() => {
+                    if (autoplay.value) {
+                        startAutoplay();
+                    }
+                    setTimeout(() => {
+                        showHint.value = false;
                     }, 3000);
                 });
 
@@ -372,9 +452,14 @@
                     closeModal,
                     activeIndex,
                     showModal,
-                    selectedProduct
+                    selectedProduct,
+                    autoplay,
+                    toggleAutoplay,
+                    pauseAutoplay,
+                    resumeAutoplay,
+                    showHint
                 };
-            },
+            }
         }).mount('#app');
     </script>
 </body>
