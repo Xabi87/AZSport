@@ -17,15 +17,53 @@
     <!-- Inline Styles -->
     <style>
         /* General Styles */
-        body, #app {
+        body {
             margin: 0;
             font-family: 'Roboto', sans-serif;
-            background: url('./images/background.png') no-repeat center center fixed; /* Applied background image */
-            background-size: cover; /* Scales the image to cover the entire background */
             overflow-x: hidden;
         }
+        #app-wrapper {
+            position: relative;
+            background: url('./images/background.png') no-repeat center center fixed;
+            background-size: cover;
+            overflow: hidden;
+        }
         #app {
-            min-height: 100vh; display: flex; flex-direction: column; align-items: center;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 1; /* Ensure content is above the pseudo-element */
+        }
+
+        #app-wrapper::before {
+            content: '';
+            position: absolute;
+            top: -5%;
+            left: -5%;
+            width: 110%;
+            height: 110%;
+            background: linear-gradient(
+                rgba(0, 0, 0, 0.3),
+                rgba(0, 0, 0, 0.3)
+            ), url('./images/background.png') no-repeat center center fixed;
+            background-size: cover;
+            background-blend-mode: overlay;
+            animation: zoomBackground 30s infinite;
+            z-index: 0; /* Place behind #app content but above the background */
+        }
+
+        @keyframes zoomBackground {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
         }
 
         /* Logo and Navigation */
@@ -275,6 +313,10 @@
             .product-info {
                 height: 140px;
             }
+            /* Disable background animation on mobile for performance */
+            #app-wrapper::before {
+                animation: none;
+            }
         }
 
         /* Prevent body scroll when menu is open */
@@ -284,91 +326,93 @@
     </style>
 </head>
 <body>
-    <div id="app" @keydown.esc="closeMenu" tabindex="0">
-        <!-- Logo -->
-        <div class="logo">
-            <img src="./images/logo2.png" alt="AZ Sports Logo">
-        </div>
-
-        <!-- Navigation Circle -->
-        <div class="nav-circle" @click="toggleMenu">
-            <i class="fas fa-bars" style="color: white;"></i>
-        </div>
-
-        <!-- Menu Overlay -->
-        <div v-if="menuOpen" class="menu-overlay" @click="toggleMenu"></div>
-
-        <!-- Radial Menu -->
-        <div class="radial-menu" v-if="menuOpen">
-            <!-- Center Logo -->
-            <div class="menu-center-logo">
+    <div id="app-wrapper">
+        <div id="app" @keydown.esc="closeMenu" tabindex="0">
+            <!-- Logo -->
+            <div class="logo">
                 <img src="./images/logo2.png" alt="AZ Sports Logo">
             </div>
-            <!-- Menu Items -->
-            <div v-for="(item, index) in navItems" 
-                 :key="item.name" 
-                 :class="['menu-item', { show: menuOpen }]" 
-                 :style="getMenuItemStyle(index)" 
-                 tabindex="0" 
-                 @keydown.enter="scrollToSection(item.path)">
-                <a href="#" @click.prevent="scrollToSection(item.path)" style="color: inherit; text-decoration: none; display: flex; flex-direction: column; align-items: center;">
-                    <i :class="item.icon"></i>
-                    <span class="menu-label">{{ item.name }}</span>
-                </a>
-            </div>
-        </div>
 
-        <!-- Product Carousel -->
-        <div
-          class="product-carousel"
-          @wheel="handleMouseWheel"
-          @mousedown="startDrag"
-          @mouseup="endDrag"
-          @mousemove="onDrag"
-          @touchstart="startDrag"
-          @touchend="endDrag"
-          @touchmove="onDrag"
-          @mouseenter="pauseAutoplay"
-          @mouseleave="resumeAutoplay"
-        >
+            <!-- Navigation Circle -->
+            <div class="nav-circle" @click="toggleMenu">
+                <i class="fas fa-bars" style="color: white;"></i>
+            </div>
+
+            <!-- Menu Overlay -->
+            <div v-if="menuOpen" class="menu-overlay" @click="toggleMenu"></div>
+
+            <!-- Radial Menu -->
+            <div class="radial-menu" v-if="menuOpen">
+                <!-- Center Logo -->
+                <div class="menu-center-logo">
+                    <img src="./images/logo2.png" alt="AZ Sports Logo">
+                </div>
+                <!-- Menu Items -->
+                <div v-for="(item, index) in navItems" 
+                     :key="item.name" 
+                     :class="['menu-item', { show: menuOpen }]" 
+                     :style="getMenuItemStyle(index)" 
+                     tabindex="0" 
+                     @keydown.enter="scrollToSection(item.path)">
+                    <a href="#" @click.prevent="scrollToSection(item.path)" style="color: inherit; text-decoration: none; display: flex; flex-direction: column; align-items: center;">
+                        <i :class="item.icon"></i>
+                        <span class="menu-label">{{ item.name }}</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Product Carousel -->
             <div
-              class="carousel-item"
-              v-for="(product, index) in products"
-              :key="index"
-              :style="getItemStyle(index)"
-              :class="{ active: index === activeIndex }"
+              class="product-carousel"
+              @wheel="handleMouseWheel"
+              @mousedown="startDrag"
+              @mouseup="endDrag"
+              @mousemove="onDrag"
+              @touchstart="startDrag"
+              @touchend="endDrag"
+              @touchmove="onDrag"
+              @mouseenter="pauseAutoplay"
+              @mouseleave="resumeAutoplay"
             >
-                <div v-if="product.badge" class="product-badge">{{ product.badge }}</div>
-                <img :src="product.image" :alt="product.name" class="product-image" loading="lazy">
-                <div class="product-info">
-                    <h3>{{ product.name }}</h3>
-                    <p class="price">{{ product.price }}</p>
-                    <!-- Product Rating -->
-                    <div class="rating">
-                        <i class="fas fa-star" v-for="n in 5" :key="n"></i>
-                    </div>
-                    <!-- Action Buttons -->
-                    <div class="actions">
-                        <button @click.stop="addToCart(product)">Add to Cart</button>
-                        <button @click.stop="showProductDetails(product)">View Details</button>
+                <div
+                  class="carousel-item"
+                  v-for="(product, index) in products"
+                  :key="index"
+                  :style="getItemStyle(index)"
+                  :class="{ active: index === activeIndex }"
+                >
+                    <div v-if="product.badge" class="product-badge">{{ product.badge }}</div>
+                    <img :src="product.image" :alt="product.name" class="product-image" loading="lazy">
+                    <div class="product-info">
+                        <h3>{{ product.name }}</h3>
+                        <p class="price">{{ product.price }}</p>
+                        <!-- Product Rating -->
+                        <div class="rating">
+                            <i class="fas fa-star" v-for="n in 5" :key="n"></i>
+                        </div>
+                        <!-- Action Buttons -->
+                        <div class="actions">
+                            <button @click.stop="addToCart(product)">Add to Cart</button>
+                            <button @click.stop="showProductDetails(product)">View Details</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Autoplay Toggle -->
-        <button class="autoplay-toggle" @click="toggleAutoplay">
-            <i :class="autoplay ? 'fas fa-pause' : 'fas fa-play'"></i>
-            {{ autoplay ? 'Pause Autoplay' : 'Start Autoplay' }}
-        </button>
+            <!-- Autoplay Toggle -->
+            <button class="autoplay-toggle" @click="toggleAutoplay">
+                <i :class="autoplay ? 'fas fa-pause' : 'fas fa-play'"></i>
+                {{ autoplay ? 'Pause Autoplay' : 'Start Autoplay' }}
+            </button>
 
-        <!-- Product Modal -->
-        <div v-if="showModal" class="product-modal" @click="closeModal">
-            <div class="modal-content" @click.stop>
-                <h2>{{ selectedProduct.name }}</h2>
-                <p>{{ selectedProduct.price }}</p>
-                <p>{{ selectedProduct.description }}</p>
-                <button @click="closeModal">Close</button>
+            <!-- Product Modal -->
+            <div v-if="showModal" class="product-modal" @click="closeModal">
+                <div class="modal-content" @click.stop>
+                    <h2>{{ selectedProduct.name }}</h2>
+                    <p>{{ selectedProduct.price }}</p>
+                    <p>{{ selectedProduct.description }}</p>
+                    <button @click="closeModal">Close</button>
+                </div>
             </div>
         </div>
     </div>
