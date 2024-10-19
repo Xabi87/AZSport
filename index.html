@@ -214,6 +214,7 @@
             padding: 10px;
             border-radius: 5px;
             animation: fadeOut 3s ease-in-out forwards;
+            z-index: 1001;
         }
         @keyframes fadeOut {
             0% { opacity: 1; }
@@ -290,10 +291,7 @@
                     <p>{{ product.price }}</p>
                 </div>
             </div>
-            <div class="carousel-controls">
-                <button class="carousel-button" @click="rotateCarousel(-1)"><i class="fas fa-arrow-left"></i></button>
-                <button class="carousel-button" @click="rotateCarousel(1)"><i class="fas fa-arrow-right"></i></button>
-            </div>
+            
             <div class="carousel-indicators">
                 <span v-for="(product, index) in products" :key="index" :class="{ 'active-dot': index === activeIndex }"></span>
             </div>
