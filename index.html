@@ -70,6 +70,39 @@
             text-align: center;
         }
 
+        /* Center Logo in Radial Menu */
+        .menu-center-logo {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            z-index: 1; /* Ensure it appears below the menu items */
+            transform: translate(-50%, -50%);
+            animation: logoPop 0.5s ease-out;
+        }
+
+        .menu-center-logo img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: contain;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .menu-center-logo img:hover {
+            transform: rotate(10deg) scale(1.1);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+        }
+
+        @keyframes logoPop {
+            0% {
+                transform: translate(-50%, -50%) scale(0);
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+
         /* Carousel Styles */
         .product-carousel {
             position: relative; width: 100%; max-width: 800px; height: 500px; perspective: 1500px; display: flex; align-items: center; justify-content: center; margin-top: 100px; overflow: hidden; z-index: 1000;
@@ -137,6 +170,16 @@
                 font-size: 16px;
                 padding: 8px 16px;
             }
+            /* Center logo adjustments for mobile */
+            .menu-center-logo {
+                position: relative;
+                margin-bottom: 20px;
+                animation: none; /* Disable animation on mobile */
+                transform: none;
+            }
+            .menu-center-logo img:hover {
+                transform: none; /* Disable hover effect on mobile */
+            }
         }
 
         /* Prevent body scroll when menu is open */
@@ -162,6 +205,11 @@
 
         <!-- Radial Menu -->
         <div class="radial-menu" v-if="menuOpen">
+            <!-- Center Logo -->
+            <div class="menu-center-logo">
+                <img src="./images/logo2.png" alt="AZ Sports Logo">
+            </div>
+            <!-- Menu Items -->
             <div v-for="(item, index) in navItems" 
                  :key="item.name" 
                  :class="['menu-item', { show: menuOpen }]" 
