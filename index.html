@@ -8,6 +8,8 @@
 
     <!-- External Styles and Scripts -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <!-- Include Google Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap">
     <script src="https://unpkg.com/vue@3"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
 
@@ -15,7 +17,7 @@
     <style>
         /* General Styles */
         body, #app {
-            margin: 0; font-family: Arial, sans-serif; background: #f0f0f0; overflow-x: hidden;
+            margin: 0; font-family: 'Roboto', sans-serif; background: #f0f0f0; overflow-x: hidden;
         }
         #app {
             min-height: 100vh; display: flex; flex-direction: column; align-items: center;
@@ -29,7 +31,8 @@
             top: 20px; left: 20px; width: 100px; height: 100px; background: #fff; padding: 5px; box-shadow: 0 3px 6px rgba(0,0,0,0.2);
         }
         .nav-circle {
-            bottom: 30px; right: 30px; width: 80px; height: 80px; background: #0056b3; cursor: pointer; transition: transform 0.3s, background-color 0.3s;
+            bottom: 30px; right: 30px; width: 60px; height: 60px; background: #0056b3; cursor: pointer; transition: transform 0.3s, background-color 0.3s; font-size: 18px;
+            z-index: 1500;
         }
         .nav-circle:hover {
             transform: scale(1.1); background-color: #007bff;
@@ -41,15 +44,29 @@
         /* Menu Overlay and Radial Menu */
         .menu-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1300;
+            backdrop-filter: blur(5px);
         }
         .radial-menu {
             position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 500px; height: 500px; display: flex; justify-content: center; align-items: center; z-index: 1400;
         }
         .menu-item {
-            position: absolute; width: 100px; height: 100px; background: #333; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; opacity: 0; transition: transform 0.5s, opacity 0.5s;
+            position: absolute; width: 100px; height: 100px; background: #333; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-direction: column;
+            opacity: 0; transition: transform 0.5s, opacity 0.5s; transition-delay: calc(0.05s * var(--menu-index));
         }
         .menu-item.show {
             opacity: 1;
+        }
+        .menu-item:hover {
+            transform: scale(1.1);
+            background-color: #444;
+        }
+        .menu-item i {
+            font-size: 1.5em;
+        }
+        .menu-label {
+            font-size: 0.8em;
+            margin-top: 5px;
+            text-align: center;
         }
 
         /* Carousel Styles */
@@ -86,15 +103,41 @@
 
         /* Autoplay Toggle */
         .autoplay-toggle {
-            margin-top: 20px; padding: 10px 20px; background: #0056b3; color: #fff; border: none; border-radius: 5px; cursor: pointer; transition: background 0.3s;
+            margin-top: 20px; padding: 10px 20px; background: #fff; color: #0056b3; border: 2px solid #0056b3; border-radius: 5px; cursor: pointer; transition: background 0.3s, color 0.3s; font-size: 18px;
         }
         .autoplay-toggle:hover {
-            background: #007bff;
+            background: #0056b3; color: #fff;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .radial-menu {
+                width: 100%;
+                height: 100%;
+                flex-direction: column;
+            }
+            .menu-item {
+                position: relative;
+                width: 100%;
+                height: auto;
+                border-radius: 0;
+                margin: 10px 0;
+            }
+            .nav-circle, .autoplay-toggle {
+                width: 60px;
+                height: 60px;
+                font-size: 18px;
+            }
+        }
+
+        /* Prevent body scroll when menu is open */
+        body.menu-open {
+            overflow: hidden;
         }
     </style>
 </head>
 <body>
-    <div id="app">
+    <div id="app" @keydown.esc="closeMenu" tabindex="0">
         <!-- Logo -->
         <div class="logo">
             <img src="./images/logo2.png" alt="AZ Sports Logo">
@@ -102,7 +145,7 @@
 
         <!-- Navigation Circle -->
         <div class="nav-circle" @click="toggleMenu">
-            <i class="fas fa-bars" style="color: white; font-size: 24px;"></i>
+            <i class="fas fa-bars" style="color: white;"></i>
         </div>
 
         <!-- Menu Overlay -->
@@ -110,9 +153,15 @@
 
         <!-- Radial Menu -->
         <div class="radial-menu" v-if="menuOpen">
-            <div v-for="(item, index) in navItems" :key="item.name" :class="['menu-item', { show: menuOpen }]" :style="calculatePosition(index, navItems.length)">
-                <a :href="item.path" style="color: inherit; text-decoration: none;">
+            <div v-for="(item, index) in navItems" 
+                 :key="item.name" 
+                 :class="['menu-item', { show: menuOpen }]" 
+                 :style="[calculatePosition(index, navItems.length), {'--menu-index': index}]" 
+                 tabindex="0" 
+                 @keydown.enter="scrollToSection(item.path)">
+                <a href="#" @click.prevent="scrollToSection(item.path)" style="color: inherit; text-decoration: none; display: flex; flex-direction: column; align-items: center;">
                     <i :class="item.icon"></i>
+                    <span class="menu-label">{{ item.name }}</span>
                 </a>
             </div>
         </div>
@@ -121,7 +170,7 @@
         <div class="product-carousel" @wheel="handleMouseWheel" @mousedown="startDrag" @mouseup="endDrag" @mousemove="onDrag" @touchstart="startDrag" @touchend="endDrag" @touchmove="onDrag" @mouseenter="pauseAutoplay" @mouseleave="resumeAutoplay">
             <div class="carousel-item" v-for="(product, index) in products" :key="index" :style="getItemStyle(index)" :class="{ active: index === activeIndex }" @click="showProductDetails(product)">
                 <div v-if="product.badge" class="product-badge">{{ product.badge }}</div>
-                <img :src="product.image" :alt="product.name" class="product-image">
+                <img :src="product.image" :alt="product.name" class="product-image" loading="lazy">
                 <div class="product-info">
                     <h3>{{ product.name }}</h3>
                     <p>{{ product.price }}</p>
@@ -131,6 +180,7 @@
 
         <!-- Autoplay Toggle -->
         <button class="autoplay-toggle" @click="toggleAutoplay">
+            <i :class="autoplay ? 'fas fa-pause' : 'fas fa-play'"></i>
             {{ autoplay ? 'Pause Autoplay' : 'Start Autoplay' }}
         </button>
 
@@ -147,7 +197,7 @@
 
     <!-- Vue Script -->
     <script>
-        const { createApp, ref, onMounted } = Vue;
+        const { createApp, ref, onMounted, watch } = Vue;
         createApp({
             setup() {
                 const menuOpen = ref(false);
@@ -179,7 +229,7 @@
                 let startX = 0;
 
                 const calculatePosition = (index, totalItems) => {
-                    const angle = (360 / totalItems) * index;
+                    const angle = (360 / totalItems) * index - 90; // Adjusted to start from top
                     const radius = 200;
                     const x = radius * Math.cos((angle * Math.PI) / 180);
                     const y = radius * Math.sin((angle * Math.PI) / 180);
@@ -242,13 +292,31 @@
                     autoplay.value ? startAutoplay() : pauseAutoplay();
                 };
 
+                const closeMenu = () => {
+                    if (menuOpen.value) {
+                        menuOpen.value = false;
+                    }
+                };
+
+                const scrollToSection = (hash) => {
+                    const element = document.querySelector(hash);
+                    if (element) {
+                        element.scrollIntoView({ behavior: 'smooth' });
+                        menuOpen.value = false; // Close menu after navigation
+                    }
+                };
+
+                watch(menuOpen, (newValue) => {
+                    document.body.classList.toggle('menu-open', newValue);
+                });
+
                 onMounted(() => { if (autoplay.value) startAutoplay(); });
 
                 return {
                     menuOpen, navItems, products, calculatePosition, toggleMenu, getItemStyle,
                     handleMouseWheel, startDrag, endDrag, onDrag, showProductDetails, closeModal,
                     activeIndex, showModal, selectedProduct, autoplay, toggleAutoplay,
-                    pauseAutoplay, resumeAutoplay
+                    pauseAutoplay, resumeAutoplay, closeMenu, scrollToSection
                 };
             }
         }).mount('#app');
