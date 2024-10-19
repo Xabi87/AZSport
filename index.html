@@ -113,7 +113,7 @@
         @media (max-width: 768px) {
             .radial-menu {
                 width: 100%;
-                height: 100%;
+                height: auto;
                 flex-direction: column;
             }
             .menu-item {
@@ -122,11 +122,19 @@
                 height: auto;
                 border-radius: 0;
                 margin: 10px 0;
+                transform: none !important;
             }
-            .nav-circle, .autoplay-toggle {
+            .nav-circle {
                 width: 60px;
                 height: 60px;
                 font-size: 18px;
+            }
+            /* Adjust the autoplay-toggle for mobile */
+            .autoplay-toggle {
+                width: auto;
+                height: auto;
+                font-size: 16px;
+                padding: 8px 16px;
             }
         }
 
@@ -156,7 +164,7 @@
             <div v-for="(item, index) in navItems" 
                  :key="item.name" 
                  :class="['menu-item', { show: menuOpen }]" 
-                 :style="[calculatePosition(index, navItems.length), {'--menu-index': index}]" 
+                 :style="getMenuItemStyle(index)" 
                  tabindex="0" 
                  @keydown.enter="scrollToSection(item.path)">
                 <a href="#" @click.prevent="scrollToSection(item.path)" style="color: inherit; text-decoration: none; display: flex; flex-direction: column; align-items: center;">
@@ -224,9 +232,16 @@
                 const showModal = ref(false);
                 const selectedProduct = ref({});
                 const autoplay = ref(true);
+                const isMobile = ref(window.innerWidth <= 768);
                 let autoplayInterval;
                 let isDragging = false;
                 let startX = 0;
+
+                const updateIsMobile = () => {
+                    isMobile.value = window.innerWidth <= 768;
+                };
+
+                window.addEventListener('resize', updateIsMobile);
 
                 const calculatePosition = (index, totalItems) => {
                     const angle = (360 / totalItems) * index - 90; // Adjusted to start from top
@@ -234,6 +249,13 @@
                     const x = radius * Math.cos((angle * Math.PI) / 180);
                     const y = radius * Math.sin((angle * Math.PI) / 180);
                     return { transform: `translate(${x}px, ${y}px)` };
+                };
+
+                const getMenuItemStyle = (index) => {
+                    if (isMobile.value) {
+                        return { transform: 'none' };
+                    }
+                    return calculatePosition(index, navItems.value.length);
                 };
 
                 const toggleMenu = () => { menuOpen.value = !menuOpen.value; };
@@ -313,7 +335,7 @@
                 onMounted(() => { if (autoplay.value) startAutoplay(); });
 
                 return {
-                    menuOpen, navItems, products, calculatePosition, toggleMenu, getItemStyle,
+                    menuOpen, navItems, products, getMenuItemStyle, toggleMenu, getItemStyle,
                     handleMouseWheel, startDrag, endDrag, onDrag, showProductDetails, closeModal,
                     activeIndex, showModal, selectedProduct, autoplay, toggleAutoplay,
                     pauseAutoplay, resumeAutoplay, closeMenu, scrollToSection
