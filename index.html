@@ -287,6 +287,8 @@
                 transform: none !important;
                 opacity: 1 !important;
                 margin: 0 0 20px 0;
+                left: 0; /* Ensure items are centered */
+                right: 0;
             }
             .carousel-item.active {
                 transform: none;
@@ -458,7 +460,7 @@
 
                 const getItemStyle = (index) => {
                     if (isMobile.value) {
-                        return { transform: 'none' };
+                        return {}; // Return an empty style object on mobile
                     }
                     const angle = (360 / products.value.length) * index + rotationAngle.value;
                     const zIndex = Math.round((Math.cos((angle * Math.PI) / 180) + 1) * 5);
@@ -466,6 +468,7 @@
                 };
 
                 const rotateCarousel = (direction) => {
+                    if (isMobile.value) return; // Disable rotation on mobile
                     rotationAngle.value += direction * (360 / products.value.length);
                     rotationAngle.value %= 360;
 
@@ -484,6 +487,7 @@
                 };
 
                 const startDrag = (event) => {
+                    if (isMobile.value) return; // Disable dragging on mobile
                     isDragging = true;
                     startX = event.clientX || event.touches[0].clientX;
                 };
@@ -508,6 +512,7 @@
                 const closeModal = () => { showModal.value = false; };
 
                 const startAutoplay = () => {
+                    if (isMobile.value) return; // Disable autoplay on mobile
                     autoplayInterval = setInterval(() => { rotateCarousel(1); }, 3000);
                 };
 
