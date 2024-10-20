@@ -346,6 +346,59 @@
             }
             .product-info {
                 height: 140px;
+                padding: 10px; /* Reduced padding for better fit */
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                align-items: center; /* Center align content */
+                text-align: center; /* Center text */
+            }
+
+            /* **New Mobile-Specific Styles** */
+
+            /* Adjust Product Name Font Size */
+            .product-info h3 {
+                font-size: 1em; /* Reduced from 1.2em */
+                min-height: 40px; /* Adjusted for shorter text */
+                margin: 5px 0 2px; /* Reduced margins */
+            }
+
+            /* Adjust Price Font Size */
+            .product-info p.price {
+                font-size: 0.9em; /* Reduced from 1.1em */
+                margin: 2px 0;
+            }
+
+            /* Adjust Rating Icons Size */
+            .product-info .rating i {
+                font-size: 0.8em; /* Smaller star icons */
+                margin: 1px;
+            }
+
+            /* Reorganize Actions (Buttons) */
+            .product-info .actions {
+                flex-direction: column; /* Stack buttons vertically */
+                gap: 8px; /* Reduced gap between buttons */
+                width: 100%; /* Make buttons full width */
+                align-items: center; /* Center align buttons */
+            }
+
+            /* Adjust Buttons Size and Font */
+            .product-info .actions button {
+                padding: 6px 12px; /* Smaller padding */
+                font-size: 0.8em; /* Smaller font size */
+                width: 100%; /* Full width for better touch targets */
+                box-sizing: border-box; /* Ensure padding doesn't exceed container */
+                box-shadow: 0 3px 8px rgba(0, 123, 255, 0.4); /* Slightly reduced shadow */
+            }
+
+            /* Optional: Adjust Product Info Alignment */
+            /* Already handled above by flex properties */
+
+            /* Optional: Reduce Badge Size on Mobile */
+            .product-badge {
+                padding: 6px; /* Smaller padding */
+                font-size: 0.8em; /* Smaller font size */
             }
         }
 
