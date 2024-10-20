@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap">
     <!-- Use the production build of Vue.js -->
     <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+    <!-- Include anime.js for animations -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
 
     <!-- Inline Styles -->
@@ -39,15 +40,31 @@
 
         /* Logo and Navigation */
         .logo, .nav-circle {
-            position: fixed; z-index: 1000; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            position: fixed; 
+            z-index: 1000; 
+            border-radius: 50%; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
         }
         .logo {
-            top: 20px; left: 20px; width: 100px; height: 100px; background: linear-gradient(145deg, #f0f0f0, #dcdcdc);
-            padding: 5px; box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+            top: 20px; 
+            left: 20px; 
+            width: 100px; 
+            height: 100px; 
+            background: linear-gradient(145deg, #f0f0f0, #dcdcdc);
+            padding: 5px; 
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
         }
         .nav-circle {
-            bottom: 30px; right: 30px; width: 60px; height: 60px; background: linear-gradient(135deg, #007bff, #0056b3);
-            cursor: pointer; transition: transform 0.3s, background-color 0.3s; font-size: 18px;
+            bottom: 30px; 
+            right: 30px; 
+            width: 60px; 
+            height: 60px; 
+            background: linear-gradient(135deg, #007bff, #0056b3);
+            cursor: pointer; 
+            transition: transform 0.3s, background-color 0.3s; 
+            font-size: 18px;
             z-index: 1500;
             color: white;
             box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
@@ -58,12 +75,21 @@
             box-shadow: 0 8px 20px rgba(0, 123, 255, 0.5);
         }
         .logo img {
-            width: 100%; height: 100%; border-radius: 50%; object-fit: contain;
+            width: 100%; 
+            height: 100%; 
+            border-radius: 50%; 
+            object-fit: contain;
         }
 
         /* Menu Overlay and Radial Menu */
         .menu-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1300;
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            background: rgba(0,0,0,0.5); 
+            z-index: 1300;
             backdrop-filter: blur(5px);
         }
 
@@ -150,9 +176,57 @@
             }
         }
 
-        /* Enhanced Carousel Styles */
+        /* Enhanced Carousel Container with 3D Effects */
+        .carousel-container {
+            width: 100%;
+            max-width: 1200px; /* Adjust as needed */
+            margin: 100px auto 40px auto; /* Centers the container with top and bottom margins */
+            padding: 40px; /* Adds space around the carousel */
+            background: radial-gradient(circle at top left, #ffffff, #f0f0f0);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2), inset 0 0 10px rgba(255,255,255,0.1);
+            border-radius: 25px;
+            transform-style: preserve-3d;
+            transition: transform 1s ease, box-shadow 0.3s ease;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 40px; /* Space between carousel and description */
+            flex-wrap: nowrap; /* Prevent wrapping */
+        }
+
+        .carousel-container::before,
+        .carousel-container::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: inherit;
+            border-radius: 25px;
+            top: 0;
+            left: 0;
+            transform: rotateY(0deg) translateZ(-10px);
+            z-index: -1;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.1), 0 0 20px rgba(255,255,255,0.2);
+        }
+
+        /* Add 3D Rotation on Hover with Anime.js Integration */
+        .carousel-container:hover {
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Product Carousel Styles */
         .product-carousel {
-            position: relative; width: 100%; max-width: 800px; height: 520px; perspective: 1800px; display: flex; align-items: center; justify-content: center; margin-top: 100px; overflow: hidden; z-index: 1000;
+            position: relative; 
+            width: 100%; 
+            max-width: 800px; 
+            height: 520px; 
+            perspective: 1800px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            overflow: hidden; 
+            z-index: 1000;
         }
         .carousel-item {
             position: absolute;
@@ -161,6 +235,7 @@
             transform-origin: center;
             border-radius: 20px;
             background: white;
+            border: 2px solid #e0f7fa; /* Light blue border matching branding */
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
             opacity: 0.8;
             transition: transform 0.6s cubic-bezier(0.25,1,0.5,1), opacity 0.5s, box-shadow 0.6s;
@@ -169,6 +244,7 @@
             flex-direction: column;
             justify-content: flex-start; /* Align content at the top */
             box-sizing: border-box; /* Include border and padding in width/height */
+            cursor: pointer;
         }
         .carousel-item.active {
             /* Removed transform to prevent conflict */
@@ -177,7 +253,7 @@
             opacity: 1;
         }
         .carousel-item:hover {
-            transform: translateZ(220px) scale(1.25);
+            transform: translateZ(220px) scale(1.25) rotateY(5deg);
             box-shadow: 0 16px 35px rgba(0, 86, 179, 0.6);
         }
 
@@ -224,7 +300,7 @@
         }
         .product-info p.price {
             font-size: 1.1em;
-            color: #0056b3;
+            color: #007bff; /* Branded blue color */
             font-weight: bold;
             margin: 3px 0;
         }
@@ -275,30 +351,74 @@
 
         /* Product Modal */
         .product-modal {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 2000;
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            background: rgba(0,0,0,0.5); 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            z-index: 2000;
         }
         .modal-content {
-            background: #fff; padding: 20px; border-radius: 10px; width: 80%; max-width: 500px; text-align: center;
+            background: #fff; 
+            padding: 20px; 
+            border-radius: 10px; 
+            width: 80%; 
+            max-width: 500px; 
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+        .modal-content button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.3s;
+        }
+        .modal-content button:hover {
+            background: #0056b3;
+            transform: translateY(-2px);
         }
 
-        /* Autoplay Toggle */
-        .autoplay-toggle {
-            margin-top: 20px; padding: 12px 24px; background: #f7f9fc; color: #0056b3; border: 2px solid #0056b3; border-radius: 10px; cursor: pointer; transition: background 0.3s, color 0.3s, transform 0.3s; font-size: 18px;
-            font-weight: 600;
+        /* Autoplay Toggle (Play/Pause Icon) */
+        .description-area .autoplay-toggle {
+            margin-top: 20px; /* Space above the button */
+            background: none; /* Remove background */
+            border: none; /* Remove border */
+            cursor: pointer;
+            font-size: 1.5em; /* Adjust icon size */
+            color: #007bff; /* Branded blue color */
+            transition: color 0.3s, transform 0.3s;
         }
-        .autoplay-toggle:hover {
-            background: #0056b3; color: #fff;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(0, 123, 255, 0.4);
+        .description-area .autoplay-toggle:hover {
+            color: #0056b3; /* Darker blue on hover */
+            transform: scale(1.2); /* Slightly enlarge on hover */
         }
 
         /* Responsive Design */
+        @media (max-width: 1200px) {
+            .carousel-container {
+                flex-direction: row;
+                gap: 20px;
+            }
+            .description-area {
+                max-width: 400px;
+            }
+        }
         @media (max-width: 768px) {
-            .radial-menu {
-                width: 100%;
-                height: auto;
+            .carousel-container {
                 flex-direction: column;
-                align-items: center;
+                gap: 20px;
+            }
+            .description-area {
+                max-width: 90%;
             }
             .menu-item {
                 position: relative;
@@ -313,36 +433,17 @@
                 height: 60px;
                 font-size: 18px;
             }
-            .autoplay-toggle {
-                width: auto;
-                height: auto;
-                font-size: 16px;
-                padding: 8px 16px;
-            }
-            .menu-center-logo {
-                position: relative;
-                top: auto;
-                left: auto;
-                margin-bottom: 20px;
-                animation: none;
-                transform: none;
-            }
-            .menu-center-logo img {
-                width: 70px;
-                height: 70px;
-            }
-            .menu-center-logo img:hover {
-                transform: none;
-            }
+            /* Remove the old autoplay-toggle button if present */
+            /* Removed previously existing autoplay-toggle styles */
             .product-carousel {
                 height: 440px;
             }
             .carousel-item {
                 width: 180px;
-                height: 300px; /* Reduced from 320px to 300px */
+                height: 300px; /* Reduced from 420px to 300px */
             }
             .product-image {
-                height: 150px; /* Reduced from 160px to 150px */
+                height: 150px; /* Reduced from 220px to 150px */
             }
             .product-info {
                 height: auto; /* Ensure height adjusts based on content */
@@ -358,20 +459,20 @@
 
             /* Adjust Product Name Font Size */
             .product-info h3 {
-                font-size: 0.95em; /* Reduced from 1em */
-                min-height: 30px; /* Adjusted from 35px */
+                font-size: 0.95em; /* Reduced from 1.2em */
+                min-height: 30px; /* Adjusted from 50px */
                 margin: 4px 0 1px; /* Further reduced margins */
             }
 
             /* Adjust Price Font Size */
             .product-info p.price {
-                font-size: 0.85em; /* Reduced from 0.9em */
+                font-size: 0.85em; /* Reduced from 1.1em */
                 margin: 1px 0; /* Further reduced margin */
             }
 
             /* Adjust Rating Icons Size */
             .product-info .rating i {
-                font-size: 0.6em; /* Reduced from 0.7em */
+                font-size: 0.6em; /* Reduced from 1.5em */
                 margin: 0 0.5px; /* Further reduced margin */
             }
 
@@ -397,6 +498,11 @@
                 padding: 5px; /* Further reduced padding */
                 font-size: 0.75em; /* Further reduced font size */
             }
+
+            /* Adjust Description Area for Mobile */
+            .description-area {
+                max-width: 90%;
+            }
         }
 
         /* Prevent body scroll when menu is open */
@@ -411,6 +517,37 @@
         .carousel-item.active .item-content {
             transform: scale(1.05); /* Slightly scale the content */
         }
+
+        /* Description Area Styles */
+        .description-area {
+            width: 100%;
+            max-width: 400px;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: opacity 0.5s ease, transform 0.3s ease;
+        }
+        .description-area.hidden {
+            opacity: 0;
+            transform: translateY(20px);
+            pointer-events: none;
+        }
+        .description-area.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .description-area h2 {
+            margin-bottom: 10px;
+            font-size: 1.5em;
+            color: #007bff;
+        }
+        .description-area p {
+            font-size: 1em;
+            color: #555;
+        }
+
     </style>
 </head>
 <body>
@@ -422,7 +559,7 @@
             </div>
 
             <!-- Navigation Circle -->
-            <div class="nav-circle" @click="toggleMenu">
+            <div class="nav-circle" @click="toggleMenu" aria-label="Open Navigation Menu" role="button" tabindex="0">
                 <i class="fas fa-bars" style="color: white;"></i>
             </div>
 
@@ -430,7 +567,7 @@
             <div v-if="menuOpen" class="menu-overlay" @click="toggleMenu"></div>
 
             <!-- Radial Menu -->
-            <div class="radial-menu" v-if="menuOpen" @mousemove="handleMouseMove">
+            <div class="radial-menu" v-if="menuOpen" @mousemove="handleMouseMove" role="navigation" aria-label="Main Navigation">
                 <!-- Center Logo -->
                 <div class="menu-center-logo">
                     <img src="./images/logo2.png" alt="AZ Sports Logo">
@@ -439,7 +576,7 @@
                 <div v-for="(item, index) in navItems" 
                      :key="item.name" 
                      :class="['menu-item', { show: menuOpen }]" 
-                     :style="getMenuItemStyle(index)" 
+                     :style="[getMenuItemStyle(index), { '--menu-index': index }]" 
                      tabindex="0" 
                      @keydown.enter="scrollToSection(item.path)">
                     <a href="#" @click.prevent="scrollToSection(item.path)" style="color: inherit; text-decoration: none; display: flex; flex-direction: column; align-items: center;">
@@ -449,54 +586,84 @@
                 </div>
             </div>
 
-            <!-- Product Carousel -->
-            <div
-              class="product-carousel"
-              @wheel="handleMouseWheel"
-              @mousedown="startDrag"
-              @mouseup="endDrag"
-              @mousemove="onDrag"
-              @touchstart="startDrag"
-              @touchend="endDrag"
-              @touchmove="onDrag"
-              @mouseenter="pauseAutoplay"
-              @mouseleave="resumeAutoplay"
-            >
+            <!-- 3D Carousel and Description Container -->
+            <div class="carousel-container" role="region" aria-label="Product Carousel and Description">
+                <!-- Product Carousel -->
                 <div
-                  class="carousel-item"
-                  v-for="(product, index) in products"
-                  :key="index"
-                  :style="getItemStyle(index)"
-                  :class="{ active: index === activeIndex }"
+                  class="product-carousel"
+                  @wheel.prevent="handleMouseWheel"
+                  @mousedown="startDrag"
+                  @mouseup="endDrag"
+                  @mousemove="onDrag"
+                  @touchstart="startDrag"
+                  @touchend="endDrag"
+                  @touchmove="onDrag"
+                  @mouseenter="pauseAutoplay"
+                  @mouseleave="resumeAutoplay"
                 >
-                    <div class="item-content">
-                        <div v-if="product.badge" class="product-badge">{{ product.badge }}</div>
-                        <img :src="product.image" :alt="product.name" class="product-image" loading="lazy">
-                        <div class="product-info">
-                            <h3>{{ product.name }}</h3>
-                            <p class="price">{{ product.price }}</p>
-                            <div class="rating">
-                                <i class="fas fa-star" v-for="n in 5" :key="n"></i>
-                            </div>
-                            <div class="actions">
-                                <button @click.stop="addToCart(product)">Add to Cart</button>
-                                <button @click.stop="showProductDetails(product)">View Details</button>
+                    <div
+                      class="carousel-item"
+                      v-for="(product, index) in products"
+                      :key="index"
+                      :style="getItemStyle(index)"
+                      :class="{ active: index === activeIndex }"
+                      role="button"
+                      aria-label="View details for {{ product.name }}"
+                      tabindex="0"
+                      @click="buyNow(product)"
+                      @click.once="animateCarouselItem($event.currentTarget)"
+                      @keydown.enter="buyNow(product)"
+                    >
+                        <div class="item-content">
+                            <div v-if="product.badge" class="product-badge">{{ product.badge }}</div>
+                            <img 
+                                :src="product.imageSmall" 
+                                :srcset="`${product.imageSmall} 480w, ${product.imageMedium} 768w, ${product.image} 1200w`" 
+                                :sizes="'(max-width: 480px) 100vw, (max-width: 768px) 50vw, 33vw'" 
+                                :alt="product.name" 
+                                class="product-image" 
+                                loading="lazy">
+                            <div class="product-info">
+                                <h3>{{ product.name }}</h3>
+                                <p class="price">{{ product.price }}</p>
+                                <div class="rating">
+                                    <i class="fas fa-star" v-for="n in 5" :key="n"></i>
+                                </div>
+                                <div class="actions">
+                                    <button @click.stop="addToCart(product)">Add to Cart</button>
+                                    <!-- Changed "View Details" to "Buy Now" -->
+                                    <button @click.stop="buyNow(product)">Buy Now</button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                <!-- Description Area -->
+                <div 
+                    class="description-area" 
+                    :class="{ visible: selectedProduct.name, hidden: !selectedProduct.name }" 
+                    v-if="selectedProduct.name"
+                >
+                    <h2>{{ selectedProduct.name }}</h2>
+                    <p>{{ selectedProduct.description }}</p>
+                    <!-- Play/Pause Autoplay Button -->
+                    <button 
+                        class="autoplay-toggle" 
+                        @click="toggleAutoplay" 
+                        :aria-label="autoplay ? 'Pause Autoplay' : 'Start Autoplay'"
+                        :aria-pressed="autoplay"
+                    >
+                        <i :class="autoplay ? 'fas fa-pause' : 'fas fa-play'"></i>
+                    </button>
+                </div>
             </div>
 
-            <!-- Autoplay Toggle -->
-            <button class="autoplay-toggle" @click="toggleAutoplay">
-                <i :class="autoplay ? 'fas fa-pause' : 'fas fa-play'"></i>
-                {{ autoplay ? 'Pause Autoplay' : 'Start Autoplay' }}
-            </button>
-
-            <!-- Product Modal -->
-            <div v-if="showModal" class="product-modal" @click="closeModal">
+            <!-- Product Modal (Optional) -->
+            <!-- If you still want to keep the modal, you can leave it; otherwise, you can remove it -->
+            <div v-if="showModal" class="product-modal" @click="closeModal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
                 <div class="modal-content" @click.stop>
-                    <h2>{{ selectedProduct.name }}</h2>
+                    <h2 id="modal-title">{{ selectedProduct.name }}</h2>
                     <p>{{ selectedProduct.price }}</p>
                     <p>{{ selectedProduct.description }}</p>
                     <button @click="closeModal">Close</button>
@@ -507,7 +674,7 @@
 
     <!-- Vue Script -->
     <script>
-        const { createApp, ref, onMounted, watch } = Vue;
+        const { createApp, ref, onMounted, watch, onBeforeUnmount } = Vue;
         createApp({
             setup() {
                 const menuOpen = ref(false);
@@ -522,11 +689,48 @@
                 ]);
 
                 const products = ref([
-                    { name: 'Nike Air Zoom Pegasus', price: '$120', image: 'https://via.placeholder.com/220x300', description: 'High-performance running shoes with responsive cushioning.', badge: 'New' },
-                    { name: 'Adidas Ultraboost 21', price: '$180', image: 'https://via.placeholder.com/220x300', description: 'Boost cushioning technology for maximum comfort.' },
-                    { name: 'Puma Running Shoes', price: '$90', image: 'https://via.placeholder.com/220x300', description: 'Lightweight and breathable running shoes for everyday use.', badge: 'On Sale' },
-                    { name: 'Reebok Crossfit Nano', price: '$110', image: 'https://via.placeholder.com/220x300', description: 'Designed for high-intensity crossfit training.' },
-                    { name: 'Under Armour Hovr', price: '$130', image: 'https://via.placeholder.com/220x300', description: 'Provides a zero-gravity feel to maintain energy return.' },
+                    { 
+                        name: 'Nike Air Zoom Pegasus', 
+                        price: '$120', 
+                        image: 'https://via.placeholder.com/220x300.webp', 
+                        imageSmall: 'https://via.placeholder.com/220x300.webp', 
+                        imageMedium: 'https://via.placeholder.com/220x300.webp',
+                        description: 'High-performance running shoes with responsive cushioning.', 
+                        badge: 'New' 
+                    },
+                    { 
+                        name: 'Adidas Ultraboost 21', 
+                        price: '$180', 
+                        image: 'https://via.placeholder.com/220x300.webp', 
+                        imageSmall: 'https://via.placeholder.com/220x300.webp', 
+                        imageMedium: 'https://via.placeholder.com/220x300.webp',
+                        description: 'Boost cushioning technology for maximum comfort.' 
+                    },
+                    { 
+                        name: 'Puma Running Shoes', 
+                        price: '$90', 
+                        image: 'https://via.placeholder.com/220x300.webp', 
+                        imageSmall: 'https://via.placeholder.com/220x300.webp', 
+                        imageMedium: 'https://via.placeholder.com/220x300.webp',
+                        description: 'Lightweight and breathable running shoes for everyday use.', 
+                        badge: 'On Sale' 
+                    },
+                    { 
+                        name: 'Reebok Crossfit Nano', 
+                        price: '$110', 
+                        image: 'https://via.placeholder.com/220x300.webp', 
+                        imageSmall: 'https://via.placeholder.com/220x300.webp', 
+                        imageMedium: 'https://via.placeholder.com/220x300.webp',
+                        description: 'Designed for high-intensity crossfit training.' 
+                    },
+                    { 
+                        name: 'Under Armour Hovr', 
+                        price: '$130', 
+                        image: 'https://via.placeholder.com/220x300.webp', 
+                        imageSmall: 'https://via.placeholder.com/220x300.webp', 
+                        imageMedium: 'https://via.placeholder.com/220x300.webp',
+                        description: 'Provides a zero-gravity feel to maintain energy return.' 
+                    },
                 ]);
 
                 const rotationAngle = ref(0);
@@ -539,6 +743,7 @@
                 let isDragging = false;
                 let startX = 0;
 
+                // Function to update isMobile based on window width
                 const updateIsMobile = () => {
                     isMobile.value = window.innerWidth <= 768;
                 };
@@ -570,11 +775,8 @@
 
                 const rotateCarousel = (direction) => {
                     rotationAngle.value += direction * (360 / products.value.length);
-                    // Removed rotationAngle reset to allow continuous rotation
-                    // if (rotationAngle.value >= 360 || rotationAngle.value <= -360) {
-                    //     rotationAngle.value %= 360;
-                    // }
                     activeIndex.value = (activeIndex.value + direction + products.value.length) % products.value.length;
+                    updateSelectedProduct();
                 };
 
                 const handleMouseWheel = (event) => {
@@ -611,7 +813,6 @@
                 };
 
                 const pauseAutoplay = () => { clearInterval(autoplayInterval); };
-
                 const resumeAutoplay = () => { if (autoplay.value) startAutoplay(); };
 
                 const toggleAutoplay = () => {
@@ -637,6 +838,17 @@
                     alert(`${product.name} has been added to your cart.`);
                 };
 
+                // New Method: Buy Now
+                const buyNow = (product) => {
+                    // Add to cart
+                    addToCart(product);
+                    // Redirect to checkout or display a confirmation
+                    // For demonstration, we'll use an alert
+                    alert(`Proceeding to purchase ${product.name} for ${product.price}.`);
+                    // You can replace the above alert with actual navigation to a checkout page
+                    // e.g., window.location.href = '/checkout';
+                };
+
                 watch(menuOpen, (newValue) => {
                     document.body.classList.toggle('menu-open', newValue);
                 });
@@ -648,14 +860,79 @@
                     radialMenu.style.transform = `translate(-50%, -50%) perspective(800px) rotateY(${x / 10}deg) rotateX(${-y / 10}deg)`;
                 };
 
-                onMounted(() => { if (autoplay.value) startAutoplay(); });
+                // Keyboard navigation for carousel
+                const handleKeyDown = (event) => {
+                    if (event.key === 'ArrowRight') {
+                        rotateCarousel(1); // Rotate right
+                    } else if (event.key === 'ArrowLeft') {
+                        rotateCarousel(-1); // Rotate left
+                    }
+                };
+
+                // Integrate anime.js for smooth container animations
+                const animateContainer = () => {
+                    const carouselContainer = document.querySelector('.carousel-container');
+                    anime({
+                        targets: carouselContainer,
+                        rotateY: '+=15deg',
+                        duration: 10000, // Long duration for smooth rotation
+                        easing: 'linear',
+                        loop: true
+                    });
+                };
+
+                // Function to animate carousel item on click
+                const animateCarouselItem = (element) => {
+                    anime({
+                        targets: element,
+                        scale: [1, 1.05, 1],
+                        duration: 600,
+                        easing: 'easeInOutSine'
+                    });
+                };
+
+                // Add method to go to a specific index
+                const goToIndex = (index) => {
+                    const direction = index > activeIndex.value ? 1 : -1;
+                    rotateCarousel(direction);
+                    activeIndex.value = index;
+                    updateSelectedProduct();
+                };
+
+                const rotateContainer = (direction) => {
+                    const carouselContainer = document.querySelector('.carousel-container');
+                    const angle = direction === 'left' ? '-=15deg' : '+=15deg';
+                    anime({
+                        targets: carouselContainer,
+                        rotateY: angle,
+                        duration: 1000,
+                        easing: 'easeInOutSine'
+                    });
+                };
+
+                const updateSelectedProduct = () => {
+                    selectedProduct.value = products.value[activeIndex.value];
+                };
+
+                onMounted(() => {
+                    window.addEventListener('keydown', handleKeyDown);
+                    if (autoplay.value) startAutoplay();
+                    animateContainer(); // Start container animation
+                    updateSelectedProduct(); // Initialize selected product
+                });
+
+                onBeforeUnmount(() => {
+                    window.removeEventListener('keydown', handleKeyDown);
+                    clearInterval(autoplayInterval);
+                });
 
                 return {
                     menuOpen, navItems, products, getMenuItemStyle, toggleMenu, getItemStyle,
                     handleMouseWheel, startDrag, endDrag, onDrag, showProductDetails, closeModal,
                     activeIndex, showModal, selectedProduct, autoplay, toggleAutoplay,
                     pauseAutoplay, resumeAutoplay, closeMenu, scrollToSection, addToCart,
-                    rotateCarousel, handleMouseMove
+                    rotateCarousel, handleMouseMove, animateCarouselItem, goToIndex, rotateContainer,
+                    buyNow // Expose buyNow method to the template
                 };
             }
         }).mount('#app');
