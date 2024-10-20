@@ -171,7 +171,7 @@
             box-sizing: border-box; /* Include border and padding in width/height */
         }
         .carousel-item.active {
-            transform: translateZ(220px) scale(1.2);
+            /* Removed transform to prevent conflict */
             box-shadow: 0 12px 30px rgba(0, 86, 179, 0.5);
             z-index: 3;
             opacity: 1;
@@ -359,7 +359,7 @@
             /* Adjust Product Name Font Size */
             .product-info h3 {
                 font-size: 0.95em; /* Reduced from 1em */
-                min-height: 30px; /* Adjusted for shorter text */
+                min-height: 30px; /* Adjusted from 35px */
                 margin: 4px 0 1px; /* Further reduced margins */
             }
 
@@ -371,7 +371,7 @@
 
             /* Adjust Rating Icons Size */
             .product-info .rating i {
-                font-size: 0.6em; /* Smaller star icons */
+                font-size: 0.6em; /* Reduced from 0.7em */
                 margin: 0 0.5px; /* Further reduced margin */
             }
 
@@ -389,7 +389,7 @@
                 font-size: 0.75em; /* Further reduced font size */
                 width: 100%; /* Full width for better touch targets */
                 box-sizing: border-box; /* Ensure padding doesn't exceed container */
-                box-shadow: 0 2px 6px rgba(0, 123, 255, 0.3); /* Slightly reduced shadow */
+                box-shadow: 0 2px 6px rgba(0, 123, 255, 0.3); /* Reduced shadow */
             }
 
             /* Optional: Reduce Badge Size on Mobile */
@@ -402,6 +402,14 @@
         /* Prevent body scroll when menu is open */
         body.menu-open {
             overflow: hidden;
+        }
+
+        /* Scaling for active item content */
+        .item-content {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .carousel-item.active .item-content {
+            transform: scale(1.05); /* Slightly scale the content */
         }
     </style>
 </head>
@@ -461,17 +469,19 @@
                   :style="getItemStyle(index)"
                   :class="{ active: index === activeIndex }"
                 >
-                    <div v-if="product.badge" class="product-badge">{{ product.badge }}</div>
-                    <img :src="product.image" :alt="product.name" class="product-image" loading="lazy">
-                    <div class="product-info">
-                        <h3>{{ product.name }}</h3>
-                        <p class="price">{{ product.price }}</p>
-                        <div class="rating">
-                            <i class="fas fa-star" v-for="n in 5" :key="n"></i>
-                        </div>
-                        <div class="actions">
-                            <button @click.stop="addToCart(product)">Add to Cart</button>
-                            <button @click.stop="showProductDetails(product)">View Details</button>
+                    <div class="item-content">
+                        <div v-if="product.badge" class="product-badge">{{ product.badge }}</div>
+                        <img :src="product.image" :alt="product.name" class="product-image" loading="lazy">
+                        <div class="product-info">
+                            <h3>{{ product.name }}</h3>
+                            <p class="price">{{ product.price }}</p>
+                            <div class="rating">
+                                <i class="fas fa-star" v-for="n in 5" :key="n"></i>
+                            </div>
+                            <div class="actions">
+                                <button @click.stop="addToCart(product)">Add to Cart</button>
+                                <button @click.stop="showProductDetails(product)">View Details</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -560,7 +570,10 @@
 
                 const rotateCarousel = (direction) => {
                     rotationAngle.value += direction * (360 / products.value.length);
-                    rotationAngle.value %= 360;
+                    // Removed rotationAngle reset to allow continuous rotation
+                    // if (rotationAngle.value >= 360 || rotationAngle.value <= -360) {
+                    //     rotationAngle.value %= 360;
+                    // }
                     activeIndex.value = (activeIndex.value + direction + products.value.length) % products.value.length;
                 };
 
