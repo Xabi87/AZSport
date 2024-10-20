@@ -21,14 +21,13 @@
             margin: 0;
             font-family: 'Roboto', sans-serif;
             overflow-x: hidden;
+            background-color: #f4f6f9; /* Light grey background */
         }
         #app-wrapper {
             position: relative;
-            /* Removed background styles */
-            /* background: url('./images/background.png') no-repeat center center fixed;
-            background-size: cover; */
             overflow: hidden;
         }
+
         #app {
             min-height: 100vh;
             display: flex;
@@ -38,49 +37,24 @@
             z-index: 1; /* Ensure content is above the pseudo-element */
         }
 
-        /* Removed #app-wrapper::before styles */
-        /* #app-wrapper::before {
-            content: '';
-            position: absolute;
-            top: -5%;
-            left: -5%;
-            width: 110%;
-            height: 110%;
-            background: linear-gradient(
-                rgba(0, 0, 0, 0.3),
-                rgba(0, 0, 0, 0.3)
-            ), url('./images/background.png') no-repeat center center fixed;
-            background-size: cover;
-            background-blend-mode: overlay;
-            animation: zoomBackground 30s infinite;
-            z-index: 0;
-        }
-
-        @keyframes zoomBackground {
-            0% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.05);
-            }
-            100% {
-                transform: scale(1);
-            }
-        } */
-
         /* Logo and Navigation */
         .logo, .nav-circle {
             position: fixed; z-index: 1000; border-radius: 50%; display: flex; align-items: center; justify-content: center;
         }
         .logo {
-            top: 20px; left: 20px; width: 100px; height: 100px; background: rgba(255, 255, 255, 0.8); padding: 5px; box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+            top: 20px; left: 20px; width: 100px; height: 100px; background: linear-gradient(145deg, #f0f0f0, #dcdcdc); /* Soft gradient */
+            padding: 5px; box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15); /* Subtle shadow */
         }
         .nav-circle {
-            bottom: 30px; right: 30px; width: 60px; height: 60px; background: #0056b3; cursor: pointer; transition: transform 0.3s, background-color 0.3s; font-size: 18px;
+            bottom: 30px; right: 30px; width: 60px; height: 60px; background: linear-gradient(135deg, #007bff, #0056b3); /* Gradient background */
+            cursor: pointer; transition: transform 0.3s, background-color 0.3s; font-size: 18px;
             z-index: 1500;
+            color: white;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
         }
         .nav-circle:hover {
             transform: scale(1.1); background-color: #007bff;
+            box-shadow: 0 8px 20px rgba(0, 123, 255, 0.5); /* Stronger shadow on hover */
         }
         .logo img {
             width: 100%; height: 100%; border-radius: 50%; object-fit: contain;
@@ -95,15 +69,17 @@
             position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 500px; height: 500px; display: flex; justify-content: center; align-items: center; z-index: 1400;
         }
         .menu-item {
-            position: absolute; width: 100px; height: 100px; background: #333; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-direction: column;
+            position: absolute; width: 100px; height: 100px; background: linear-gradient(135deg, #333, #444); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-direction: column;
             opacity: 0; transition: transform 0.5s, opacity 0.5s; transition-delay: calc(0.05s * var(--menu-index));
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         }
         .menu-item.show {
             opacity: 1;
         }
         .menu-item:hover {
-            transform: scale(1.1);
-            background-color: #444;
+            transform: scale(1.15);
+            background-color: #555;
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.4);
         }
         .menu-item i {
             font-size: 1.5em;
@@ -149,29 +125,31 @@
 
         /* Enhanced Carousel Styles */
         .product-carousel {
-            position: relative; width: 100%; max-width: 800px; height: 520px; perspective: 1500px; display: flex; align-items: center; justify-content: center; margin-top: 100px; overflow: hidden; z-index: 1000;
+            position: relative; width: 100%; max-width: 800px; height: 520px; perspective: 1800px; display: flex; align-items: center; justify-content: center; margin-top: 100px; overflow: hidden; z-index: 1000;
         }
         .carousel-item {
             position: absolute;
             width: 220px;
-            height: 380px;
+            height: 420px; /* Increased height for better content alignment */
             transform-origin: center;
-            border-radius: 15px;
-            background: #fff;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            opacity: 0.7;
-            transition: transform 0.5s cubic-bezier(0.25,1,0.5,1), opacity 0.5s;
+            border-radius: 20px;
+            background: white;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* Deeper shadow */
+            opacity: 0.8;
+            transition: transform 0.6s cubic-bezier(0.25,1,0.5,1), opacity 0.5s, box-shadow 0.6s;
             overflow: hidden;
+            display: flex;
+            flex-direction: column;
         }
         .carousel-item.active {
-            transform: translateZ(200px) scale(1.2);
-            box-shadow: 0 8px 20px rgba(0,86,179,0.4);
-            z-index: 2;
+            transform: translateZ(220px) scale(1.2);
+            box-shadow: 0 12px 30px rgba(0, 86, 179, 0.5);
+            z-index: 3;
             opacity: 1;
         }
         .carousel-item:hover {
-            transform: translateZ(200px) scale(1.25);
-            box-shadow: 0 12px 25px rgba(0,86,179,0.5);
+            transform: translateZ(220px) scale(1.25);
+            box-shadow: 0 16px 35px rgba(0, 86, 179, 0.6);
         }
         .product-image {
             width: 100%;
@@ -182,46 +160,59 @@
         .carousel-item:hover .product-image {
             transform: scale(1.05);
         }
+
+        /* Product Info with Flexbox for Alignment */
         .product-info {
             padding: 15px;
-            background: #f8f8f8;
+            background: #f7f9fc;
             text-align: center;
-            height: 160px; /* Adjusted to fit content */
+            height: 100%; /* Full height of the card */
             box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; /* Evenly distribute elements */
+            align-items: center;
+            border-top: 1px solid #ddd; /* Slight border for separation */
+            border-radius: 0 0 20px 20px; /* Rounded bottom corners */
         }
         .product-info h3 {
-            margin: 5px 0;
-            font-size: 1.1em;
-            color: #333;
+            margin: 5px 0 3px; /* Reduced bottom margin to move elements up */
+            font-size: 1.2em;
+            font-weight: 700;
+            color: #222;
+            min-height: 50px; /* Set min height for consistent text alignment */
         }
         .product-info p.price {
-            font-size: 1em;
-            color: #007bff;
+            font-size: 1.1em;
+            color: #0056b3;
             font-weight: bold;
-            margin: 5px 0;
+            margin: 3px 0; /* Reduced margin above and below the price */
         }
         .product-info .rating {
             color: #ffc107;
-            margin: 5px 0;
+            margin: 3px 0; /* Reduced margin for the rating to align closer to price */
         }
         .product-info .actions {
             display: flex;
             justify-content: center;
             gap: 10px;
-            margin-top: 5px;
         }
         .product-info .actions button {
-            padding: 6px 10px;
-            border: none;
-            border-radius: 5px;
-            background: #0056b3;
+            padding: 8px 14px;
+            border-radius: 8px;
+            background: linear-gradient(145deg, #007bff, #0056b3);
             color: #fff;
+            font-size: 0.9em;
+            font-weight: 600;
+            box-shadow: 0 4px 10px rgba(0, 123, 255, 0.4);
+            transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
+            border: none;
             cursor: pointer;
-            font-size: 0.85em;
-            transition: background 0.3s;
         }
         .product-info .actions button:hover {
             background: #007bff;
+            transform: translateY(-2px); /* Slight lift on hover */
+            box-shadow: 0 6px 15px rgba(0, 123, 255, 0.5);
         }
 
         /* Badge Styles */
@@ -229,12 +220,13 @@
             position: absolute;
             top: 10px;
             left: 10px;
-            background: red;
+            background: linear-gradient(145deg, #ff4444, #ff0000);
             color: #fff;
             padding: 8px;
             font-size: 0.9em;
-            border-radius: 5px;
+            border-radius: 10px;
             animation: badgePulse 1.5s infinite ease-in-out;
+            box-shadow: 0 0 12px rgba(255, 0, 0, 0.5);
         }
         @keyframes badgePulse {
             0%, 100% { transform: scale(1); box-shadow: 0 0 5px rgba(255,0,0,0.4); }
@@ -251,10 +243,13 @@
 
         /* Autoplay Toggle */
         .autoplay-toggle {
-            margin-top: 20px; padding: 10px 20px; background: #fff; color: #0056b3; border: 2px solid #0056b3; border-radius: 5px; cursor: pointer; transition: background 0.3s, color 0.3s; font-size: 18px;
+            margin-top: 20px; padding: 12px 24px; background: #f7f9fc; color: #0056b3; border: 2px solid #0056b3; border-radius: 10px; cursor: pointer; transition: background 0.3s, color 0.3s, transform 0.3s; font-size: 18px;
+            font-weight: 600;
         }
         .autoplay-toggle:hover {
             background: #0056b3; color: #fff;
+            transform: translateY(-2px); /* Slight lift on hover */
+            box-shadow: 0 8px 20px rgba(0, 123, 255, 0.4);
         }
 
         /* Responsive Design */
@@ -315,10 +310,6 @@
             .product-info {
                 height: 140px;
             }
-            /* Disable background animation on mobile for performance */
-            /* #app-wrapper::before {
-                animation: none;
-            } */
         }
 
         /* Prevent body scroll when menu is open */
