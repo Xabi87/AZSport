@@ -34,7 +34,7 @@
             flex-direction: column;
             align-items: center;
             position: relative;
-            z-index: 1; /* Ensure content is above the pseudo-element */
+            z-index: 1;
         }
 
         /* Logo and Navigation */
@@ -42,19 +42,20 @@
             position: fixed; z-index: 1000; border-radius: 50%; display: flex; align-items: center; justify-content: center;
         }
         .logo {
-            top: 20px; left: 20px; width: 100px; height: 100px; background: linear-gradient(145deg, #f0f0f0, #dcdcdc); /* Soft gradient */
-            padding: 5px; box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15); /* Subtle shadow */
+            top: 20px; left: 20px; width: 100px; height: 100px; background: linear-gradient(145deg, #f0f0f0, #dcdcdc);
+            padding: 5px; box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
         }
         .nav-circle {
-            bottom: 30px; right: 30px; width: 60px; height: 60px; background: linear-gradient(135deg, #007bff, #0056b3); /* Gradient background */
+            bottom: 30px; right: 30px; width: 60px; height: 60px; background: linear-gradient(135deg, #007bff, #0056b3);
             cursor: pointer; transition: transform 0.3s, background-color 0.3s; font-size: 18px;
             z-index: 1500;
             color: white;
             box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
         }
         .nav-circle:hover {
-            transform: scale(1.1); background-color: #007bff;
-            box-shadow: 0 8px 20px rgba(0, 123, 255, 0.5); /* Stronger shadow on hover */
+            transform: scale(1.1);
+            background-color: #007bff;
+            box-shadow: 0 8px 20px rgba(0, 123, 255, 0.5);
         }
         .logo img {
             width: 100%; height: 100%; border-radius: 50%; object-fit: contain;
@@ -65,21 +66,44 @@
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1300;
             backdrop-filter: blur(5px);
         }
+
+        /* Radial Menu */
         .radial-menu {
-            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 500px; height: 500px; display: flex; justify-content: center; align-items: center; z-index: 1400;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 500px;
+            height: 500px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1400;
+            transition: transform 0.2s ease-out;
+            perspective: 800px;
         }
         .menu-item {
-            position: absolute; width: 100px; height: 100px; background: linear-gradient(135deg, #333, #444); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-direction: column;
-            opacity: 0; transition: transform 0.5s, opacity 0.5s; transition-delay: calc(0.05s * var(--menu-index));
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #333, #444);
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            opacity: 0;
+            transition: transform 0.5s, opacity 0.5s, box-shadow 0.3s ease-in-out;
+            transition-delay: calc(0.05s * var(--menu-index));
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         }
         .menu-item.show {
             opacity: 1;
         }
         .menu-item:hover {
-            transform: scale(1.15);
-            background-color: #555;
-            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.4);
+            transform: scale(1.2);
+            box-shadow: 0 10px 20px rgba(0, 86, 179, 0.5), 0 0 15px rgba(0, 86, 179, 0.6);
         }
         .menu-item i {
             font-size: 1.5em;
@@ -90,16 +114,20 @@
             text-align: center;
         }
 
+        /* Parallax Effect for Radial Menu */
+        .radial-menu:hover {
+            transform: perspective(800px) rotateX(15deg) rotateY(15deg);
+        }
+
         /* Center Logo in Radial Menu */
         .menu-center-logo {
             position: absolute;
             top: 50%;
             left: 50%;
-            z-index: 1; /* Ensure it appears below the menu items */
+            z-index: 1;
             transform: translate(-50%, -50%);
             animation: logoPop 0.5s ease-out;
         }
-
         .menu-center-logo img {
             width: 100px;
             height: 100px;
@@ -108,7 +136,6 @@
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
         }
-
         .menu-center-logo img:hover {
             transform: rotate(10deg) scale(1.1);
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
@@ -130,11 +157,11 @@
         .carousel-item {
             position: absolute;
             width: 220px;
-            height: 420px; /* Increased height for better content alignment */
+            height: 420px;
             transform-origin: center;
             border-radius: 20px;
             background: white;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* Deeper shadow */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
             opacity: 0.8;
             transition: transform 0.6s cubic-bezier(0.25,1,0.5,1), opacity 0.5s, box-shadow 0.6s;
             overflow: hidden;
@@ -166,31 +193,31 @@
             padding: 15px;
             background: #f7f9fc;
             text-align: center;
-            height: 100%; /* Full height of the card */
+            height: 100%;
             box-sizing: border-box;
             display: flex;
             flex-direction: column;
-            justify-content: space-between; /* Evenly distribute elements */
+            justify-content: space-between;
             align-items: center;
-            border-top: 1px solid #ddd; /* Slight border for separation */
-            border-radius: 0 0 20px 20px; /* Rounded bottom corners */
+            border-top: 1px solid #ddd;
+            border-radius: 0 0 20px 20px;
         }
         .product-info h3 {
-            margin: 5px 0 3px; /* Reduced bottom margin to move elements up */
+            margin: 5px 0 3px;
             font-size: 1.2em;
             font-weight: 700;
             color: #222;
-            min-height: 50px; /* Set min height for consistent text alignment */
+            min-height: 50px;
         }
         .product-info p.price {
             font-size: 1.1em;
             color: #0056b3;
             font-weight: bold;
-            margin: 3px 0; /* Reduced margin above and below the price */
+            margin: 3px 0;
         }
         .product-info .rating {
             color: #ffc107;
-            margin: 3px 0; /* Reduced margin for the rating to align closer to price */
+            margin: 3px 0;
         }
         .product-info .actions {
             display: flex;
@@ -211,7 +238,7 @@
         }
         .product-info .actions button:hover {
             background: #007bff;
-            transform: translateY(-2px); /* Slight lift on hover */
+            transform: translateY(-2px);
             box-shadow: 0 6px 15px rgba(0, 123, 255, 0.5);
         }
 
@@ -248,7 +275,7 @@
         }
         .autoplay-toggle:hover {
             background: #0056b3; color: #fff;
-            transform: translateY(-2px); /* Slight lift on hover */
+            transform: translateY(-2px);
             box-shadow: 0 8px 20px rgba(0, 123, 255, 0.4);
         }
 
@@ -273,20 +300,18 @@
                 height: 60px;
                 font-size: 18px;
             }
-            /* Adjust the autoplay-toggle for mobile */
             .autoplay-toggle {
                 width: auto;
                 height: auto;
                 font-size: 16px;
                 padding: 8px 16px;
             }
-            /* Center logo adjustments for mobile */
             .menu-center-logo {
                 position: relative;
                 top: auto;
                 left: auto;
                 margin-bottom: 20px;
-                animation: none; /* Disable animation on mobile */
+                animation: none;
                 transform: none;
             }
             .menu-center-logo img {
@@ -294,11 +319,10 @@
                 height: 70px;
             }
             .menu-center-logo img:hover {
-                transform: none; /* Disable hover effect on mobile */
+                transform: none;
             }
-            /* Carousel adjustments for mobile */
             .product-carousel {
-                height: 440px; /* Adjusted for mobile */
+                height: 440px;
             }
             .carousel-item {
                 width: 180px;
@@ -335,7 +359,7 @@
             <div v-if="menuOpen" class="menu-overlay" @click="toggleMenu"></div>
 
             <!-- Radial Menu -->
-            <div class="radial-menu" v-if="menuOpen">
+            <div class="radial-menu" v-if="menuOpen" @mousemove="handleMouseMove">
                 <!-- Center Logo -->
                 <div class="menu-center-logo">
                     <img src="./images/logo2.png" alt="AZ Sports Logo">
@@ -379,11 +403,9 @@
                     <div class="product-info">
                         <h3>{{ product.name }}</h3>
                         <p class="price">{{ product.price }}</p>
-                        <!-- Product Rating -->
                         <div class="rating">
                             <i class="fas fa-star" v-for="n in 5" :key="n"></i>
                         </div>
-                        <!-- Action Buttons -->
                         <div class="actions">
                             <button @click.stop="addToCart(product)">Add to Cart</button>
                             <button @click.stop="showProductDetails(product)">View Details</button>
@@ -451,7 +473,7 @@
                 window.addEventListener('resize', updateIsMobile);
 
                 const calculatePosition = (index, totalItems) => {
-                    const angle = (360 / totalItems) * index - 90; // Adjusted to start from top
+                    const angle = (360 / totalItems) * index - 90;
                     const radius = 200;
                     const x = radius * Math.cos((angle * Math.PI) / 180);
                     const y = radius * Math.sin((angle * Math.PI) / 180);
@@ -531,18 +553,24 @@
                     const element = document.querySelector(hash);
                     if (element) {
                         element.scrollIntoView({ behavior: 'smooth' });
-                        menuOpen.value = false; // Close menu after navigation
+                        menuOpen.value = false;
                     }
                 };
 
                 const addToCart = (product) => {
-                    // Implement your add to cart logic here
                     alert(`${product.name} has been added to your cart.`);
                 };
 
                 watch(menuOpen, (newValue) => {
                     document.body.classList.toggle('menu-open', newValue);
                 });
+
+                const handleMouseMove = (event) => {
+                    const x = (event.clientX / window.innerWidth) * 100 - 50;
+                    const y = (event.clientY / window.innerHeight) * 100 - 50;
+                    const radialMenu = document.querySelector('.radial-menu');
+                    radialMenu.style.transform = `translate(-50%, -50%) perspective(800px) rotateY(${x / 10}deg) rotateX(${-y / 10}deg)`;
+                };
 
                 onMounted(() => { if (autoplay.value) startAutoplay(); });
 
@@ -551,7 +579,7 @@
                     handleMouseWheel, startDrag, endDrag, onDrag, showProductDetails, closeModal,
                     activeIndex, showModal, selectedProduct, autoplay, toggleAutoplay,
                     pauseAutoplay, resumeAutoplay, closeMenu, scrollToSection, addToCart,
-                    rotateCarousel
+                    rotateCarousel, handleMouseMove
                 };
             }
         }).mount('#app');
