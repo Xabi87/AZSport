@@ -167,6 +167,8 @@
             overflow: hidden;
             display: flex;
             flex-direction: column;
+            justify-content: flex-start; /* Align content at the top */
+            box-sizing: border-box; /* Include border and padding in width/height */
         }
         .carousel-item.active {
             transform: translateZ(220px) scale(1.2);
@@ -178,14 +180,25 @@
             transform: translateZ(220px) scale(1.25);
             box-shadow: 0 16px 35px rgba(0, 86, 179, 0.6);
         }
+
+        /* Image Styles - Combined Glass & Neon Glow Effect */
         .product-image {
             width: 100%;
             height: 220px;
             object-fit: cover;
-            transition: transform 0.3s ease;
+            border-radius: 15px 15px 0 0; /* Rounded top corners */
+            border: 2px solid rgba(255, 255, 255, 0.4); /* Transparent glass-like border */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            background-color: rgba(255, 255, 255, 0.2); /* Glass effect background */
+            margin-bottom: 0;
+            box-sizing: border-box; /* Ensures border fits inside container */
         }
+
         .carousel-item:hover .product-image {
-            transform: scale(1.05);
+            transform: scale(1.08); /* Slight zoom */
+            border-color: rgba(0, 123, 255, 0.6); /* Stronger glass border effect */
+            box-shadow: 0 8px 20px rgba(0, 123, 255, 0.5), 0 0 20px rgba(0, 123, 255, 0.7); /* Neon glow */
         }
 
         /* Product Info with Flexbox for Alignment */
@@ -193,7 +206,7 @@
             padding: 15px;
             background: #f7f9fc;
             text-align: center;
-            height: 100%;
+            flex-grow: 1;
             box-sizing: border-box;
             display: flex;
             flex-direction: column;
