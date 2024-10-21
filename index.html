@@ -507,6 +507,27 @@
             .description-area {
                 max-width: 90%;
             }
+
+            /* Enhanced Alignment for Mobile */
+
+            /* Center Carousel and Description */
+            .carousel-container {
+                align-items: center;
+                justify-content: center;
+            }
+
+            /* Ensure Description Area is Below Carousel */
+            .carousel-container {
+                flex-direction: column;
+            }
+
+            /* Adjust Description Area Content Alignment */
+            .description-area {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
         }
 
         /* Prevent body scroll when menu is open */
