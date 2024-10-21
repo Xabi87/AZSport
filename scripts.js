@@ -71,7 +71,18 @@ createApp({
         // Function to update isMobile based on window width
         const updateIsMobile = () => {
             isMobile.value = window.innerWidth <= 768;
-            // Optionally, adjust rotationAngle or other properties if needed
+            // Recalculate menu item positions when viewport changes
+            if (menuOpen.value) {
+                setTimeout(() => {
+                    navItems.value.forEach((item, index) => {
+                        const menuItem = document.querySelectorAll('.menu-item')[index];
+                        if (menuItem) {
+                            const styles = getMenuItemStyle(index);
+                            Object.assign(menuItem.style, styles);
+                        }
+                    });
+                }, 300); // Delay to allow CSS transitions
+            }
         };
 
         // Event Listener for Window Resize
@@ -80,6 +91,18 @@ createApp({
         // Watch for menuOpen to toggle body class
         watch(menuOpen, (newVal) => {
             document.body.classList.toggle('menu-open', newVal);
+            if (newVal) {
+                // Position menu items when menu opens
+                navItems.value.forEach((item, index) => {
+                    const menuItem = document.querySelectorAll('.menu-item')[index];
+                    if (menuItem) {
+                        const styles = getMenuItemStyle(index);
+                        Object.assign(menuItem.style, styles);
+                    }
+                });
+            } else {
+                // Optionally, reset menu item positions or styles when menu closes
+            }
         });
 
         // Menu Toggle Function
