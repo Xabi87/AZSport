@@ -10,9 +10,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     <!-- Google Fonts: Anton for product names, Roboto Condensed for other texts -->
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Include GSAP and ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/ScrollTrigger.min.js"></script>
     <!-- Use the production build of Vue.js -->
     <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
-    <!-- Include anime.js for animations -->
+    <!-- Include anime.js for additional animations -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
 
     <!-- Inline Styles -->
@@ -172,6 +175,95 @@
             }
         }
 
+        /* Parallax Hero Section */
+        .hero-section {
+            position: relative;
+            height: 100vh; /* Full viewport height */
+            overflow: hidden;
+            background-color: #007bff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            text-align: center;
+        }
+        .hero-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+        }
+        /* Background Image */
+        .hero-background {
+            background-image: url('./images/hero-bg.jpg'); /* Replace with your background image */
+            z-index: 1;
+            transform: translateZ(-1px) scale(2);
+            /* Parallax effect */
+        }
+        /* Foreground Content */
+        .hero-foreground {
+            z-index: 3;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .hero-foreground h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            animation: fadeInDown 1s ease-out forwards;
+            opacity: 0;
+        }
+        .hero-foreground p {
+            font-size: 1.5em;
+            margin-bottom: 30px;
+            animation: fadeInUp 1s ease-out forwards;
+            opacity: 0;
+        }
+        .hero-foreground button {
+            padding: 12px 24px;
+            font-size: 1em;
+            background-color: #ffc107;
+            border: none;
+            border-radius: 25px;
+            color: #222;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            animation: fadeInUp 1s ease-out forwards;
+            opacity: 0;
+        }
+        .hero-foreground button:hover {
+            background-color: #e0a800;
+            transform: scale(1.05);
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
         /* Carousel Container */
         .carousel-container {
             width: 100%;
@@ -302,6 +394,9 @@
             margin: 3px 0;
             font-size: 0.85em;
         }
+        .product-info .rating i {
+            margin: 0 0.3px;
+        }
         .product-info .actions {
             display: flex;
             justify-content: center;
@@ -359,6 +454,17 @@
             text-align: center;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
             position: relative;
+        }
+        .modal-content .modal-image {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .modal-content .price {
+            font-size: 1.2em;
+            color: #007bff;
+            margin-bottom: 15px;
         }
         .modal-content button {
             margin-top: 20px;
@@ -582,7 +688,8 @@
                      :class="['menu-item', { show: menuOpen }]" 
                      :style="getMenuItemStyle(index)" 
                      tabindex="0" 
-                     @keydown.enter="scrollToSection(item.path)">
+                     @keydown.enter="scrollToSection(item.path)"
+                     >
                     <a href="#" @click.prevent="scrollToSection(item.path)" class="menu-link" style="color: inherit; text-decoration: none; display: flex; flex-direction: column; align-items: center;">
                         <i :class="item.icon"></i>
                         <span class="menu-label">{{ item.name }}</span>
@@ -590,8 +697,19 @@
                 </div>
             </div>
 
+            <!-- Parallax Hero Section -->
+            <section class="hero-section">
+                <div class="hero-layer hero-background"></div>
+                <!-- Removed hero-midground layer -->
+                <div class="hero-layer hero-foreground">
+                    <h1>Elevate Your Game</h1>
+                    <p>Experience unmatched comfort and performance</p>
+                    <button @click="scrollToSection('#carousel')">Explore Products</button>
+                </div>
+            </section>
+
             <!-- 3D Carousel and Description Container -->
-            <div class="carousel-container" role="region" aria-label="Product Carousel and Description">
+            <div class="carousel-container" id="carousel" role="region" aria-label="Product Carousel and Description">
                 <!-- Product Carousel -->
                 <div
                   class="product-carousel"
@@ -666,7 +784,8 @@
             <div v-if="showModal" class="product-modal active" @click="closeModal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
                 <div class="modal-content" @click.stop>
                     <h2 id="modal-title">{{ selectedProduct.name }}</h2>
-                    <p>{{ selectedProduct.price }}</p>
+                    <img :src="selectedProduct.image" :alt="selectedProduct.name" class="modal-image">
+                    <p class="price">{{ selectedProduct.price }}</p>
                     <p>{{ selectedProduct.description }}</p>
                     <button @click="closeModal">Close</button>
                 </div>
@@ -890,17 +1009,46 @@
                     selectedProduct.value = products.value[activeIndex.value];
                 };
 
-                // Watch for menuOpen to toggle body class
-                watch(menuOpen, (newVal) => {
-                    document.body.classList.toggle('menu-open', newVal);
-                });
-
                 // Lifecycle Hooks
                 onMounted(() => {
                     window.addEventListener('keydown', handleKeyDown);
                     if (autoplay.value) startAutoplay();
                     animateContainer();
                     updateSelectedProduct();
+
+                    // Initialize GSAP ScrollTrigger for Hero Section
+                    gsap.registerPlugin(ScrollTrigger);
+
+                    // Animate Hero Background Image
+                    gsap.to(".hero-background", {
+                        scale: 1.05,
+                        duration: 20,
+                        repeat: -1,
+                        yoyo: true,
+                        ease: "sine.inOut"
+                    });
+
+                    // Fade In Animations for Hero Foreground Elements
+                    gsap.from(".hero-foreground h1", {
+                        opacity: 0,
+                        y: -50,
+                        duration: 1,
+                        delay: 0.5
+                    });
+
+                    gsap.from(".hero-foreground p", {
+                        opacity: 0,
+                        y: 50,
+                        duration: 1,
+                        delay: 1
+                    });
+
+                    gsap.from(".hero-foreground button", {
+                        opacity: 0,
+                        scale: 0.8,
+                        duration: 1,
+                        delay: 1.5
+                    });
                 });
 
                 onBeforeUnmount(() => {
