@@ -18,6 +18,9 @@
     <!-- Inline Styles -->
     <style>
         /* General Styles */
+        * {
+            box-sizing: border-box; /* Ensure padding and borders are included within element's total width and height */
+        }
         body {
             margin: 0;
             font-family: 'Roboto Condensed', sans-serif; /* Default font for body */
@@ -429,11 +432,16 @@
             }
             .menu-item {
                 position: relative;
-                width: 100%;
-                height: auto;
-                border-radius: 0;
-                margin: 10px 0;
+                width: 60px; /* Reduced size */
+                height: 60px;
+                border-radius: 50%; /* Maintain circular shape */
+                margin: 8px 0; /* Increased vertical spacing */
                 transform: none !important;
+                font-size: 1.2em; /* Adjust icon size */
+            }
+            .menu-center-logo img {
+                width: 80px; /* Slightly smaller logo */
+                height: 80px;
             }
             .nav-circle {
                 width: 50px; /* Slightly reduced size for mobile */
@@ -529,6 +537,14 @@
                 flex-direction: column;
                 align-items: center;
                 text-align: center;
+            }
+
+            /* Adjust Radial Menu for Mobile */
+            .radial-menu {
+                width: 80vw; /* 80% of viewport width */
+                height: 80vw; /* Maintain square aspect ratio */
+                max-width: 400px; /* Maximum width */
+                max-height: 400px;
             }
         }
 
