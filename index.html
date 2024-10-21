@@ -8,8 +8,8 @@
 
     <!-- External Styles and Scripts -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
-    <!-- Include Google Fonts -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap">
+    <!-- Google Fonts: Anton for product names, Roboto Condensed for other texts -->
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
     <!-- Use the production build of Vue.js -->
     <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
     <!-- Include anime.js for animations -->
@@ -20,7 +20,7 @@
         /* General Styles */
         body {
             margin: 0;
-            font-family: 'Roboto', sans-serif;
+            font-family: 'Roboto Condensed', sans-serif; /* Default font for body */
             overflow-x: hidden;
             background-color: #f4f6f9; /* Light grey background */
         }
@@ -181,17 +181,17 @@
             width: 100%;
             max-width: 1200px; /* Adjust as needed */
             margin: 100px auto 40px auto; /* Centers the container with top and bottom margins */
-            padding: 40px; /* Adds space around the carousel */
+            padding: 30px; /* Reduced padding to minimize empty space */
             background: radial-gradient(circle at top left, #ffffff, #f0f0f0);
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2), inset 0 0 10px rgba(255,255,255,0.1);
-            border-radius: 25px;
+            border-radius: 20px; /* Reduced border radius for a sleeker look */
             transform-style: preserve-3d;
             transition: transform 1s ease, box-shadow 0.3s ease;
             position: relative;
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 40px; /* Space between carousel and description */
+            justify-content: space-between; /* Better distribution */
+            gap: 30px; /* Reduced gap */
             flex-wrap: nowrap; /* Prevent wrapping */
         }
 
@@ -202,7 +202,7 @@
             width: 100%;
             height: 100%;
             background: inherit;
-            border-radius: 25px;
+            border-radius: 20px; /* Match container's border radius */
             top: 0;
             left: 0;
             transform: rotateY(0deg) translateZ(-10px);
@@ -220,7 +220,7 @@
             position: relative; 
             width: 100%; 
             max-width: 800px; 
-            height: 520px; 
+            height: 500px; /* Reduced height */
             perspective: 1800px; 
             display: flex; 
             align-items: center; 
@@ -230,14 +230,14 @@
         }
         .carousel-item {
             position: absolute;
-            width: 220px;
-            height: 420px;
+            width: 200px; /* Reduced width */
+            height: 380px; /* Further reduced height */
             transform-origin: center;
-            border-radius: 20px;
+            border-radius: 15px; /* Slightly reduced border radius */
             background: white;
             border: 2px solid #e0f7fa; /* Light blue border matching branding */
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-            opacity: 0.8;
+            opacity: 0.85; /* Slightly increased opacity for better visibility */
             transition: transform 0.6s cubic-bezier(0.25,1,0.5,1), opacity 0.5s, box-shadow 0.6s;
             overflow: hidden;
             display: flex;
@@ -248,21 +248,21 @@
         }
         .carousel-item.active {
             /* Removed transform to prevent conflict */
-            box-shadow: 0 12px 30px rgba(0, 86, 179, 0.5);
+            box-shadow: 0 14px 35px rgba(0, 86, 179, 0.6); /* Enhanced shadow for active item */
             z-index: 3;
             opacity: 1;
         }
         .carousel-item:hover {
             transform: translateZ(220px) scale(1.25) rotateY(5deg);
-            box-shadow: 0 16px 35px rgba(0, 86, 179, 0.6);
+            box-shadow: 0 18px 45px rgba(0, 86, 179, 0.7); /* Further enhanced shadow */
         }
 
         /* Image Styles - Combined Glass & Neon Glow Effect */
         .product-image {
             width: 100%;
-            height: 220px;
+            height: 180px; /* Reduced height */
             object-fit: cover;
-            border-radius: 15px 15px 0 0; /* Rounded top corners */
+            border-radius: 12px 12px 0 0; /* Slightly reduced border radius */
             border: 2px solid rgba(255, 255, 255, 0.4); /* Transparent glass-like border */
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Subtle shadow */
             transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
@@ -279,7 +279,7 @@
 
         /* Product Info with Flexbox for Alignment */
         .product-info {
-            padding: 15px;
+            padding: 8px 12px; /* Further reduced padding */
             background: #f7f9fc;
             text-align: center;
             flex-grow: 1;
@@ -289,17 +289,19 @@
             justify-content: space-between;
             align-items: center;
             border-top: 1px solid #ddd;
-            border-radius: 0 0 20px 20px;
+            border-radius: 0 0 15px 15px; /* Match border radius */
         }
         .product-info h3 {
             margin: 5px 0 3px;
-            font-size: 1.2em;
-            font-weight: 700;
+            font-family: 'Anton', sans-serif; /* Sports-themed font for product names */
+            font-size: 1.3em; /* Further reduced font size */
+            font-weight: 400; /* Adjusted font weight */
             color: #222;
-            min-height: 50px;
+            min-height: 36px; /* Reduced min-height */
+            line-height: 1.2; /* Improved line height */
         }
         .product-info p.price {
-            font-size: 1.1em;
+            font-size: 0.95em; /* Slightly reduced font size */
             color: #007bff; /* Branded blue color */
             font-weight: bold;
             margin: 3px 0;
@@ -307,18 +309,19 @@
         .product-info .rating {
             color: #ffc107;
             margin: 3px 0;
+            font-size: 0.85em; /* Reduced icon size */
         }
         .product-info .actions {
             display: flex;
             justify-content: center;
-            gap: 10px;
+            gap: 6px; /* Further reduced gap */
         }
         .product-info .actions button {
-            padding: 8px 14px;
-            border-radius: 8px;
+            padding: 6px 10px; /* Further reduced padding */
+            border-radius: 6px; /* Reduced border radius */
             background: linear-gradient(145deg, #007bff, #0056b3);
             color: #fff;
-            font-size: 0.9em;
+            font-size: 0.8em; /* Further reduced font size */
             font-weight: 600;
             box-shadow: 0 4px 10px rgba(0, 123, 255, 0.4);
             transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
@@ -334,15 +337,15 @@
         /* Badge Styles */
         .product-badge {
             position: absolute;
-            top: 10px;
-            left: 10px;
+            top: 8px;
+            left: 8px;
             background: linear-gradient(145deg, #ff4444, #ff0000);
             color: #fff;
-            padding: 8px;
-            font-size: 0.9em;
-            border-radius: 10px;
+            padding: 5px 7px; /* Further reduced padding */
+            font-size: 0.75em; /* Further reduced font size */
+            border-radius: 8px; /* Reduced border radius */
             animation: badgePulse 1.5s infinite ease-in-out;
-            box-shadow: 0 0 12px rgba(255, 0, 0, 0.5);
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
         }
         @keyframes badgePulse {
             0%, 100% { transform: scale(1); box-shadow: 0 0 5px rgba(255,0,0,0.4); }
@@ -389,17 +392,17 @@
 
         /* Autoplay Toggle (Play/Pause Icon) */
         .description-area .autoplay-toggle {
-            margin-top: 20px; /* Space above the button */
+            margin-top: 15px; /* Slightly reduced space above the button */
             background: none; /* Remove background */
             border: none; /* Remove border */
             cursor: pointer;
-            font-size: 1.5em; /* Adjust icon size */
+            font-size: 1.3em; /* Adjust icon size */
             color: #007bff; /* Branded blue color */
             transition: color 0.3s, transform 0.3s;
         }
         .description-area .autoplay-toggle:hover {
             color: #0056b3; /* Darker blue on hover */
-            transform: scale(1.2); /* Slightly enlarge on hover */
+            transform: scale(1.1); /* Slightly enlarge on hover */
         }
 
         /* Responsive Design */
@@ -440,14 +443,14 @@
             }
             .carousel-item {
                 width: 180px;
-                height: 300px; /* Reduced from 420px to 300px */
+                height: 300px; /* Reduced from 380px to 300px */
             }
             .product-image {
-                height: 150px; /* Reduced from 220px to 150px */
+                height: 140px; /* Reduced from 180px to 140px */
             }
             .product-info {
                 height: auto; /* Ensure height adjusts based on content */
-                padding: 8px; /* Further reduced padding */
+                padding: 6px 10px; /* Further reduced padding */
                 display: flex;
                 flex-direction: column;
                 justify-content: flex-start; /* Align items to top */
@@ -459,21 +462,22 @@
 
             /* Adjust Product Name Font Size */
             .product-info h3 {
-                font-size: 0.95em; /* Reduced from 1.2em */
-                min-height: 30px; /* Adjusted from 50px */
+                font-size: 1.2em; /* Maintain readability */
+                min-height: 30px; /* Adjusted from 36px */
                 margin: 4px 0 1px; /* Further reduced margins */
+                line-height: 1.1; /* Slightly reduced line height */
             }
 
             /* Adjust Price Font Size */
             .product-info p.price {
-                font-size: 0.85em; /* Reduced from 1.1em */
+                font-size: 0.9em; /* Slightly reduced for mobile */
                 margin: 1px 0; /* Further reduced margin */
             }
 
             /* Adjust Rating Icons Size */
             .product-info .rating i {
-                font-size: 0.6em; /* Reduced from 1.5em */
-                margin: 0 0.5px; /* Further reduced margin */
+                font-size: 0.7em; /* Reduced from 0.85em */
+                margin: 0 0.3px; /* Further reduced margin */
             }
 
             /* Reorganize Actions (Buttons) */
@@ -486,7 +490,7 @@
 
             /* Adjust Buttons Size and Font */
             .product-info .actions button {
-                padding: 5px 10px; /* Further reduced padding */
+                padding: 5px 8px; /* Further reduced padding */
                 font-size: 0.75em; /* Further reduced font size */
                 width: 100%; /* Full width for better touch targets */
                 box-sizing: border-box; /* Ensure padding doesn't exceed container */
@@ -495,8 +499,8 @@
 
             /* Optional: Reduce Badge Size on Mobile */
             .product-badge {
-                padding: 5px; /* Further reduced padding */
-                font-size: 0.75em; /* Further reduced font size */
+                padding: 4px 6px; /* Further reduced padding */
+                font-size: 0.7em; /* Further reduced font size */
             }
 
             /* Adjust Description Area for Mobile */
@@ -513,6 +517,7 @@
         /* Scaling for active item content */
         .item-content {
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin-top: 10px; /* Added margin-top to shift content downward */
         }
         .carousel-item.active .item-content {
             transform: scale(1.05); /* Slightly scale the content */
@@ -523,7 +528,7 @@
             width: 100%;
             max-width: 400px;
             background: #ffffff;
-            padding: 20px;
+            padding: 18px; /* Slightly reduced padding */
             border-radius: 15px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
             text-align: center;
@@ -539,13 +544,15 @@
             transform: translateY(0);
         }
         .description-area h2 {
-            margin-bottom: 10px;
-            font-size: 1.5em;
+            margin-bottom: 8px; /* Reduced margin */
+            font-size: 1.4em; /* Slightly reduced font size */
             color: #007bff;
+            font-family: 'Anton', sans-serif; /* Apply sports-themed font */
         }
         .description-area p {
-            font-size: 1em;
+            font-size: 0.95em; /* Slightly reduced font size */
             color: #555;
+            line-height: 1.4; /* Improved readability */
         }
 
     </style>
@@ -608,7 +615,7 @@
                       :style="getItemStyle(index)"
                       :class="{ active: index === activeIndex }"
                       role="button"
-                      aria-label="View details for {{ product.name }}"
+                      aria-label="Buy {{ product.name }}"
                       tabindex="0"
                       @click="buyNow(product)"
                       @click.once="animateCarouselItem($event.currentTarget)"
@@ -692,43 +699,43 @@
                     { 
                         name: 'Nike Air Zoom Pegasus', 
                         price: '$120', 
-                        image: 'https://via.placeholder.com/220x300.webp', 
-                        imageSmall: 'https://via.placeholder.com/220x300.webp', 
-                        imageMedium: 'https://via.placeholder.com/220x300.webp',
+                        image: 'https://via.placeholder.com/200x380.webp', 
+                        imageSmall: 'https://via.placeholder.com/200x380.webp', 
+                        imageMedium: 'https://via.placeholder.com/200x380.webp',
                         description: 'High-performance running shoes with responsive cushioning.', 
                         badge: 'New' 
                     },
                     { 
                         name: 'Adidas Ultraboost 21', 
                         price: '$180', 
-                        image: 'https://via.placeholder.com/220x300.webp', 
-                        imageSmall: 'https://via.placeholder.com/220x300.webp', 
-                        imageMedium: 'https://via.placeholder.com/220x300.webp',
+                        image: 'https://via.placeholder.com/200x380.webp', 
+                        imageSmall: 'https://via.placeholder.com/200x380.webp', 
+                        imageMedium: 'https://via.placeholder.com/200x380.webp',
                         description: 'Boost cushioning technology for maximum comfort.' 
                     },
                     { 
                         name: 'Puma Running Shoes', 
                         price: '$90', 
-                        image: 'https://via.placeholder.com/220x300.webp', 
-                        imageSmall: 'https://via.placeholder.com/220x300.webp', 
-                        imageMedium: 'https://via.placeholder.com/220x300.webp',
+                        image: 'https://via.placeholder.com/200x380.webp', 
+                        imageSmall: 'https://via.placeholder.com/200x380.webp', 
+                        imageMedium: 'https://via.placeholder.com/200x380.webp',
                         description: 'Lightweight and breathable running shoes for everyday use.', 
                         badge: 'On Sale' 
                     },
                     { 
                         name: 'Reebok Crossfit Nano', 
                         price: '$110', 
-                        image: 'https://via.placeholder.com/220x300.webp', 
-                        imageSmall: 'https://via.placeholder.com/220x300.webp', 
-                        imageMedium: 'https://via.placeholder.com/220x300.webp',
+                        image: 'https://via.placeholder.com/200x380.webp', 
+                        imageSmall: 'https://via.placeholder.com/200x380.webp', 
+                        imageMedium: 'https://via.placeholder.com/200x380.webp',
                         description: 'Designed for high-intensity crossfit training.' 
                     },
                     { 
                         name: 'Under Armour Hovr', 
                         price: '$130', 
-                        image: 'https://via.placeholder.com/220x300.webp', 
-                        imageSmall: 'https://via.placeholder.com/220x300.webp', 
-                        imageMedium: 'https://via.placeholder.com/220x300.webp',
+                        image: 'https://via.placeholder.com/200x380.webp', 
+                        imageSmall: 'https://via.placeholder.com/200x380.webp', 
+                        imageMedium: 'https://via.placeholder.com/200x380.webp',
                         description: 'Provides a zero-gravity feel to maintain energy return.' 
                     },
                 ]);
