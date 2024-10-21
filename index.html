@@ -180,18 +180,18 @@
         .carousel-container {
             width: 100%;
             max-width: 1200px; /* Adjust as needed */
-            margin: 100px auto 40px auto; /* Centers the container with top and bottom margins */
-            padding: 30px; /* Reduced padding to minimize empty space */
+            margin: 50px auto 20px auto; /* Reduced top and bottom margins for mobile */
+            padding: 20px; /* Further reduced padding to minimize empty space */
             background: radial-gradient(circle at top left, #ffffff, #f0f0f0);
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2), inset 0 0 10px rgba(255,255,255,0.1);
-            border-radius: 20px; /* Reduced border radius for a sleeker look */
+            border-radius: 15px; /* Further reduced border radius for a sleeker look */
             transform-style: preserve-3d;
             transition: transform 1s ease, box-shadow 0.3s ease;
             position: relative;
             display: flex;
             align-items: center;
             justify-content: space-between; /* Better distribution */
-            gap: 30px; /* Reduced gap */
+            gap: 20px; /* Reduced gap */
             flex-wrap: nowrap; /* Prevent wrapping */
         }
 
@@ -202,7 +202,7 @@
             width: 100%;
             height: 100%;
             background: inherit;
-            border-radius: 20px; /* Match container's border radius */
+            border-radius: 15px; /* Match container's border radius */
             top: 0;
             left: 0;
             transform: rotateY(0deg) translateZ(-10px);
@@ -220,7 +220,7 @@
             position: relative; 
             width: 100%; 
             max-width: 800px; 
-            height: 500px; /* Reduced height */
+            height: 500px; /* Consider making this dynamic */
             perspective: 1800px; 
             display: flex; 
             align-items: center; 
@@ -419,6 +419,10 @@
             .carousel-container {
                 flex-direction: column;
                 gap: 20px;
+                align-items: center; /* Center align items */
+                justify-content: center; /* Center justify items */
+                margin: 30px auto 20px auto; /* Further reduced top margin */
+                padding: 10px; /* Further reduced padding */
             }
             .description-area {
                 max-width: 90%;
@@ -432,21 +436,25 @@
                 transform: none !important;
             }
             .nav-circle {
-                width: 60px;
-                height: 60px;
-                font-size: 18px;
+                width: 50px; /* Slightly reduced size for mobile */
+                height: 50px;
+                font-size: 16px;
+                bottom: 20px; /* Adjusted positioning */
+                right: 20px;
             }
             /* Remove the old autoplay-toggle button if present */
             /* Removed previously existing autoplay-toggle styles */
             .product-carousel {
-                height: 440px;
+                height: 400px; /* Further reduced height */
+                width: 100%; /* Ensure full width */
             }
             .carousel-item {
-                width: 180px;
-                height: 300px; /* Reduced from 380px to 300px */
+                width: 160px; /* Further reduced width */
+                height: 280px; /* Further reduced height */
             }
             .product-image {
-                height: 140px; /* Reduced from 180px to 140px */
+                height: 120px; /* Further reduced height */
+                object-fit: cover;
             }
             .product-info {
                 height: auto; /* Ensure height adjusts based on content */
@@ -509,12 +517,6 @@
             }
 
             /* Enhanced Alignment for Mobile */
-
-            /* Center Carousel and Description */
-            .carousel-container {
-                align-items: center;
-                justify-content: center;
-            }
 
             /* Ensure Description Area is Below Carousel */
             .carousel-container {
