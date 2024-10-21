@@ -102,6 +102,13 @@ createApp({
                 });
             } else {
                 // Optionally, reset menu item positions or styles when menu closes
+                navItems.value.forEach((item, index) => {
+                    const menuItem = document.querySelectorAll('.menu-item')[index];
+                    if (menuItem) {
+                        menuItem.style.transform = `translate(0px, 0px)`;
+                        menuItem.style.opacity = '0';
+                    }
+                });
             }
         });
 
@@ -138,7 +145,7 @@ createApp({
 
             const x = radius * Math.cos(angle * Math.PI / 180);
             const y = radius * Math.sin(angle * Math.PI / 180);
-            return { transform: `translate(${x}px, ${y}px)` };
+            return { transform: `translate(${x}px, ${y}px)`, opacity: '1' };
         };
 
         // Get Carousel Item Style Function
