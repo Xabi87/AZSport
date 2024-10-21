@@ -82,10 +82,10 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1400;
+    z-index: 1600; /* Increased z-index to ensure it appears above the nav-circle */
     transition: transform 0.2s ease-out;
     perspective: 800px;
-    overflow: hidden; /* Ensure menu items don't overflow */
+    overflow: hidden; /* Prevent overflow */
 }
 .radial-menu:hover {
     transform: translate(-50%, -50%) perspective(800px) rotateX(15deg) rotateY(15deg);
@@ -104,7 +104,7 @@ body {
     justify-content: center;
     flex-direction: column;
     opacity: 0;
-    transition: transform 0.5s, opacity 0.5s, box-shadow 0.3s ease-in-out;
+    transition: transform 0.5s ease, opacity 0.5s ease; /* Smooth transitions */
     transition-delay: calc(0.05s * var(--menu-index));
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
@@ -559,6 +559,7 @@ body {
         border-radius: 50%;
         font-size: 1.2em;
         /* Removed transform override */
+        transition: transform 0.5s ease, opacity 0.5s ease; /* Ensure smooth transitions */
     }
 
     /* Adjust the center logo size for mobile */
