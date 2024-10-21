@@ -71,6 +71,7 @@ createApp({
         // Function to update isMobile based on window width
         const updateIsMobile = () => {
             isMobile.value = window.innerWidth <= 768;
+            // Optionally, adjust rotationAngle or other properties if needed
         };
 
         // Event Listener for Window Resize
@@ -101,17 +102,17 @@ createApp({
 
         // Get Menu Item Style Function
         const getMenuItemStyle = (index) => {
-            if (isMobile.value) {
-                const total = navItems.value.length;
-                const angle = (360 / total) * index;
-                const radius = 100;
-                const x = radius * Math.cos(angle * Math.PI / 180);
-                const y = radius * Math.sin(angle * Math.PI / 180);
-                return { transform: `translate(${x}px, ${y}px)` };
-            }
             const total = navItems.value.length;
-            const angle = (360 / total) * index - 90;
-            const radius = 200;
+            let angle, radius;
+
+            if (isMobile.value) {
+                angle = (360 / total) * index;
+                radius = 80; // Adjusted radius for mobile
+            } else {
+                angle = (360 / total) * index - 90;
+                radius = 200;
+            }
+
             const x = radius * Math.cos(angle * Math.PI / 180);
             const y = radius * Math.sin(angle * Math.PI / 180);
             return { transform: `translate(${x}px, ${y}px)` };
