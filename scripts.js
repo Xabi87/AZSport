@@ -101,7 +101,14 @@ createApp({
 
         // Get Menu Item Style Function
         const getMenuItemStyle = (index) => {
-            if (isMobile.value) return { transform: 'none' };
+            if (isMobile.value) {
+                const total = navItems.value.length;
+                const angle = (360 / total) * index;
+                const radius = 100;
+                const x = radius * Math.cos(angle * Math.PI / 180);
+                const y = radius * Math.sin(angle * Math.PI / 180);
+                return { transform: `translate(${x}px, ${y}px)` };
+            }
             const total = navItems.value.length;
             const angle = (360 / total) * index - 90;
             const radius = 200;
