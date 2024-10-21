@@ -73,7 +73,7 @@ body {
 
 /* Radial Menu */
 .radial-menu {
-    position: fixed;
+    position: fixed; /* Ensure it stays relative to the viewport */
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -82,7 +82,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1600; /* Increased z-index to ensure it appears above the nav-circle */
+    z-index: 1600; /* Ensure it's above other elements */
     transition: transform 0.2s ease-out;
     perspective: 800px;
     overflow: hidden; /* Prevent overflow */
@@ -515,6 +515,7 @@ body {
         max-width: 400px;
     }
 }
+
 @media (max-width: 768px) {
     /* Adjust carousel-container to column direction */
     .carousel-container {
@@ -529,7 +530,11 @@ body {
         max-width: 400px;
         max-height: 400px;
         perspective: 800px;
-        position: relative; /* Ensure relative positioning for absolute children */
+        /* Maintain fixed positioning */
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
         overflow: hidden; /* Prevent overflow */
     }
 
