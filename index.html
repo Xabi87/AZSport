@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Meta and Title -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AZ Sports - Enhanced Product Carousel</title>
+
+    <!-- External Styles and Scripts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <!-- Google Fonts: Anton for product names, Roboto Condensed for other texts -->
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Include GSAP and ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/ScrollTrigger.min.js"></script>
+    <!-- Use the production build of Vue.js -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+    <!-- Include anime.js for additional animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+
+    <!-- Link to External CSS File -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="app-wrapper">
+        <div id="app" @keydown.esc="closeMenu" tabindex="0">
+            <!-- Logo -->
+            <div class="logo fixed">
+                <img src="./images/logo2.png" alt="AZ Sports Logo">
+            </div>
+
+            <!-- Navigation Circle -->
+            <div class="nav-circle fixed" @click="toggleMenu" aria-label="Open Navigation Menu" role="button" tabindex="0">
+                <i class="fas fa-bars"></i>
+            </div>
+
+            <!-- Menu Overlay -->
+            <div v-if="menuOpen" class="menu-overlay" @click="toggleMenu"></div>
+
+            <!-- Radial Menu -->
+            <div class="radial-menu" v-if="menuOpen" @mousemove="handleMouseMove" role="navigation" aria-label="Main Navigation">
+                <!-- Center Logo -->
+                <div class="menu-center-logo">
+                    <img src="./images/logo2.png" alt="AZ Sports Logo">
+                </div>
+                <!-- Menu Items -->
+                <div v-for="(item, index) in navItems" 
+                     :key="item.name" 
+                     :class="['menu-item', { show: menuOpen }]" 
+                     :style="getMenuItemStyle(index)" 
+                     tabindex="0" 
+                     @keydown.enter="scrollToSection(item.path)"
+                     >
+                    <a href="#" @click.prevent="scrollToSection(item.path)" class="menu-link" style="color: inherit; text-decoration: none; display: flex; flex-direction: column; align-items: center;">
+                        <i :class="item.icon"></i>
+                        <span class="menu-label">{{ item.name }}</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Parallax Hero Section -->
+            <section class="hero-section">
+                <div class="hero-layer hero-background"></div>
+                <!-- Removed hero-midground layer -->
+                <div class="hero-layer hero-foreground">
+                    <h1>Elevate Your Game</h1>
+                    <p>Experience unmatched comfort and performance</p>
+                    <button @click="scrollToSection('#carousel')">Explore Products</button>
+                </div>
+            </section>
+
+            <!-- 3D Carousel and Description Container -->
+            <div class="carousel-container" id="carousel" role="region" aria-label="Product Carousel and Description">
+                <!-- Product Carousel -->
+                <div
+                  class="product-carousel"
+                  @wheel.prevent="handleMouseWheel"
+                  @mousedown="startDrag"
+                  @mouseup="endDrag"
+                  @mousemove="onDrag"
+                  @touchstart="startDrag"
+                  @touchend="endDrag"
+                  @touchmove="onDrag"
+                  @mouseenter="pauseAutoplay"
+                  @mouseleave="resumeAutoplay"
+                >
+                    <div
+                      class="carousel-item"
+                      v-for="(product, index) in products"
+                      :key="index"
+                      :style="getItemStyle(index)"
+                      :class="{ active: index === activeIndex }"
+                      role="button"
+                      aria-label="Buy {{ product.name }}"
+                      tabindex="0"
+                      @click="buyNow(product)"
+                      @click.once="animateCarouselItem($event.currentTarget)"
+                      @keydown.enter="buyNow(product)"
+                    >
+                        <div class="item-content">
+                            <div v-if="product.badge" class="product-badge">{{ product.badge }}</div>
+                            <img 
+                                :src="product.imageSmall" 
+                                :srcset="`${product.imageSmall} 480w, ${product.imageMedium} 768w, ${product.image} 1200w`" 
+                                :sizes="'(max-width: 480px) 100vw, (max-width: 768px) 50vw, 33vw'" 
+                                :alt="product.name" 
+                                class="product-image" 
+                                loading="lazy">
+                            <div class="product-info">
+                                <h3>{{ product.name }}</h3>
+                                <p class="price">{{ product.price }}</p>
+                                <div class="rating">
+                                    <i class="fas fa-star" v-for="n in 5" :key="n"></i>
+                                </div>
+                                <div class="actions">
+                                    <button @click.stop="addToCart(product)">Add to Cart</button>
+                                    <button @click.stop="buyNow(product)">Buy Now</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Description Area -->
+                <div 
+                    class="description-area" 
+                    :class="{ visible: selectedProduct.name, hidden: !selectedProduct.name }" 
+                    v-if="selectedProduct.name"
+                >
+                    <h2>{{ selectedProduct.name }}</h2>
+                    <p>{{ selectedProduct.description }}</p>
+                    <!-- Play/Pause Autoplay Button -->
+                    <button 
+                        class="autoplay-toggle" 
+                        @click="toggleAutoplay" 
+                        :aria-label="autoplay ? 'Pause Autoplay' : 'Start Autoplay'"
+                        :aria-pressed="autoplay"
+                    >
+                        <i :class="autoplay ? 'fas fa-pause' : 'fas fa-play'"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Product Modal (Optional) -->
+            <div v-if="showModal" class="product-modal active" @click="closeModal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+                <div class="modal-content" @click.stop>
+                    <h2 id="modal-title">{{ selectedProduct.name }}</h2>
+                    <img :src="selectedProduct.image" :alt="selectedProduct.name" class="modal-image">
+                    <p class="price">{{ selectedProduct.price }}</p>
+                    <p>{{ selectedProduct.description }}</p>
+                    <button @click="closeModal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Link to External JavaScript File -->
+    <script src="scripts.js"></script>
+</body>
+</html>
