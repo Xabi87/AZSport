@@ -85,6 +85,7 @@ body {
     z-index: 1400;
     transition: transform 0.2s ease-out;
     perspective: 800px;
+    overflow: hidden; /* Ensure menu items don't overflow */
 }
 .radial-menu:hover {
     transform: translate(-50%, -50%) perspective(800px) rotateX(15deg) rotateY(15deg);
@@ -92,7 +93,7 @@ body {
 
 /* Menu Items */
 .menu-item {
-    position: absolute;
+    position: absolute; /* Changed from relative to absolute */
     width: 100px;
     height: 100px;
     background: linear-gradient(135deg, #333, #444);
@@ -515,19 +516,8 @@ body {
     }
 }
 @media (max-width: 768px) {
-    .carousel-container {
-        flex-direction: column;
-        gap: 20px;
-        align-items: center;
-        justify-content: center;
-        margin: 30px auto 20px;
-        padding: 10px;
-    }
-    .description-area {
-        max-width: 90%;
-    }
-
-    /* Adjusted Radial Menu for Mobile */
+    /* Removed conflicting styles to maintain radial layout */
+    /*
     .radial-menu {
         display: flex;
         flex-direction: column;
@@ -549,11 +539,35 @@ body {
         transform: none !important;
         font-size: 1.2em;
     }
+    */
 
+    /* Instead, maintain the radial layout */
+    .radial-menu {
+        width: 80vw;
+        height: 80vw;
+        max-width: 400px;
+        max-height: 400px;
+        perspective: 800px;
+        position: relative; /* Ensure relative positioning for absolute children */
+        overflow: hidden; /* Prevent overflow */
+    }
+
+    .menu-item {
+        position: absolute; /* Keep absolute positioning */
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        font-size: 1.2em;
+        /* Removed transform override */
+    }
+
+    /* Adjust the center logo size for mobile */
     .menu-center-logo img {
         width: 80px;
         height: 80px;
     }
+
+    /* Adjust navigation circle size for mobile */
     .nav-circle {
         width: 50px;
         height: 50px;
@@ -562,6 +576,8 @@ body {
         right: 20px;
         border-radius: 50%;
     }
+
+    /* Adjust Product Carousel for Mobile */
     .product-carousel {
         height: 400px;
         width: 100%;
