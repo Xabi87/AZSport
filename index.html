@@ -19,81 +19,74 @@
     <style>
         /* General Styles */
         * {
-            box-sizing: border-box; /* Ensure padding and borders are included within element's total width and height */
+            box-sizing: border-box;
         }
         body {
             margin: 0;
-            font-family: 'Roboto Condensed', sans-serif; /* Default font for body */
+            font-family: 'Roboto Condensed', sans-serif;
             overflow-x: hidden;
-            background-color: #f4f6f9; /* Light grey background */
+            background-color: #f4f6f9;
         }
-        #app-wrapper {
-            position: relative;
-            overflow: hidden;
-        }
-
-        #app {
-            min-height: 100vh;
+        .fixed {
+            position: fixed;
             display: flex;
-            flex-direction: column;
             align-items: center;
-            position: relative;
-            z-index: 1;
+            justify-content: center;
+            border-radius: 50%;
+            z-index: 1000;
+        }
+        /* Logo */
+        .logo {
+            top: 20px;
+            left: 20px;
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(145deg, #f0f0f0, #dcdcdc);
+            padding: 5px;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+            border-radius: 50%; /* Ensure logo container is circular */
+        }
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 50%; /* Ensure logo image is circular */
         }
 
-        /* Logo and Navigation */
-        .logo, .nav-circle {
-            position: fixed; 
-            z-index: 1000; 
-            border-radius: 50%; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center;
-        }
-        .logo {
-            top: 20px; 
-            left: 20px; 
-            width: 100px; 
-            height: 100px; 
-            background: linear-gradient(145deg, #f0f0f0, #dcdcdc);
-            padding: 5px; 
-            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
-        }
+        /* Navigation Circle */
         .nav-circle {
-            bottom: 30px; 
-            right: 30px; 
-            width: 60px; 
-            height: 60px; 
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
             background: linear-gradient(135deg, #007bff, #0056b3);
-            cursor: pointer; 
-            transition: transform 0.3s, background-color 0.3s; 
+            cursor: pointer;
+            transition: transform 0.3s, background-color 0.3s;
             font-size: 18px;
-            z-index: 1500;
             color: white;
             box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+            z-index: 1500;
+            border-radius: 50%; /* Ensure nav-circle remains circular */
         }
         .nav-circle:hover {
             transform: scale(1.1);
             background-color: #007bff;
             box-shadow: 0 8px 20px rgba(0, 123, 255, 0.5);
         }
-        .logo img {
-            width: 100%; 
-            height: 100%; 
-            border-radius: 50%; 
-            object-fit: contain;
-        }
 
-        /* Menu Overlay and Radial Menu */
-        .menu-overlay {
-            position: fixed; 
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            height: 100%; 
-            background: rgba(0,0,0,0.5); 
-            z-index: 1300;
+        /* Menu Overlay and Modal */
+        .menu-overlay, .product-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
             backdrop-filter: blur(5px);
+            z-index: 1300;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         /* Radial Menu */
@@ -111,6 +104,11 @@
             transition: transform 0.2s ease-out;
             perspective: 800px;
         }
+        .radial-menu:hover {
+            transform: translate(-50%, -50%) perspective(800px) rotateX(15deg) rotateY(15deg);
+        }
+
+        /* Menu Items */
         .menu-item {
             position: absolute;
             width: 100px;
@@ -143,11 +141,6 @@
             text-align: center;
         }
 
-        /* Parallax Effect for Radial Menu */
-        .radial-menu:hover {
-            transform: perspective(800px) rotateX(15deg) rotateY(15deg);
-        }
-
         /* Center Logo in Radial Menu */
         .menu-center-logo {
             position: absolute;
@@ -160,8 +153,8 @@
         .menu-center-logo img {
             width: 100px;
             height: 100px;
-            border-radius: 50%;
             object-fit: contain;
+            border-radius: 50%;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
         }
@@ -179,25 +172,24 @@
             }
         }
 
-        /* Enhanced Carousel Container with 3D Effects */
+        /* Carousel Container */
         .carousel-container {
             width: 100%;
-            max-width: 1200px; /* Adjust as needed */
-            margin: 50px auto 20px auto; /* Reduced top and bottom margins for mobile */
-            padding: 20px; /* Further reduced padding to minimize empty space */
+            max-width: 1200px;
+            margin: 50px auto 20px;
+            padding: 20px;
             background: radial-gradient(circle at top left, #ffffff, #f0f0f0);
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2), inset 0 0 10px rgba(255,255,255,0.1);
-            border-radius: 15px; /* Further reduced border radius for a sleeker look */
+            border-radius: 15px;
             transform-style: preserve-3d;
             transition: transform 1s ease, box-shadow 0.3s ease;
-            position: relative;
             display: flex;
             align-items: center;
-            justify-content: space-between; /* Better distribution */
-            gap: 20px; /* Reduced gap */
-            flex-wrap: nowrap; /* Prevent wrapping */
+            justify-content: space-between;
+            gap: 20px;
+            flex-wrap: nowrap;
+            position: relative;
         }
-
         .carousel-container::before,
         .carousel-container::after {
             content: '';
@@ -205,84 +197,80 @@
             width: 100%;
             height: 100%;
             background: inherit;
-            border-radius: 15px; /* Match container's border radius */
+            border-radius: 15px;
             top: 0;
             left: 0;
             transform: rotateY(0deg) translateZ(-10px);
             z-index: -1;
             box-shadow: inset 0 0 10px rgba(0,0,0,0.1), 0 0 20px rgba(255,255,255,0.2);
         }
-
-        /* Add 3D Rotation on Hover with Anime.js Integration */
         .carousel-container:hover {
             box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
         }
 
-        /* Product Carousel Styles */
+        /* Product Carousel */
         .product-carousel {
-            position: relative; 
-            width: 100%; 
-            max-width: 800px; 
-            height: 500px; /* Consider making this dynamic */
-            perspective: 1800px; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            overflow: hidden; 
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            height: 500px;
+            perspective: 1800px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
             z-index: 1000;
         }
         .carousel-item {
             position: absolute;
-            width: 200px; /* Reduced width */
-            height: 380px; /* Further reduced height */
+            width: 200px;
+            height: 380px;
             transform-origin: center;
-            border-radius: 15px; /* Slightly reduced border radius */
+            border-radius: 15px;
             background: white;
-            border: 2px solid #e0f7fa; /* Light blue border matching branding */
+            border: 2px solid #e0f7fa;
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-            opacity: 0.85; /* Slightly increased opacity for better visibility */
+            opacity: 0.85;
             transition: transform 0.6s cubic-bezier(0.25,1,0.5,1), opacity 0.5s, box-shadow 0.6s;
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            justify-content: flex-start; /* Align content at the top */
-            box-sizing: border-box; /* Include border and padding in width/height */
+            justify-content: flex-start;
+            box-sizing: border-box;
             cursor: pointer;
         }
         .carousel-item.active {
-            /* Removed transform to prevent conflict */
-            box-shadow: 0 14px 35px rgba(0, 86, 179, 0.6); /* Enhanced shadow for active item */
+            box-shadow: 0 14px 35px rgba(0, 86, 179, 0.6);
             z-index: 3;
             opacity: 1;
         }
         .carousel-item:hover {
             transform: translateZ(220px) scale(1.25) rotateY(5deg);
-            box-shadow: 0 18px 45px rgba(0, 86, 179, 0.7); /* Further enhanced shadow */
+            box-shadow: 0 18px 45px rgba(0, 86, 179, 0.7);
         }
 
-        /* Image Styles - Combined Glass & Neon Glow Effect */
+        /* Product Image */
         .product-image {
             width: 100%;
-            height: 180px; /* Reduced height */
+            height: 180px;
             object-fit: cover;
-            border-radius: 12px 12px 0 0; /* Slightly reduced border radius */
-            border: 2px solid rgba(255, 255, 255, 0.4); /* Transparent glass-like border */
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+            border-radius: 12px 12px 0 0;
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
             transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-            background-color: rgba(255, 255, 255, 0.2); /* Glass effect background */
+            background-color: rgba(255, 255, 255, 0.2);
             margin-bottom: 0;
-            box-sizing: border-box; /* Ensures border fits inside container */
+            box-sizing: border-box;
         }
-
         .carousel-item:hover .product-image {
-            transform: scale(1.08); /* Slight zoom */
-            border-color: rgba(0, 123, 255, 0.6); /* Stronger glass border effect */
-            box-shadow: 0 8px 20px rgba(0, 123, 255, 0.5), 0 0 20px rgba(0, 123, 255, 0.7); /* Neon glow */
+            transform: scale(1.08);
+            border-color: rgba(0, 123, 255, 0.6);
+            box-shadow: 0 8px 20px rgba(0, 123, 255, 0.5), 0 0 20px rgba(0, 123, 255, 0.7);
         }
 
-        /* Product Info with Flexbox for Alignment */
+        /* Product Info */
         .product-info {
-            padding: 8px 12px; /* Further reduced padding */
+            padding: 8px 12px;
             background: #f7f9fc;
             text-align: center;
             flex-grow: 1;
@@ -292,39 +280,39 @@
             justify-content: space-between;
             align-items: center;
             border-top: 1px solid #ddd;
-            border-radius: 0 0 15px 15px; /* Match border radius */
+            border-radius: 0 0 15px 15px;
         }
         .product-info h3 {
             margin: 5px 0 3px;
-            font-family: 'Anton', sans-serif; /* Sports-themed font for product names */
-            font-size: 1.3em; /* Further reduced font size */
-            font-weight: 400; /* Adjusted font weight */
+            font-family: 'Anton', sans-serif;
+            font-size: 1.3em;
+            font-weight: 400;
             color: #222;
-            min-height: 36px; /* Reduced min-height */
-            line-height: 1.2; /* Improved line height */
+            min-height: 36px;
+            line-height: 1.2;
         }
         .product-info p.price {
-            font-size: 0.95em; /* Slightly reduced font size */
-            color: #007bff; /* Branded blue color */
+            font-size: 0.95em;
+            color: #007bff;
             font-weight: bold;
             margin: 3px 0;
         }
         .product-info .rating {
             color: #ffc107;
             margin: 3px 0;
-            font-size: 0.85em; /* Reduced icon size */
+            font-size: 0.85em;
         }
         .product-info .actions {
             display: flex;
             justify-content: center;
-            gap: 6px; /* Further reduced gap */
+            gap: 6px;
         }
         .product-info .actions button {
-            padding: 6px 10px; /* Further reduced padding */
-            border-radius: 6px; /* Reduced border radius */
+            padding: 6px 10px;
+            border-radius: 6px;
             background: linear-gradient(145deg, #007bff, #0056b3);
             color: #fff;
-            font-size: 0.8em; /* Further reduced font size */
+            font-size: 0.8em;
             font-weight: 600;
             box-shadow: 0 4px 10px rgba(0, 123, 255, 0.4);
             transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
@@ -344,9 +332,9 @@
             left: 8px;
             background: linear-gradient(145deg, #ff4444, #ff0000);
             color: #fff;
-            padding: 5px 7px; /* Further reduced padding */
-            font-size: 0.75em; /* Further reduced font size */
-            border-radius: 8px; /* Reduced border radius */
+            padding: 5px 7px;
+            font-size: 0.75em;
+            border-radius: 8px;
             animation: badgePulse 1.5s infinite ease-in-out;
             box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
         }
@@ -357,23 +345,17 @@
 
         /* Product Modal */
         .product-modal {
-            position: fixed; 
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            height: 100%; 
-            background: rgba(0,0,0,0.5); 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            z-index: 2000;
+            display: none; /* Hidden by default */
+        }
+        .product-modal.active {
+            display: flex;
         }
         .modal-content {
-            background: #fff; 
-            padding: 20px; 
-            border-radius: 10px; 
-            width: 80%; 
-            max-width: 500px; 
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 500px;
             text-align: center;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
             position: relative;
@@ -393,19 +375,51 @@
             transform: translateY(-2px);
         }
 
-        /* Autoplay Toggle (Play/Pause Icon) */
-        .description-area .autoplay-toggle {
-            margin-top: 15px; /* Slightly reduced space above the button */
-            background: none; /* Remove background */
-            border: none; /* Remove border */
+        /* Autoplay Toggle */
+        .autoplay-toggle {
+            margin-top: 15px;
+            background: none;
+            border: none;
             cursor: pointer;
-            font-size: 1.3em; /* Adjust icon size */
-            color: #007bff; /* Branded blue color */
+            font-size: 1.3em;
+            color: #007bff;
             transition: color 0.3s, transform 0.3s;
         }
-        .description-area .autoplay-toggle:hover {
-            color: #0056b3; /* Darker blue on hover */
-            transform: scale(1.1); /* Slightly enlarge on hover */
+        .autoplay-toggle:hover {
+            color: #0056b3;
+            transform: scale(1.1);
+        }
+
+        /* Description Area */
+        .description-area {
+            width: 100%;
+            max-width: 400px;
+            background: #ffffff;
+            padding: 18px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: opacity 0.5s ease, transform 0.3s ease;
+        }
+        .description-area.hidden {
+            opacity: 0;
+            transform: translateY(20px);
+            pointer-events: none;
+        }
+        .description-area.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .description-area h2 {
+            margin-bottom: 8px;
+            font-size: 1.4em;
+            color: #007bff;
+            font-family: 'Anton', sans-serif;
+        }
+        .description-area p {
+            font-size: 0.95em;
+            color: #555;
+            line-height: 1.4;
         }
 
         /* Responsive Design */
@@ -422,129 +436,106 @@
             .carousel-container {
                 flex-direction: column;
                 gap: 20px;
-                align-items: center; /* Center align items */
-                justify-content: center; /* Center justify items */
-                margin: 30px auto 20px auto; /* Further reduced top margin */
-                padding: 10px; /* Further reduced padding */
+                align-items: center;
+                justify-content: center;
+                margin: 30px auto 20px;
+                padding: 10px;
             }
             .description-area {
                 max-width: 90%;
             }
-            .menu-item {
-                position: relative;
-                width: 60px; /* Reduced size */
-                height: 60px;
-                border-radius: 50%; /* Maintain circular shape */
-                margin: 8px 0; /* Increased vertical spacing */
-                transform: none !important;
-                font-size: 1.2em; /* Adjust icon size */
-            }
-            .menu-center-logo img {
-                width: 80px; /* Slightly smaller logo */
-                height: 80px;
-            }
-            .nav-circle {
-                width: 50px; /* Slightly reduced size for mobile */
-                height: 50px;
-                font-size: 16px;
-                bottom: 20px; /* Adjusted positioning */
-                right: 20px;
-            }
-            /* Remove the old autoplay-toggle button if present */
-            /* Removed previously existing autoplay-toggle styles */
-            .product-carousel {
-                height: 400px; /* Further reduced height */
-                width: 100%; /* Ensure full width */
-            }
-            .carousel-item {
-                width: 160px; /* Further reduced width */
-                height: 280px; /* Further reduced height */
-            }
-            .product-image {
-                height: 120px; /* Further reduced height */
-                object-fit: cover;
-            }
-            .product-info {
-                height: auto; /* Ensure height adjusts based on content */
-                padding: 6px 10px; /* Further reduced padding */
-                display: flex;
-                flex-direction: column;
-                justify-content: flex-start; /* Align items to top */
-                align-items: center; /* Center align content */
-                text-align: center; /* Center text */
-            }
 
-            /* **New Mobile-Specific Styles** */
-
-            /* Adjust Product Name Font Size */
-            .product-info h3 {
-                font-size: 1.2em; /* Maintain readability */
-                min-height: 30px; /* Adjusted from 36px */
-                margin: 4px 0 1px; /* Further reduced margins */
-                line-height: 1.1; /* Slightly reduced line height */
-            }
-
-            /* Adjust Price Font Size */
-            .product-info p.price {
-                font-size: 0.9em; /* Slightly reduced for mobile */
-                margin: 1px 0; /* Further reduced margin */
-            }
-
-            /* Adjust Rating Icons Size */
-            .product-info .rating i {
-                font-size: 0.7em; /* Reduced from 0.85em */
-                margin: 0 0.3px; /* Further reduced margin */
-            }
-
-            /* Reorganize Actions (Buttons) */
-            .product-info .actions {
-                flex-direction: column; /* Stack buttons vertically */
-                gap: 4px; /* Further reduced gap between buttons */
-                width: 100%; /* Make buttons full width */
-                align-items: center; /* Center align buttons */
-            }
-
-            /* Adjust Buttons Size and Font */
-            .product-info .actions button {
-                padding: 5px 8px; /* Further reduced padding */
-                font-size: 0.75em; /* Further reduced font size */
-                width: 100%; /* Full width for better touch targets */
-                box-sizing: border-box; /* Ensure padding doesn't exceed container */
-                box-shadow: 0 2px 6px rgba(0, 123, 255, 0.3); /* Reduced shadow */
-            }
-
-            /* Optional: Reduce Badge Size on Mobile */
-            .product-badge {
-                padding: 4px 6px; /* Further reduced padding */
-                font-size: 0.7em; /* Further reduced font size */
-            }
-
-            /* Adjust Description Area for Mobile */
-            .description-area {
-                max-width: 90%;
-            }
-
-            /* Enhanced Alignment for Mobile */
-
-            /* Ensure Description Area is Below Carousel */
-            .carousel-container {
-                flex-direction: column;
-            }
-
-            /* Adjust Description Area Content Alignment */
-            .description-area {
+            /* Adjusted Radial Menu for Mobile */
+            .radial-menu {
                 display: flex;
                 flex-direction: column;
                 align-items: center;
-                text-align: center;
+                justify-content: center;
+                perspective: none;
+                width: 80vw;
+                height: 80vw;
+                max-width: 400px;
+                max-height: 400px;
             }
 
-            /* Adjust Radial Menu for Mobile */
-            .radial-menu {
-                width: 80vw; /* 80% of viewport width */
-                height: 80vw; /* Maintain square aspect ratio */
-                max-width: 400px; /* Maximum width */
-                max-height: 400px;
+            .menu-item {
+                position: relative;
+                margin: 8px;
+                width: 60px;
+                height: 60px;
+                border-radius: 50%;
+                transform: none !important;
+                font-size: 1.2em;
+            }
+
+            .menu-center-logo img {
+                width: 80px;
+                height: 80px;
+            }
+            .nav-circle {
+                width: 50px;
+                height: 50px;
+                font-size: 16px;
+                bottom: 20px;
+                right: 20px;
+                border-radius: 50%; /* Ensure nav-circle remains circular on mobile */
+            }
+            .product-carousel {
+                height: 400px;
+                width: 100%;
+            }
+            .carousel-item {
+                width: 160px;
+                height: 280px;
+            }
+            .product-image {
+                height: 120px;
+                object-fit: cover;
+            }
+            .product-info {
+                height: auto;
+                padding: 6px 10px;
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: center;
+                text-align: center;
+            }
+            /* Product Name Font Size */
+            .product-info h3 {
+                font-size: 1.2em;
+                min-height: 30px;
+                margin: 4px 0 1px;
+                line-height: 1.1;
+            }
+            /* Price Font Size */
+            .product-info p.price {
+                font-size: 0.9em;
+                margin: 1px 0;
+            }
+            /* Rating Icons Size */
+            .product-info .rating i {
+                font-size: 0.7em;
+                margin: 0 0.3px;
+            }
+            /* Actions Buttons */
+            .product-info .actions {
+                flex-direction: column;
+                gap: 4px;
+                width: 100%;
+                align-items: center;
+            }
+            .product-info .actions button {
+                padding: 5px 8px;
+                font-size: 0.75em;
+                width: 100%;
+                box-sizing: border-box;
+                box-shadow: 0 2px 6px rgba(0, 123, 255, 0.3);
+            }
+            /* Badge Size on Mobile */
+            .product-badge {
+                padding: 4px 6px;
+                font-size: 0.7em;
             }
         }
 
@@ -553,60 +544,27 @@
             overflow: hidden;
         }
 
-        /* Scaling for active item content */
+        /* Active Item Content Scaling */
         .item-content {
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            margin-top: 10px; /* Added margin-top to shift content downward */
+            margin-top: 10px;
         }
         .carousel-item.active .item-content {
-            transform: scale(1.05); /* Slightly scale the content */
+            transform: scale(1.05);
         }
-
-        /* Description Area Styles */
-        .description-area {
-            width: 100%;
-            max-width: 400px;
-            background: #ffffff;
-            padding: 18px; /* Slightly reduced padding */
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            transition: opacity 0.5s ease, transform 0.3s ease;
-        }
-        .description-area.hidden {
-            opacity: 0;
-            transform: translateY(20px);
-            pointer-events: none;
-        }
-        .description-area.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        .description-area h2 {
-            margin-bottom: 8px; /* Reduced margin */
-            font-size: 1.4em; /* Slightly reduced font size */
-            color: #007bff;
-            font-family: 'Anton', sans-serif; /* Apply sports-themed font */
-        }
-        .description-area p {
-            font-size: 0.95em; /* Slightly reduced font size */
-            color: #555;
-            line-height: 1.4; /* Improved readability */
-        }
-
     </style>
 </head>
 <body>
     <div id="app-wrapper">
         <div id="app" @keydown.esc="closeMenu" tabindex="0">
             <!-- Logo -->
-            <div class="logo">
+            <div class="logo fixed">
                 <img src="./images/logo2.png" alt="AZ Sports Logo">
             </div>
 
             <!-- Navigation Circle -->
-            <div class="nav-circle" @click="toggleMenu" aria-label="Open Navigation Menu" role="button" tabindex="0">
-                <i class="fas fa-bars" style="color: white;"></i>
+            <div class="nav-circle fixed" @click="toggleMenu" aria-label="Open Navigation Menu" role="button" tabindex="0">
+                <i class="fas fa-bars"></i>
             </div>
 
             <!-- Menu Overlay -->
@@ -622,10 +580,10 @@
                 <div v-for="(item, index) in navItems" 
                      :key="item.name" 
                      :class="['menu-item', { show: menuOpen }]" 
-                     :style="[getMenuItemStyle(index), { '--menu-index': index }]" 
+                     :style="getMenuItemStyle(index)" 
                      tabindex="0" 
                      @keydown.enter="scrollToSection(item.path)">
-                    <a href="#" @click.prevent="scrollToSection(item.path)" style="color: inherit; text-decoration: none; display: flex; flex-direction: column; align-items: center;">
+                    <a href="#" @click.prevent="scrollToSection(item.path)" class="menu-link" style="color: inherit; text-decoration: none; display: flex; flex-direction: column; align-items: center;">
                         <i :class="item.icon"></i>
                         <span class="menu-label">{{ item.name }}</span>
                     </a>
@@ -677,7 +635,6 @@
                                 </div>
                                 <div class="actions">
                                     <button @click.stop="addToCart(product)">Add to Cart</button>
-                                    <!-- Changed "View Details" to "Buy Now" -->
                                     <button @click.stop="buyNow(product)">Buy Now</button>
                                 </div>
                             </div>
@@ -706,8 +663,7 @@
             </div>
 
             <!-- Product Modal (Optional) -->
-            <!-- If you still want to keep the modal, you can leave it; otherwise, you can remove it -->
-            <div v-if="showModal" class="product-modal" @click="closeModal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+            <div v-if="showModal" class="product-modal active" @click="closeModal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
                 <div class="modal-content" @click.stop>
                     <h2 id="modal-title">{{ selectedProduct.name }}</h2>
                     <p>{{ selectedProduct.price }}</p>
@@ -723,6 +679,7 @@
         const { createApp, ref, onMounted, watch, onBeforeUnmount } = Vue;
         createApp({
             setup() {
+                // Reactive Variables
                 const menuOpen = ref(false);
                 const navItems = ref([
                     { name: 'Home', path: '#home', icon: 'fas fa-home' },
@@ -794,49 +751,69 @@
                     isMobile.value = window.innerWidth <= 768;
                 };
 
+                // Event Listener for Window Resize
                 window.addEventListener('resize', updateIsMobile);
 
-                const calculatePosition = (index, totalItems) => {
-                    const angle = (360 / totalItems) * index - 90;
+                // Watch for menuOpen to toggle body class
+                watch(menuOpen, (newVal) => {
+                    document.body.classList.toggle('menu-open', newVal);
+                });
+
+                // Menu Toggle Function
+                const toggleMenu = () => { menuOpen.value = !menuOpen.value; };
+
+                // Close Menu Function
+                const closeMenu = () => { menuOpen.value = false; };
+
+                // Close Modal Function
+                const closeModal = () => { showModal.value = false; };
+
+                // Scroll to Section Function
+                const scrollToSection = (hash) => {
+                    const element = document.querySelector(hash);
+                    if (element) {
+                        element.scrollIntoView({ behavior: 'smooth' });
+                        menuOpen.value = false;
+                    }
+                };
+
+                // Get Menu Item Style Function
+                const getMenuItemStyle = (index) => {
+                    if (isMobile.value) return { transform: 'none' };
+                    const total = navItems.value.length;
+                    const angle = (360 / total) * index - 90;
                     const radius = 200;
-                    const x = radius * Math.cos((angle * Math.PI) / 180);
-                    const y = radius * Math.sin((angle * Math.PI) / 180);
+                    const x = radius * Math.cos(angle * Math.PI / 180);
+                    const y = radius * Math.sin(angle * Math.PI / 180);
                     return { transform: `translate(${x}px, ${y}px)` };
                 };
 
-                const getMenuItemStyle = (index) => {
-                    if (isMobile.value) {
-                        return { transform: 'none' };
-                    }
-                    return calculatePosition(index, navItems.value.length);
-                };
-
-                const toggleMenu = () => { menuOpen.value = !menuOpen.value; };
-
+                // Get Carousel Item Style Function
                 const getItemStyle = (index) => {
                     const angle = (360 / products.value.length) * index + rotationAngle.value;
-                    const zIndex = Math.round((Math.cos((angle * Math.PI) / 180) + 1) * 5);
+                    const zIndex = Math.round((Math.cos(angle * Math.PI / 180) + 1) * 5);
                     return { transform: `rotateY(${angle}deg) translateZ(300px)`, zIndex };
                 };
 
+                // Rotate Carousel Function
                 const rotateCarousel = (direction) => {
                     rotationAngle.value += direction * (360 / products.value.length);
                     activeIndex.value = (activeIndex.value + direction + products.value.length) % products.value.length;
-                    updateSelectedProduct();
+                    selectedProduct.value = products.value[activeIndex.value];
                 };
 
+                // Handle Mouse Wheel for Carousel
                 const handleMouseWheel = (event) => {
                     event.preventDefault();
                     rotateCarousel(event.deltaY > 0 ? 1 : -1);
                 };
 
+                // Drag Functions for Carousel
                 const startDrag = (event) => {
                     isDragging = true;
                     startX = event.clientX || event.touches[0].clientX;
                 };
-
                 const endDrag = () => { isDragging = false; };
-
                 const onDrag = (event) => {
                     if (!isDragging) return;
                     const currentX = event.clientX || event.touches[0].clientX;
@@ -847,58 +824,29 @@
                     }
                 };
 
-                const showProductDetails = (product) => {
-                    selectedProduct.value = product;
-                    showModal.value = true;
-                };
-
-                const closeModal = () => { showModal.value = false; };
-
+                // Autoplay Functions
                 const startAutoplay = () => {
                     autoplayInterval = setInterval(() => { rotateCarousel(1); }, 3000);
                 };
-
                 const pauseAutoplay = () => { clearInterval(autoplayInterval); };
                 const resumeAutoplay = () => { if (autoplay.value) startAutoplay(); };
-
                 const toggleAutoplay = () => {
                     autoplay.value = !autoplay.value;
                     autoplay.value ? startAutoplay() : pauseAutoplay();
                 };
 
-                const closeMenu = () => {
-                    if (menuOpen.value) {
-                        menuOpen.value = false;
-                    }
+                // Buy Now Function
+                const buyNow = (product) => {
+                    addToCart(product);
+                    alert(`Proceeding to purchase ${product.name} for ${product.price}.`);
                 };
 
-                const scrollToSection = (hash) => {
-                    const element = document.querySelector(hash);
-                    if (element) {
-                        element.scrollIntoView({ behavior: 'smooth' });
-                        menuOpen.value = false;
-                    }
-                };
-
+                // Add to Cart Function
                 const addToCart = (product) => {
                     alert(`${product.name} has been added to your cart.`);
                 };
 
-                // New Method: Buy Now
-                const buyNow = (product) => {
-                    // Add to cart
-                    addToCart(product);
-                    // Redirect to checkout or display a confirmation
-                    // For demonstration, we'll use an alert
-                    alert(`Proceeding to purchase ${product.name} for ${product.price}.`);
-                    // You can replace the above alert with actual navigation to a checkout page
-                    // e.g., window.location.href = '/checkout';
-                };
-
-                watch(menuOpen, (newValue) => {
-                    document.body.classList.toggle('menu-open', newValue);
-                });
-
+                // Handle Mouse Move for Radial Menu
                 const handleMouseMove = (event) => {
                     const x = (event.clientX / window.innerWidth) * 100 - 50;
                     const y = (event.clientY / window.innerHeight) * 100 - 50;
@@ -906,28 +854,28 @@
                     radialMenu.style.transform = `translate(-50%, -50%) perspective(800px) rotateY(${x / 10}deg) rotateX(${-y / 10}deg)`;
                 };
 
-                // Keyboard navigation for carousel
+                // Keyboard Navigation for Carousel
                 const handleKeyDown = (event) => {
                     if (event.key === 'ArrowRight') {
-                        rotateCarousel(1); // Rotate right
+                        rotateCarousel(1);
                     } else if (event.key === 'ArrowLeft') {
-                        rotateCarousel(-1); // Rotate left
+                        rotateCarousel(-1);
                     }
                 };
 
-                // Integrate anime.js for smooth container animations
+                // Animate Carousel Container with anime.js
                 const animateContainer = () => {
                     const carouselContainer = document.querySelector('.carousel-container');
                     anime({
                         targets: carouselContainer,
                         rotateY: '+=15deg',
-                        duration: 10000, // Long duration for smooth rotation
+                        duration: 10000,
                         easing: 'linear',
                         loop: true
                     });
                 };
 
-                // Function to animate carousel item on click
+                // Animate Carousel Item on Click
                 const animateCarouselItem = (element) => {
                     anime({
                         targets: element,
@@ -937,48 +885,36 @@
                     });
                 };
 
-                // Add method to go to a specific index
-                const goToIndex = (index) => {
-                    const direction = index > activeIndex.value ? 1 : -1;
-                    rotateCarousel(direction);
-                    activeIndex.value = index;
-                    updateSelectedProduct();
-                };
-
-                const rotateContainer = (direction) => {
-                    const carouselContainer = document.querySelector('.carousel-container');
-                    const angle = direction === 'left' ? '-=15deg' : '+=15deg';
-                    anime({
-                        targets: carouselContainer,
-                        rotateY: angle,
-                        duration: 1000,
-                        easing: 'easeInOutSine'
-                    });
-                };
-
+                // Update Selected Product Function
                 const updateSelectedProduct = () => {
                     selectedProduct.value = products.value[activeIndex.value];
                 };
 
+                // Watch for menuOpen to toggle body class
+                watch(menuOpen, (newVal) => {
+                    document.body.classList.toggle('menu-open', newVal);
+                });
+
+                // Lifecycle Hooks
                 onMounted(() => {
                     window.addEventListener('keydown', handleKeyDown);
                     if (autoplay.value) startAutoplay();
-                    animateContainer(); // Start container animation
-                    updateSelectedProduct(); // Initialize selected product
+                    animateContainer();
+                    updateSelectedProduct();
                 });
 
                 onBeforeUnmount(() => {
                     window.removeEventListener('keydown', handleKeyDown);
+                    window.removeEventListener('resize', updateIsMobile);
                     clearInterval(autoplayInterval);
                 });
 
                 return {
-                    menuOpen, navItems, products, getMenuItemStyle, toggleMenu, getItemStyle,
-                    handleMouseWheel, startDrag, endDrag, onDrag, showProductDetails, closeModal,
-                    activeIndex, showModal, selectedProduct, autoplay, toggleAutoplay,
-                    pauseAutoplay, resumeAutoplay, closeMenu, scrollToSection, addToCart,
-                    rotateCarousel, handleMouseMove, animateCarouselItem, goToIndex, rotateContainer,
-                    buyNow // Expose buyNow method to the template
+                    menuOpen, navItems, products, toggleMenu, getMenuItemStyle, getItemStyle,
+                    handleMouseWheel, startDrag, endDrag, onDrag, buyNow, addToCart,
+                    showModal, selectedProduct, autoplay, toggleAutoplay,
+                    handleMouseMove, scrollToSection, closeMenu, closeModal,
+                    animateCarouselItem, rotateCarousel, updateSelectedProduct
                 };
             }
         }).mount('#app');
