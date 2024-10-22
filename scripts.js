@@ -1,4 +1,5 @@
 const { createApp, ref, onMounted, watch, onBeforeUnmount } = Vue;
+
 createApp({
     setup() {
         // Reactive Variables
@@ -101,7 +102,7 @@ createApp({
                     }
                 });
             } else {
-                // Optionally, reset menu item positions or styles when menu closes
+                // Reset menu item positions or styles when menu closes
                 navItems.value.forEach((item, index) => {
                     const menuItem = document.querySelectorAll('.menu-item')[index];
                     if (menuItem) {
@@ -171,12 +172,12 @@ createApp({
         // Drag Functions for Carousel
         const startDrag = (event) => {
             isDragging = true;
-            startX = event.clientX || event.touches[0].clientX;
+            startX = event.clientX || (event.touches && event.touches[0].clientX);
         };
         const endDrag = () => { isDragging = false; };
         const onDrag = (event) => {
             if (!isDragging) return;
-            const currentX = event.clientX || event.touches[0].clientX;
+            const currentX = event.clientX || (event.touches && event.touches[0].clientX);
             const delta = currentX - startX;
             if (Math.abs(delta) > 50) {
                 rotateCarousel(delta > 0 ? -1 : 1);
@@ -250,18 +251,108 @@ createApp({
             selectedProduct.value = products.value[activeIndex.value];
         };
 
+        // Initialize tsParticles
+        const initParticles = () => {
+            tsParticles.load("tsparticles", {
+                fpsLimit: 60,
+                background: {
+                    color: {
+                        value: "transparent",
+                    },
+                },
+                particles: {
+                    number: {
+                        value: 50,
+                        density: {
+                            enable: true,
+                            area: 800,
+                        },
+                    },
+                    color: {
+                        value: "#ffffff",
+                    },
+                    shape: {
+                        type: "circle",
+                    },
+                    opacity: {
+                        value: 0.5,
+                        random: true,
+                    },
+                    size: {
+                        value: 3,
+                        random: true,
+                    },
+                    move: {
+                        enable: true,
+                        speed: 1,
+                        direction: "none",
+                        random: false,
+                        straight: false,
+                        outModes: "out",
+                    },
+                },
+                interactivity: {
+                    events: {
+                        onHover: {
+                            enable: true,
+                            mode: "repulse",
+                        },
+                        onClick: {
+                            enable: true,
+                            mode: "push",
+                        },
+                        resize: true,
+                    },
+                    modes: {
+                        repulse: {
+                            distance: 100,
+                            duration: 0.4,
+                        },
+                        push: {
+                            quantity: 4,
+                        },
+                    },
+                },
+                detectRetina: true,
+            });
+        };
+
+        // Typewriter Effect for Hero Title
+        const initTypewriter = () => {
+            gsap.registerPlugin(TextPlugin);
+            gsap.fromTo(".hero-title", 
+                { text: "" }, 
+                { 
+                    text: "Elevate Your Game", 
+                    duration: 3, 
+                    ease: "none",
+                    delay: 0.5 
+                }
+            );
+        };
+
         // Lifecycle Hooks
         onMounted(() => {
             window.addEventListener('keydown', handleKeyDown);
+            window.addEventListener('touchstart', handleTouchStart, { passive: false });
+            window.addEventListener('touchend', handleTouchEnd, { passive: false });
+            window.addEventListener('touchmove', handleTouchMove, { passive: false });
+
             if (autoplay.value) startAutoplay();
             animateContainer();
             updateSelectedProduct();
 
-            // Initialize GSAP ScrollTrigger for Hero Section
-            gsap.registerPlugin(ScrollTrigger);
+            // Initialize tsParticles
+            initParticles();
 
-            // Animate Hero Background Image
-            gsap.to(".hero-background", {
+            // Initialize Typewriter Effect
+            initTypewriter();
+
+            // Initialize GSAP ScrollTrigger for Parallax Effects
+            gsap.registerPlugin(ScrollTrigger, TextPlugin);
+
+            // Animate Hero Background Image (e.g., slight scale for parallax)
+            gsap.to(".hero-section", {
                 scale: 1.05,
                 duration: 20,
                 repeat: -1,
@@ -269,34 +360,58 @@ createApp({
                 ease: "sine.inOut"
             });
 
-            // Fade In Animations for Hero Foreground Elements
-            gsap.from(".hero-foreground h1", {
-                opacity: 0,
+            // Parallax Effect for Hero Sections
+            gsap.to(".hero-section", {
                 y: -50,
-                duration: 1,
-                delay: 0.5
+                ease: "none",
+                scrollTrigger: {
+                    trigger: ".hero-section",
+                    start: "top top",
+                    end: "bottom top",
+                    scrub: true
+                }
             });
 
-            gsap.from(".hero-foreground p", {
-                opacity: 0,
-                y: 50,
-                duration: 1,
-                delay: 1
-            });
-
-            gsap.from(".hero-foreground button", {
-                opacity: 0,
-                scale: 0.8,
-                duration: 1,
-                delay: 1.5
+            gsap.to(".hero-foreground", {
+                y: 20,
+                ease: "none",
+                scrollTrigger: {
+                    trigger: ".hero-section",
+                    start: "top top",
+                    end: "bottom top",
+                    scrub: true
+                }
             });
         });
 
         onBeforeUnmount(() => {
             window.removeEventListener('keydown', handleKeyDown);
             window.removeEventListener('resize', updateIsMobile);
+            window.removeEventListener('touchstart', handleTouchStart);
+            window.removeEventListener('touchend', handleTouchEnd);
+            window.removeEventListener('touchmove', handleTouchMove);
             clearInterval(autoplayInterval);
         });
+
+        // Touch Event Handlers for Mobile Carousel Swiping
+        const handleTouchStart = (event) => {
+            if (!isMobile.value) return;
+            isDragging = true;
+            startX = event.touches[0].clientX;
+        };
+        const handleTouchEnd = (event) => {
+            if (!isMobile.value) return;
+            isDragging = false;
+        };
+        const handleTouchMove = (event) => {
+            if (!isMobile.value || !isDragging) return;
+            const currentX = event.touches[0].clientX;
+            const delta = currentX - startX;
+            if (Math.abs(delta) > 50) {
+                rotateCarousel(delta > 0 ? -1 : 1);
+                startX = currentX;
+            }
+        };
 
         return {
             menuOpen, navItems, products, toggleMenu, getMenuItemStyle, getItemStyle,
