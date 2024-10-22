@@ -10,13 +10,16 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     <!-- Google Fonts: Anton for product names, Roboto Condensed for other texts -->
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
-    <!-- Include GSAP and ScrollTrigger -->
+    <!-- Include GSAP, ScrollTrigger, and TextPlugin -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/TextPlugin.min.js"></script>
     <!-- Use the production build of Vue.js -->
     <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
     <!-- Include anime.js for additional animations -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <!-- Include tsParticles for Particle Effects -->
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.3.3/tsparticles.bundle.min.js"></script>
 
     <!-- Link to External CSS File -->
     <link rel="stylesheet" href="styles.css">
@@ -51,21 +54,33 @@
                      tabindex="0" 
                      @keydown.enter="scrollToSection(item.path)"
                      >
-                    <a href="#" @click.prevent="scrollToSection(item.path)" class="menu-link" style="color: inherit; text-decoration: none; display: flex; flex-direction: column; align-items: center;">
+                    <a href="#" @click.prevent="scrollToSection(item.path)" class="menu-link" aria-label="Navigate to {{ item.name }}">
                         <i :class="item.icon"></i>
                         <span class="menu-label">{{ item.name }}</span>
                     </a>
                 </div>
             </div>
 
-            <!-- Parallax Hero Section -->
-            <section class="hero-section">
-                <div class="hero-layer hero-background"></div>
-                <!-- Removed hero-midground layer -->
+            <!-- Parallax Hero Section with Background Image and Particles -->
+            <section class="hero-section" id="home">
+                <!-- Particle Background -->
+                <div id="tsparticles"></div>
+
+                <!-- Overlay -->
+                <div class="hero-layer hero-overlay"></div>
+
+                <!-- Foreground Content -->
                 <div class="hero-layer hero-foreground">
-                    <h1>Elevate Your Game</h1>
-                    <p>Experience unmatched comfort and performance</p>
-                    <button @click="scrollToSection('#carousel')">Explore Products</button>
+                    <h1 class="hero-title">Elevate Your Game</h1>
+                    <p class="hero-subtitle">Experience unmatched comfort and performance</p>
+                    <button @click="scrollToSection('#carousel')" aria-label="Explore our products">Explore Products</button>
+                </div>
+
+                <!-- Scroll Indicator -->
+                <div class="scroll-indicator" @click="scrollToSection('#carousel')" aria-label="Scroll to products">
+                    <span></span>
+                    <span></span>
+                    <span></span>
                 </div>
             </section>
 
@@ -113,8 +128,8 @@
                                     <i class="fas fa-star" v-for="n in 5" :key="n"></i>
                                 </div>
                                 <div class="actions">
-                                    <button @click.stop="addToCart(product)">Add to Cart</button>
-                                    <button @click.stop="buyNow(product)">Buy Now</button>
+                                    <button @click.stop="addToCart(product)" aria-label="Add {{ product.name }} to cart">Add to Cart</button>
+                                    <button @click.stop="buyNow(product)" aria-label="Buy {{ product.name }} now">Buy Now</button>
                                 </div>
                             </div>
                         </div>
@@ -148,7 +163,7 @@
                     <img :src="selectedProduct.image" :alt="selectedProduct.name" class="modal-image">
                     <p class="price">{{ selectedProduct.price }}</p>
                     <p>{{ selectedProduct.description }}</p>
-                    <button @click="closeModal">Close</button>
+                    <button @click="closeModal" aria-label="Close modal">Close</button>
                 </div>
             </div>
         </div>
