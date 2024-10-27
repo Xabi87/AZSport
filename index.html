@@ -34,10 +34,10 @@
         :root {
             --primary-color: #121212; /* Dark Background */
             --secondary-color: #1f1f1f; /* Darker Gray */
-            --accent-color: #00e5ff; /* Neon Blue */
+            --accent-color: #1E90FF; /* Updated to your specified blue color */
             --text-color: #e0e0e0; /* Light Gray */
             --white: #FFFFFF;
-            --badge-color: #ff4081; /* Neon Pink */
+            --badge-color: #FF69B4; /* Adjusted badge color to complement new blue */
             --shadow-color: rgba(0, 0, 0, 0.7);
         }
 
@@ -285,13 +285,13 @@
             font-weight: 600;
             cursor: pointer;
             transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
-            box-shadow: 0 4px 15px rgba(0, 229, 255, 0.4);
+            box-shadow: 0 4px 15px rgba(30, 144, 255, 0.4);
         }
 
         .hero-content .cta-button:hover {
-            background: #00b8d4;
+            background: #007FFF; /* Updated hover color */
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0, 229, 255, 0.5);
+            box-shadow: 0 6px 20px rgba(30, 144, 255, 0.5);
         }
 
         /* Carousel and Description Container */
@@ -350,7 +350,7 @@
             transform-origin: center;
             border-radius: 15px;
             background: var(--secondary-color);
-            border: 2px solid #00e5ff;
+            border: 2px solid var(--accent-color);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.7);
             opacity: 0.85;
             transition: transform 0.6s cubic-bezier(0.25,1,0.5,1), opacity 0.5s, box-shadow 0.5s;
@@ -363,14 +363,14 @@
         }
 
         .carousel-item.active {
-            box-shadow: 0 14px 35px rgba(0, 229, 255, 0.6);
+            box-shadow: 0 14px 35px rgba(30, 144, 255, 0.6);
             z-index: 2;
             opacity: 1;
         }
 
         .carousel-item:hover {
             transform: translateZ(220px) scale(1.25) rotateY(5deg);
-            box-shadow: 0 18px 45px rgba(0, 229, 255, 0.7);
+            box-shadow: 0 18px 45px rgba(30, 144, 255, 0.7);
         }
 
         /* Product Image */
@@ -390,7 +390,7 @@
         .carousel-item:hover .product-image {
             transform: scale(1.08);
             border-color: var(--accent-color);
-            box-shadow: 0 8px 20px rgba(0, 229, 255, 0.5), 0 0 20px rgba(0, 229, 255, 0.7);
+            box-shadow: 0 8px 20px rgba(30, 144, 255, 0.5), 0 0 20px rgba(30, 144, 255, 0.7);
         }
 
         /* Product Info */
@@ -404,7 +404,7 @@
             flex-direction: column;
             justify-content: space-between;
             align-items: center;
-            border-top: 1px solid #00e5ff;
+            border-top: 1px solid var(--accent-color);
             border-radius: 0 0 15px 15px;
         }
 
@@ -427,7 +427,7 @@
         }
 
         .product-info .rating {
-            color: #ffea00;
+            color: #FFD700; /* Gold color for stars */
             margin: 3px 0;
             font-size: 0.85em;
         }
@@ -449,16 +449,16 @@
             color: var(--primary-color);
             font-size: 0.8em;
             font-weight: 600;
-            box-shadow: 0 4px 10px rgba(0, 229, 255, 0.4);
+            box-shadow: 0 4px 10px rgba(30, 144, 255, 0.4);
             transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
             border: none;
             cursor: pointer;
         }
 
         .product-info .actions button:hover {
-            background: #00b8d4;
+            background: #007FFF; /* Updated hover color */
             transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(0, 229, 255, 0.5);
+            box-shadow: 0 6px 15px rgba(30, 144, 255, 0.5);
         }
 
         /* Badge Styles */
@@ -472,12 +472,12 @@
             font-size: 0.75em;
             border-radius: 8px;
             animation: badgePulse 1.5s infinite ease-in-out;
-            box-shadow: 0 0 10px rgba(255, 64, 129, 0.5);
+            box-shadow: 0 0 10px rgba(255, 105, 180, 0.5);
         }
 
         @keyframes badgePulse {
-            0%, 100% { transform: scale(1); box-shadow: 0 0 5px rgba(255,64,129,0.4); }
-            50% { transform: scale(1.1); box-shadow: 0 0 15px rgba(255,64,129,0.7); }
+            0%, 100% { transform: scale(1); box-shadow: 0 0 5px rgba(255,105,180,0.4); }
+            50% { transform: scale(1.1); box-shadow: 0 0 15px rgba(255,105,180,0.7); }
         }
 
         /* Autoplay Toggle */
@@ -492,7 +492,7 @@
         }
 
         .autoplay-toggle:hover {
-            color: #00b8d4;
+            color: #007FFF; /* Updated hover color */
             transform: scale(1.1);
         }
 
@@ -575,7 +575,7 @@
 
         .category-card:hover {
             transform: scale(1.05);
-            box-shadow: 0 12px 30px rgba(0, 229, 255, 0.4), 0 6px 20px rgba(0, 0, 0, 0.9);
+            box-shadow: 0 12px 30px rgba(30, 144, 255, 0.4), 0 6px 20px rgba(0, 0, 0, 0.9);
         }
 
         .category-background {
@@ -589,7 +589,7 @@
         .category-content {
             position: absolute;
             inset: 0;
-            background: rgba(0, 229, 255, 0.2);
+            background: rgba(30, 144, 255, 0.2);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -1156,83 +1156,87 @@
                     gsap.to('.hero-content', { opacity: 1, y: 0, duration: 1 });
 
                     // Initialize Particles.js
-                    particlesJS('particles-js', {
-                        "particles": {
-                            "number": {
-                                "value": 80,
-                                "density": {
-                                    "enable": true,
-                                    "value_area": 800
-                                }
-                            },
-                            "color": {
-                                "value": "#00e5ff"
-                            },
-                            "shape": {
-                                "type": "circle",
-                                "stroke": {
-                                    "width": 0,
-                                    "color": "#000000"
-                                }
-                            },
-                            "opacity": {
-                                "value": 0.5,
-                                "random": false,
-                                "anim": {
-                                    "enable": false
-                                }
-                            },
-                            "size": {
-                                "value": 3,
-                                "random": true,
-                                "anim": {
-                                    "enable": false
-                                }
-                            },
-                            "line_linked": {
-                                "enable": true,
-                                "distance": 150,
-                                "color": "#00e5ff",
-                                "opacity": 0.4,
-                                "width": 1
-                            },
-                            "move": {
-                                "enable": true,
-                                "speed": 6,
-                                "direction": "none",
-                                "random": false,
-                                "straight": false,
-                                "out_mode": "out",
-                                "bounce": false
-                            }
-                        },
-                        "interactivity": {
-                            "detect_on": "canvas",
-                            "events": {
-                                "onhover": {
-                                    "enable": true,
-                                    "mode": "grab"
-                                },
-                                "onclick": {
-                                    "enable": true,
-                                    "mode": "push"
-                                },
-                                "resize": true
-                            },
-                            "modes": {
-                                "grab": {
-                                    "distance": 140,
-                                    "line_linked": {
-                                        "opacity": 1
+                    if (typeof particlesJS !== 'undefined') {
+                        particlesJS('particles-js', {
+                            "particles": {
+                                "number": {
+                                    "value": 80,
+                                    "density": {
+                                        "enable": true,
+                                        "value_area": 800
                                     }
                                 },
-                                "push": {
-                                    "particles_nb": 4
+                                "color": {
+                                    "value": "#1E90FF" /* Updated particle color */
+                                },
+                                "shape": {
+                                    "type": "circle",
+                                    "stroke": {
+                                        "width": 0,
+                                        "color": "#000000"
+                                    }
+                                },
+                                "opacity": {
+                                    "value": 0.5,
+                                    "random": false,
+                                    "anim": {
+                                        "enable": false
+                                    }
+                                },
+                                "size": {
+                                    "value": 3,
+                                    "random": true,
+                                    "anim": {
+                                        "enable": false
+                                    }
+                                },
+                                "line_linked": {
+                                    "enable": true,
+                                    "distance": 150,
+                                    "color": "#1E90FF", /* Updated line color */
+                                    "opacity": 0.4,
+                                    "width": 1
+                                },
+                                "move": {
+                                    "enable": true,
+                                    "speed": 6,
+                                    "direction": "none",
+                                    "random": false,
+                                    "straight": false,
+                                    "out_mode": "out",
+                                    "bounce": false
                                 }
-                            }
-                        },
-                        "retina_detect": true
-                    });
+                            },
+                            "interactivity": {
+                                "detect_on": "canvas",
+                                "events": {
+                                    "onhover": {
+                                        "enable": true,
+                                        "mode": "grab"
+                                    },
+                                    "onclick": {
+                                        "enable": true,
+                                        "mode": "push"
+                                    },
+                                    "resize": true
+                                },
+                                "modes": {
+                                    "grab": {
+                                        "distance": 140,
+                                        "line_linked": {
+                                            "opacity": 1
+                                        }
+                                    },
+                                    "push": {
+                                        "particles_nb": 4
+                                    }
+                                }
+                            },
+                            "retina_detect": true
+                        });
+                    } else {
+                        console.error('Particles.js library is not loaded.');
+                    }
 
                 });
 
