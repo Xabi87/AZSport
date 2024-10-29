@@ -128,6 +128,7 @@
             width: 120px; /* Reduced width for smaller header */
             height: auto;
             cursor: pointer;
+            flex-shrink: 0;
         }
 
         #header .logo img {
@@ -144,30 +145,39 @@
         }
 
         /* Navigation Styles */
-        #header .nav {
+        .nav-left, .nav-right {
             display: flex;
             align-items: center;
-            flex-grow: 1;
-            justify-content: center;
         }
 
-        #header .nav__list {
+        .nav-left {
+            flex: 1;
+            justify-content: flex-start;
+        }
+
+        .nav-right {
+            flex: 1;
+            justify-content: flex-end;
+        }
+
+        .nav-left .nav__list,
+        .nav-right .nav__list {
+            display: flex;
             list-style: none;
-            display: flex;
-            gap: 25px; /* Reduced gap for smaller header */
-            align-items: center;
+            margin: 0;
+            padding: 0;
         }
 
-        #header .nav__item {
+        .nav__item {
             position: relative;
         }
 
-        #header .nav__link {
+        .nav__link {
             font-size: 0.95rem; /* Slightly smaller font */
             font-weight: 500;
             color: var(--text-color);
             position: relative;
-            padding: 5px 0;
+            padding: 5px 15px;
             cursor: pointer;
             transition: color 0.3s ease;
             display: flex;
@@ -175,12 +185,12 @@
             gap: 5px;
         }
 
-        #header .nav__link:hover {
+        .nav__link:hover {
             color: var(--accent-color);
         }
 
         /* Dropdown Menu Styles */
-        #header .dropdown-content {
+        .dropdown-content {
             display: none;
             position: absolute;
             top: 100%;
@@ -194,7 +204,7 @@
             overflow: hidden;
         }
 
-        #header .dropdown-content a {
+        .dropdown-content a {
             padding: 10px 16px; /* Reduced padding */
             display: block;
             color: var(--text-color);
@@ -203,13 +213,13 @@
             font-weight: 400;
         }
 
-        #header .dropdown-content a:hover {
+        .dropdown-content a:hover {
             background-color: var(--accent-color);
             color: var(--primary-color);
         }
 
         /* Show dropdown on hover */
-        #header .nav__item:hover .dropdown-content {
+        .nav__item:hover .dropdown-content {
             display: block;
         }
 
@@ -295,7 +305,7 @@
 
         /* Responsive Styles */
         @media (max-width: 1024px) {
-            #header .nav {
+            .nav-left, .nav-right {
                 display: none;
             }
 
@@ -737,6 +747,7 @@
             background-size: cover;
             background-position: center;
             transition: transform 0.3s ease;
+            background-image: url('images/menscat.png'); /* Default for all screen sizes */
         }
 
         .category-content {
@@ -941,13 +952,8 @@
             </div>
             <!-- Header -->
             <header id="header">
-                <!-- Logo -->
-                <div class="logo" @click="scrollToTop" role="button" tabindex="0" aria-label="Home">
-                    <img src="images/logo2.png" alt="AZ Sports Logo">
-                </div>
-
-                <!-- Navigation Menu -->
-                <nav class="nav">
+                <!-- Left Navigation Menu -->
+                <nav class="nav-left">
                     <ul class="nav__list" role="menubar">
                         <li class="nav__item" role="none">
                             <a href="#" class="nav__link" role="menuitem" @click="scrollToSection('#home')"><i class="fas fa-home"></i> Home</a>
@@ -968,6 +974,17 @@
                                 <a href="#" @click="scrollToSection('#womens-accessories')" role="menuitem">Accessories</a>
                             </div>
                         </li>
+                    </ul>
+                </nav>
+
+                <!-- Logo -->
+                <div class="logo" @click="scrollToTop" role="button" tabindex="0" aria-label="Home">
+                    <img src="images/logo2.png" alt="AZ Sports Logo">
+                </div>
+
+                <!-- Right Navigation Menu -->
+                <nav class="nav-right">
+                    <ul class="nav__list" role="menubar">
                         <li class="nav__item dropdown" role="none">
                             <a href="#" class="nav__link" role="menuitem" aria-haspopup="true" aria-expanded="false"><i class="fas fa-child"></i> Kids</a>
                             <div class="dropdown-content" role="menu">
@@ -1036,9 +1053,9 @@
                             <a href="#" @click="scrollToSection('#womens-accessories'); toggleMenu()" role="menuitem">Accessories</a>
                         </div>
                     </li>
-                    <li class="nav__item" role="none">
-                        <a href="#" class="nav__link" role="menuitem" @click="toggleSubMenu('kids')"><i class="fas fa-child"></i> Kids</a>
-                        <div class="dropdown-content" v-if="activeSubMenu === 'kids'">
+                    <li class="nav__item dropdown" role="none">
+                        <a href="#" class="nav__link" role="menuitem" aria-haspopup="true" aria-expanded="false"><i class="fas fa-child"></i> Kids</a>
+                        <div class="dropdown-content" role="menu">
                             <a href="#" @click="scrollToSection('#kids-t-shirts'); toggleMenu()" role="menuitem">T-Shirts</a>
                             <a href="#" @click="scrollToSection('#kids-shorts'); toggleMenu()" role="menuitem">Shorts</a>
                             <a href="#" @click="scrollToSection('#kids-accessories'); toggleMenu()" role="menuitem">Accessories</a>
@@ -1105,8 +1122,6 @@
                             <div v-if="product.badge" class="product-badge">{{ product.badge }}</div>
                             <img 
                                 :src="product.imageSmall" 
-                                :srcset="`${product.imageSmall} 480w, ${product.imageMedium} 768w, ${product.image} 1200w`" 
-                                sizes="(max-width: 480px) 100vw, (max-width: 768px) 50vw, 33vw" 
                                 :alt="product.name" 
                                 class="product-image" 
                                 loading="lazy">
@@ -1260,45 +1275,40 @@
 
                 const products = ref([
                     { 
-                        name: 'Nike Air Zoom Pegasus', 
+                        name: 'Product 1', 
                         price: '$120', 
-                        image: 'https://images.unsplash.com/photo-1600180758895-f5e1193e6dff?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60', 
-                        imageSmall: 'https://images.unsplash.com/photo-1600180758895-f5e1193e6dff?ixlib=rb-1.2.1&auto=format&fit=crop&w=480&q=60', 
-                        imageMedium: 'https://images.unsplash.com/photo-1600180758895-f5e1193e6dff?ixlib=rb-1.2.1&auto=format&fit=crop&w=768&q=60',
+                        image: 'images/car1.png', 
+                        imageSmall: 'images/car1.png', 
                         description: 'High-performance running shoes with responsive cushioning.', 
                         badge: 'New' 
                     },
                     { 
-                        name: 'Adidas Ultraboost 21', 
+                        name: 'Product 2', 
                         price: '$180', 
-                        image: 'https://images.unsplash.com/photo-1617050315526-4f752c1f324d?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60', 
-                        imageSmall: 'https://images.unsplash.com/photo-1617050315526-4f752c1f324d?ixlib=rb-1.2.1&auto=format&fit=crop&w=480&q=60', 
-                        imageMedium: 'https://images.unsplash.com/photo-1617050315526-4f752c1f324d?ixlib=rb-1.2.1&auto=format&fit=crop&w=768&q=60',
+                        image: 'images/car2.png', 
+                        imageSmall: 'images/car2.png', 
                         description: 'Boost cushioning technology for maximum comfort.' 
                     },
                     { 
-                        name: 'Puma Running Shoes', 
+                        name: 'Product 3', 
                         price: '$90', 
-                        image: 'https://images.unsplash.com/photo-1600077109437-8b8ff6de8b8e?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60', 
-                        imageSmall: 'https://images.unsplash.com/photo-1600077109437-8b8ff6de8b8e?ixlib=rb-1.2.1&auto=format&fit=crop&w=480&q=60', 
-                        imageMedium: 'https://images.unsplash.com/photo-1600077109437-8b8ff6de8b8e?ixlib=rb-1.2.1&auto=format&fit=crop&w=768&q=60',
+                        image: 'images/car3.png', 
+                        imageSmall: 'images/car3.png', 
                         description: 'Lightweight and breathable running shoes for everyday use.', 
                         badge: 'On Sale' 
                     },
                     { 
-                        name: 'Reebok Crossfit Nano', 
+                        name: 'Product 4', 
                         price: '$110', 
-                        image: 'https://images.unsplash.com/photo-1588084400017-18eec9a9e42a?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60', 
-                        imageSmall: 'https://images.unsplash.com/photo-1588084400017-18eec9a9e42a?ixlib=rb-1.2.1&auto=format&fit=crop&w=480&q=60', 
-                        imageMedium: 'https://images.unsplash.com/photo-1588084400017-18eec9a9e42a?ixlib=rb-1.2.1&auto=format&fit=crop&w=768&q=60',
+                        image: 'images/car4.png', 
+                        imageSmall: 'images/car4.png', 
                         description: 'Designed for high-intensity crossfit training.' 
                     },
                     { 
-                        name: 'Under Armour Hovr', 
+                        name: 'Product 5', 
                         price: '$130', 
-                        image: 'https://images.unsplash.com/photo-1583436266219-2dbf3c8c82c1?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60', 
-                        imageSmall: 'https://images.unsplash.com/photo-1583436266219-2dbf3c8c82c1?ixlib=rb-1.2.1&auto=format&fit=crop&w=480&q=60', 
-                        imageMedium: 'https://images.unsplash.com/photo-1583436266219-2dbf3c8c82c1?ixlib=rb-1.2.1&auto=format&fit=crop&w=768&q=60',
+                        image: 'images/car5.png', 
+                        imageSmall: 'images/car5.png', 
                         description: 'Provides a zero-gravity feel to maintain energy return.' 
                     },
                 ]);
@@ -1306,23 +1316,23 @@
                 const categories = ref([
                     { 
                         name: "Mens", 
-                        image: "https://images.unsplash.com/photo-1521335629791-ce4aec67dd50?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60" 
+                        image: "images/menscat.png" 
                     },
                     { 
                         name: "Womens", 
-                        image: "https://images.unsplash.com/photo-1533006804860-5f83d3e3c47b?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60" 
+                        image: "images/womenscat.png" 
                     },
                     { 
                         name: "Kids", 
-                        image: "https://images.unsplash.com/photo-1542873536-c2074668d795?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60" 
+                        image: "images/kidscat.png" 
                     },
                     { 
                         name: "Sale", 
-                        image: "https://images.unsplash.com/photo-1611095973517-5d61be4f2539?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60" // Updated image with "Sale" graphic
+                        image: "images/salecat.png" 
                     },
                     { 
                         name: "Latest", 
-                        image: "https://images.unsplash.com/photo-1570998968741-a9dbe7f6e10c?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60" // Updated image with "Latest" graphic
+                        image: "images/latestcat.png" 
                     },
                 ]);
 
