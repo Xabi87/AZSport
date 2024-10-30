@@ -69,6 +69,7 @@
             display: flex;
             justify-content: space-between;
             width: 100%;
+            flex-wrap: wrap;
         }
 
         .top-bar .contact-info {
@@ -77,18 +78,30 @@
             gap: 20px;
         }
 
+        .top-bar .contact-info span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
         .top-bar .contact-info i {
-            margin-right: 5px;
             color: var(--accent-color);
+        }
+
+        .top-bar .social-media {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 8px;
         }
 
         .top-bar .social-media a {
             color: var(--text-color);
-            margin-left: 15px;
             transition: color 0.3s;
+            font-size: 1.1rem;
         }
 
-        .top-bar .social-media a:hover {
+        .top-bar .social-media a:hover, .top-bar .social-media a:focus {
             color: var(--accent-color);
         }
 
@@ -139,9 +152,10 @@
             transition: transform 0.3s ease, filter 0.3s ease;
         }
 
-        #header .logo img:hover {
+        #header .logo img:hover, #header .logo img:focus {
             transform: scale(1.05);
             filter: drop-shadow(4px 8px 12px rgba(0, 0, 0, 0.6));
+            outline: none;
         }
 
         /* Navigation Styles */
@@ -185,8 +199,9 @@
             gap: 5px;
         }
 
-        .nav__link:hover {
+        .nav__link:hover, .nav__link:focus {
             color: var(--accent-color);
+            outline: none;
         }
 
         /* Dropdown Menu Styles */
@@ -213,13 +228,15 @@
             font-weight: 400;
         }
 
-        .dropdown-content a:hover {
+        .dropdown-content a:hover, .dropdown-content a:focus {
             background-color: var(--accent-color);
             color: var(--primary-color);
+            outline: none;
         }
 
-        /* Show dropdown on hover */
-        .nav__item:hover .dropdown-content {
+        /* Show dropdown on hover and focus */
+        .nav__item:hover .dropdown-content,
+        .nav__item:focus-within .dropdown-content {
             display: block;
         }
 
@@ -235,6 +252,7 @@
             align-items: center;
             gap: 8px;
             z-index: 1001;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
         }
 
         .search-bar input {
@@ -259,8 +277,9 @@
             font-size: 0.9rem;
         }
 
-        .search-bar button:hover {
+        .search-bar button:hover, .search-bar button:focus {
             background-color: #007FFF;
+            outline: none;
         }
 
         /* Icons Styles */
@@ -271,6 +290,10 @@
         /* Shopping Cart Icon */
         .cart-icon a {
             position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px;
         }
 
         .cart-icon a::after {
@@ -286,6 +309,24 @@
             font-weight: bold;
         }
 
+        /* Close Button Styles */
+        .close-menu {
+            background: none;
+            border: none;
+            color: var(--text-color);
+            font-size: 1.5rem;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .close-menu:hover, .close-menu:focus {
+            color: var(--accent-color);
+            outline: none;
+        }
+
         /* Hamburger Menu Styles */
         #header .hamburger {
             display: none;
@@ -293,6 +334,7 @@
             cursor: pointer;
             gap: 5px; /* Reduced gap */
             transition: transform 0.3s ease;
+            padding: 10px;
         }
 
         #header .hamburger .bar {
@@ -301,6 +343,18 @@
             background-color: var(--text-color);
             border-radius: 4px;
             transition: all 0.3s ease;
+        }
+
+        #header .hamburger.active .bar:nth-child(2) {
+            opacity: 0;
+        }
+
+        #header .hamburger.active .bar:nth-child(1) {
+            transform: translateY(8px) rotate(45deg);
+        }
+
+        #header .hamburger.active .bar:nth-child(3) {
+            transform: translateY(-8px) rotate(-45deg);
         }
 
         /* Responsive Styles */
@@ -318,7 +372,72 @@
             }
         }
 
-        /* Mobile Navigation */
+        @media (max-width: 768px) {
+            #header {
+                padding: 8px 20px; /* Further reduced padding */
+            }
+
+            #header .logo {
+                width: 100px; /* Further reduced width */
+            }
+
+            .search-bar input {
+                width: 150px; /* Further reduced width */
+            }
+
+            .top-bar .container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .top-bar .social-media {
+                margin-top: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav__link {
+                padding: 10px 10px;
+                font-size: 1rem;
+            }
+
+            .search-bar input {
+                width: 120px;
+            }
+
+            .hero-content h1 {
+                font-size: 2rem; /* Further reduced font size */
+            }
+
+            .hero-content p {
+                font-size: 1rem; /* Further reduced font size */
+            }
+
+            .hero-content .cta-button {
+                padding: 8px 16px; /* Further reduced padding */
+                font-size: 0.85rem; /* Further reduced font size */
+            }
+
+            /* Adjust carousel height for smaller screens */
+            .product-carousel {
+                height: 400px;
+            }
+
+            /* Adjust footer padding */
+            .footer {
+                padding: 2rem 1rem;
+            }
+
+            .footer-section h3 {
+                font-size: 1.1rem;
+            }
+
+            .footer-section p, .footer-section a {
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Mobile Navigation Menu */
         #mobile-menu {
             display: none;
         }
@@ -367,27 +486,20 @@
             background-color: var(--secondary-color);
             box-shadow: none;
             padding-left: 20px;
+            display: none;
         }
 
-        #mobile-menu .nav__item:hover .dropdown-content {
+        #mobile-menu .nav__item.active .dropdown-content {
             display: block;
         }
 
         /* Adjust logo size on mobile */
         @media (max-width: 768px) {
-            #header {
-                padding: 8px 20px; /* Further reduced padding */
-            }
-
-            #header .logo {
-                width: 100px; /* Further reduced width */
-            }
-
             .search-bar input {
                 width: 150px; /* Further reduced width */
             }
         }
-        
+
         /* Hero Section Styles */
         .hero-section {
             position: relative;
@@ -400,6 +512,8 @@
             color: var(--text-color);
             text-align: center;
             background: var(--primary-color);
+            padding-top: 60px; /* Adjust for fixed header */
+            box-sizing: border-box;
         }
 
         /* Particles.js Container */
@@ -451,10 +565,11 @@
             box-shadow: 0 4px 15px rgba(30, 144, 255, 0.4);
         }
 
-        .hero-content .cta-button:hover {
+        .hero-content .cta-button:hover, .hero-content .cta-button:focus {
             background: #007FFF; /* Updated hover color */
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(30, 144, 255, 0.5);
+            outline: none;
         }
 
         /* Carousel and Description Container */
@@ -531,9 +646,10 @@
             opacity: 1;
         }
 
-        .carousel-item:hover {
+        .carousel-item:hover, .carousel-item:focus {
             transform: translateZ(220px) scale(1.25) rotateY(5deg);
             box-shadow: 0 18px 45px rgba(30, 144, 255, 0.7);
+            outline: none;
         }
 
         /* Product Image */
@@ -550,10 +666,11 @@
             box-sizing: border-box;
         }
 
-        .carousel-item:hover .product-image {
+        .carousel-item:hover .product-image, .carousel-item:focus .product-image {
             transform: scale(1.08);
             border-color: var(--accent-color);
             box-shadow: 0 8px 20px rgba(30, 144, 255, 0.5), 0 0 20px rgba(30, 144, 255, 0.7);
+            outline: none;
         }
 
         /* Product Info */
@@ -618,10 +735,11 @@
             cursor: pointer;
         }
 
-        .product-info .actions button:hover {
+        .product-info .actions button:hover, .product-info .actions button:focus {
             background: #007FFF; /* Updated hover color */
             transform: translateY(-2px);
             box-shadow: 0 6px 15px rgba(30, 144, 255, 0.5);
+            outline: none;
         }
 
         /* Badge Styles */
@@ -654,9 +772,10 @@
             transition: color 0.3s, transform 0.3s;
         }
 
-        .autoplay-toggle:hover {
+        .autoplay-toggle:hover, .autoplay-toggle:focus {
             color: #007FFF; /* Updated hover color */
             transform: scale(1.1);
+            outline: none;
         }
 
         /* Description Area */
@@ -736,9 +855,10 @@
             cursor: pointer;
         }
 
-        .category-card:hover {
+        .category-card:hover, .category-card:focus-within {
             transform: scale(1.05);
             box-shadow: 0 12px 30px rgba(30, 144, 255, 0.4), 0 6px 20px rgba(0, 0, 0, 0.9);
+            outline: none;
         }
 
         .category-background {
@@ -762,7 +882,8 @@
             transition: opacity 0.3s ease;
         }
 
-        .category-card:hover .category-content {
+        .category-card:hover .category-content,
+        .category-card:focus-within .category-content {
             opacity: 1;
         }
 
@@ -831,8 +952,9 @@
             transition: color 0.3s;
         }
 
-        .footer-section a:hover {
+        .footer-section a:hover, .footer-section a:focus {
             color: var(--accent-color);
+            outline: none;
         }
 
         .social-icons {
@@ -854,9 +976,10 @@
             transition: color 0.3s, transform 0.3s;
         }
 
-        .social-icons a:hover {
+        .social-icons a:hover, .social-icons a:focus {
             color: var(--accent-color);
             transform: scale(1.2);
+            outline: none;
         }
 
         .footer-bottom {
@@ -927,8 +1050,9 @@
             transition: background 0.3s;
         }
 
-        .product-modal button:hover {
+        .product-modal button:hover, .product-modal button:focus {
             background: #007FFF;
+            outline: none;
         }
     </style>
 </head>
@@ -979,7 +1103,7 @@
 
                 <!-- Logo -->
                 <div class="logo" @click="scrollToTop" role="button" tabindex="0" aria-label="Home">
-                    <img src="images/logo2.png" alt="AZ Sports Logo">
+                    <img src="images/logo2.png" alt="AZ Sports Logo" loading="lazy">
                 </div>
 
                 <!-- Right Navigation Menu -->
@@ -1005,15 +1129,15 @@
                         </li>
                         <!-- Shopping Cart Icon -->
                         <li class="nav__item cart-icon" role="none">
-                            <a href="#" class="nav__link" role="menuitem" data-count="0"><i class="fas fa-shopping-cart"></i></a>
+                            <a href="#" class="nav__link" role="menuitem" data-count="0" aria-label="Shopping Cart"><i class="fas fa-shopping-cart"></i></a>
                         </li>
                     </ul>
                 </nav>
 
                 <!-- Search Bar -->
                 <div class="search-bar" v-if="searchOpen">
-                    <input type="text" placeholder="Search..." v-model="searchQuery" @keyup.enter="performSearch">
-                    <button @click="performSearch"><i class="fas fa-search"></i></button>
+                    <input type="text" placeholder="Search..." v-model="searchQuery" @keyup.enter="performSearch" aria-label="Search">
+                    <button @click="performSearch" aria-label="Search Button"><i class="fas fa-search"></i></button>
                 </div>
 
                 <!-- Hamburger Menu -->
@@ -1025,6 +1149,7 @@
                     tabindex="0" 
                     aria-label="Toggle Navigation Menu" 
                     :aria-expanded="menuOpen"
+                    :class="{ active: menuOpen }"
                 >
                     <span class="bar"></span>
                     <span class="bar"></span>
@@ -1032,47 +1157,51 @@
                 </div>
             </header>
             <!-- Mobile Navigation Menu -->
-            <nav id="mobile-menu" :class="{ 'active': menuOpen }">
+            <nav id="mobile-menu" :class="{ 'active': menuOpen }" aria-hidden="!menuOpen">
+                <!-- Close Button -->
+                <button 
+                    class="close-menu" 
+                    @click="toggleMenu" 
+                    aria-label="Close Navigation Menu"
+                >
+                    <i class="fas fa-times"></i>
+                </button>
                 <ul>
                     <li class="nav__item" role="none">
-                        <a href="#" class="nav__link" role="menuitem" @click="scrollToSection('#home'); toggleMenu()"><i class="fas fa-home"></i> Home</a>
+                        <a href="#" class="nav__link" role="menuitem" @click="scrollToSection('#home'); toggleMenu()" tabindex="0"><i class="fas fa-home"></i> Home</a>
                     </li>
                     <li class="nav__item" role="none">
-                        <a href="#" class="nav__link" role="menuitem" @click="toggleSubMenu('mens')"><i class="fas fa-male"></i> Mens</a>
+                        <a href="#" class="nav__link" role="menuitem" @click="toggleSubMenu('mens')" tabindex="0"><i class="fas fa-male"></i> Mens</a>
                         <div class="dropdown-content" v-if="activeSubMenu === 'mens'">
-                            <a href="#" @click="scrollToSection('#mens-shirts'); toggleMenu()" role="menuitem">Shirts</a>
-                            <a href="#" @click="scrollToSection('#mens-pants'); toggleMenu()" role="menuitem">Pants</a>
-                            <a href="#" @click="scrollToSection('#mens-accessories'); toggleMenu()" role="menuitem">Accessories</a>
+                            <a href="#" @click="scrollToSection('#mens-shirts'); toggleMenu()" role="menuitem" tabindex="0">Shirts</a>
+                            <a href="#" @click="scrollToSection('#mens-pants'); toggleMenu()" role="menuitem" tabindex="0">Pants</a>
+                            <a href="#" @click="scrollToSection('#mens-accessories'); toggleMenu()" role="menuitem" tabindex="0">Accessories</a>
                         </div>
                     </li>
                     <li class="nav__item" role="none">
-                        <a href="#" class="nav__link" role="menuitem" @click="toggleSubMenu('womens')"><i class="fas fa-female"></i> Womens</a>
+                        <a href="#" class="nav__link" role="menuitem" @click="toggleSubMenu('womens')" tabindex="0"><i class="fas fa-female"></i> Womens</a>
                         <div class="dropdown-content" v-if="activeSubMenu === 'womens'">
-                            <a href="#" @click="scrollToSection('#womens-dresses'); toggleMenu()" role="menuitem">Dresses</a>
-                            <a href="#" @click="scrollToSection('#womens-tops'); toggleMenu()" role="menuitem">Tops</a>
-                            <a href="#" @click="scrollToSection('#womens-accessories'); toggleMenu()" role="menuitem">Accessories</a>
+                            <a href="#" @click="scrollToSection('#womens-dresses'); toggleMenu()" role="menuitem" tabindex="0">Dresses</a>
+                            <a href="#" @click="scrollToSection('#womens-tops'); toggleMenu()" role="menuitem" tabindex="0">Tops</a>
+                            <a href="#" @click="scrollToSection('#womens-accessories'); toggleMenu()" role="menuitem" tabindex="0">Accessories</a>
                         </div>
                     </li>
                     <li class="nav__item dropdown" role="none">
-                        <a href="#" class="nav__link" role="menuitem" aria-haspopup="true" aria-expanded="false"><i class="fas fa-child"></i> Kids</a>
+                        <a href="#" class="nav__link" role="menuitem" aria-haspopup="true" aria-expanded="false" tabindex="0"><i class="fas fa-child"></i> Kids</a>
                         <div class="dropdown-content" role="menu">
-                            <a href="#" @click="scrollToSection('#kids-t-shirts'); toggleMenu()" role="menuitem">T-Shirts</a>
-                            <a href="#" @click="scrollToSection('#kids-shorts'); toggleMenu()" role="menuitem">Shorts</a>
-                            <a href="#" @click="scrollToSection('#kids-accessories'); toggleMenu()" role="menuitem">Accessories</a>
+                            <a href="#" @click="scrollToSection('#kids-t-shirts'); toggleMenu()" role="menuitem" tabindex="0">T-Shirts</a>
+                            <a href="#" @click="scrollToSection('#kids-shorts'); toggleMenu()" role="menuitem" tabindex="0">Shorts</a>
+                            <a href="#" @click="scrollToSection('#kids-accessories'); toggleMenu()" role="menuitem" tabindex="0">Accessories</a>
                         </div>
                     </li>
                     <li class="nav__item" role="none">
-                        <a href="#" class="nav__link" role="menuitem" @click="scrollToSection('#sale'); toggleMenu()"><i class="fas fa-tags"></i> Sale</a>
+                        <a href="#" class="nav__link" role="menuitem" @click="scrollToSection('#sale'); toggleMenu()" tabindex="0"><i class="fas fa-tags"></i> Sale</a>
                     </li>
                     <li class="nav__item" role="none">
-                        <a href="#" class="nav__link" role="menuitem" @click="scrollToSection('#latest'); toggleMenu()"><i class="fas fa-star"></i> Latest</a>
+                        <a href="#" class="nav__link" role="menuitem" @click="scrollToSection('#latest'); toggleMenu()" tabindex="0"><i class="fas fa-star"></i> Latest</a>
                     </li>
-                    <li class="nav__item" role="none">
-                        <a href="#" class="nav__link" role="menuitem" @click="scrollToSection('#contact'); toggleMenu()"><i class="fas fa-envelope"></i> Contact</a>
-                    </li>
-                    <!-- Search Icon -->
                     <li class="nav__item search-icon" role="none">
-                        <a href="#" class="nav__link" role="menuitem" @click.prevent="toggleSearch"><i class="fas fa-search"></i> Search</a>
+                        <a href="#" class="nav__link" role="menuitem" @click.prevent="toggleSearch" tabindex="0"><i class="fas fa-search"></i> Search</a>
                     </li>
                 </ul>
             </nav>
@@ -1132,8 +1261,8 @@
                                     <i class="fas fa-star" v-for="n in 5" :key="n"></i>
                                 </div>
                                 <div class="actions">
-                                    <button @click.stop="addToCart(product)">Add to Cart</button>
-                                    <button @click.stop="buyNow(product)">Buy Now</button>
+                                    <button @click.stop="addToCart(product)" aria-label="Add {{ product.name }} to Cart">Add to Cart</button>
+                                    <button @click.stop="buyNow(product)" aria-label="Buy {{ product.name }}">Buy Now</button>
                                 </div>
                             </div>
                         </div>
@@ -1171,6 +1300,7 @@
                             class="category-card"
                             role="link"
                             aria-label="Explore {{ category.name }} collection"
+                            tabindex="0"
                         >
                             <div 
                                 class="category-background"
@@ -1233,7 +1363,7 @@
             <div v-if="showModal" class="product-modal active" @click="closeModal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
                 <div class="modal-content" @click.stop>
                     <h2 id="modal-title">{{ selectedProduct.name }}</h2>
-                    <img :src="selectedProduct.image" :alt="selectedProduct.name" class="modal-image">
+                    <img :src="selectedProduct.image" :alt="selectedProduct.name" class="modal-image" loading="lazy">
                     <p class="price">{{ selectedProduct.price }}</p>
                     <p>{{ selectedProduct.description }}</p>
                     <button @click="closeModal">Close</button>
@@ -1348,8 +1478,13 @@
                     menuOpen.value = !menuOpen.value;
                     if (menuOpen.value) {
                         document.body.classList.add('menu-open');
+                        // Trap focus within the mobile menu
+                        const firstFocusable = document.querySelector('#mobile-menu a, #mobile-menu .close-menu');
+                        firstFocusable && firstFocusable.focus();
                     } else {
                         document.body.classList.remove('menu-open');
+                        // Return focus to hamburger
+                        document.getElementById('hamburger').focus();
                     }
                 };
 
@@ -1360,9 +1495,11 @@
 
                 // Perform Search
                 const performSearch = () => {
-                    alert(`Searching for "${searchQuery.value}"`);
-                    searchQuery.value = '';
-                    searchOpen.value = false;
+                    if (searchQuery.value.trim() !== '') {
+                        alert(`Searching for "${searchQuery.value}"`);
+                        searchQuery.value = '';
+                        searchOpen.value = false;
+                    }
                 };
 
                 // Toggle Submenu in Mobile Navigation
@@ -1553,7 +1690,7 @@
                                 },
                                 "move": {
                                     "enable": true,
-                                    "speed": 6,
+                                    "speed": 2,
                                     "direction": "none",
                                     "random": false,
                                     "straight": false,
