@@ -326,7 +326,7 @@
 
             <!-- Product Modal (Optional) -->
             <div v-if="showModal" class="product-modal active" @click="closeModal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-                <div class="modal-content" @click.stop>
+                <div v-cloak class="modal-content" @click.stop>
                     <h2 id="modal-title">{{ selectedProduct.name }}</h2>
                     <img :src="selectedProduct.image" :alt="selectedProduct.name" class="modal-image" loading="lazy">
                     <p class="price">{{ selectedProduct.price }}</p>
