@@ -1,1060 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Meta and Title -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AZ Sports - Premium Sportswear</title>
-
-    <!-- SEO Meta Tags -->
     <meta name="description" content="AZ Sports offers premium sportswear that combines comfort and performance to elevate your game. Explore our exclusive collection today.">
     <meta name="keywords" content="AZ Sports, sportswear, premium sportswear, athletic clothing, performance wear">
     <meta name="author" content="AZ Sports">
 
-    <!-- External Styles and Scripts -->
-    <!-- Font Awesome -->
+    <!-- External Stylesheets -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts: Roboto, Orbitron -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
-    <!-- Tailwind CSS (Local Import Recommended for Production) -->
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-
-    <!-- Inline Styles -->
-    <style>
-        /* CSS Variables for Theming */
-        :root {
-            --primary-color: #121212; /* Dark Background */
-            --secondary-color: #1f1f1f; /* Darker Gray */
-            --accent-color: #1E90FF; /* Blue color */
-            --text-color: #e0e0e0; /* Light Gray */
-            --white: #FFFFFF;
-            --badge-color: #FF69B4; /* Badge color */
-            --shadow-color: rgba(0, 0, 0, 0.7);
-        }
-
-        /* Hide elements with v-cloak until Vue is ready */
-        .hero-content[v-cloak] {
-            display: none;
-        }
-
-        /* General Styles */
-        * {
-            box-sizing: border-box;
-        }
-        body {
-            margin: 0;
-            font-family: 'Roboto', sans-serif;
-            overflow-x: hidden;
-            background-color: var(--primary-color);
-            color: var(--text-color);
-        }
-
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
-
-        /* Top Bar Styles */
-        .top-bar {
-            background-color: var(--secondary-color);
-            color: var(--text-color);
-            font-size: 0.9rem;
-            padding: 8px 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .top-bar .container {
-            display: flex;
-            justify-content: space-between;
-            width: 100%;
-            flex-wrap: wrap;
-        }
-
-        .top-bar .contact-info {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .top-bar .contact-info span {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .top-bar .contact-info i {
-            color: var(--accent-color);
-        }
-
-        .top-bar .social-media {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-top: 8px;
-        }
-
-        .top-bar .social-media a {
-            color: var(--text-color);
-            transition: color 0.3s;
-            font-size: 1.1rem;
-        }
-
-        .top-bar .social-media a:hover, .top-bar .social-media a:focus {
-            color: var(--accent-color);
-        }
-
-        /* Header Styles with Subtle Texture */
-        #header {
-            background-color: var(--primary-color);
-            background-image: repeating-linear-gradient(
-                45deg,
-                rgba(255, 255, 255, 0.02),
-                rgba(255, 255, 255, 0.02) 20px,
-                transparent 20px,
-                transparent 40px
-            );
-            padding: 10px 40px; /* Reduced padding for smaller height */
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            border-bottom: 2px solid var(--accent-color); /* Accent border for depth */
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); /* Subtle shadow for depth */
-            transition: background-color 0.3s ease, padding 0.3s ease, border-bottom-color 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        #header.scrolled {
-            background-color: rgba(18, 18, 18, 0.95);
-            padding: 8px 40px; /* Further reduced padding on scroll */
-            backdrop-filter: blur(10px);
-            border-bottom-color: var(--accent-color);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6); /* Enhanced shadow on scroll */
-        }
-
-        /* Logo Styling with Depth */
-        #header .logo {
-            width: 120px; /* Reduced width for smaller header */
-            height: auto;
-            cursor: pointer;
-            flex-shrink: 0;
-        }
-
-        #header .logo img {
-            width: 100%;
-            height: auto;
-            object-fit: contain;
-            filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.5));
-            transition: transform 0.3s ease, filter 0.3s ease;
-        }
-
-        #header .logo img:hover, #header .logo img:focus {
-            transform: scale(1.05);
-            filter: drop-shadow(4px 8px 12px rgba(0, 0, 0, 0.6));
-            outline: none;
-        }
-
-        /* Navigation Styles */
-        .nav-left, .nav-right {
-            display: flex;
-            align-items: center;
-        }
-
-        .nav-left {
-            flex: 1;
-            justify-content: flex-start;
-        }
-
-        .nav-right {
-            flex: 1;
-            justify-content: flex-end;
-        }
-
-        .nav-left .nav__list,
-        .nav-right .nav__list {
-            display: flex;
-            list-style: none;
-            margin: 0;
-            padding: 0;
-        }
-
-        .nav__item {
-            position: relative;
-        }
-
-        .nav__link {
-            font-size: 0.95rem; /* Slightly smaller font */
-            font-weight: 500;
-            color: var(--text-color);
-            position: relative;
-            padding: 5px 15px;
-            cursor: pointer;
-            transition: color 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .nav__link:hover, .nav__link:focus {
-            color: var(--accent-color);
-            outline: none;
-        }
-
-        /* Dropdown Menu Styles */
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            top: 100%;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: var(--secondary-color);
-            min-width: 180px; /* Reduced width */
-            box-shadow: 0 4px 12px rgba(0,0,0,0.9);
-            z-index: 999;
-            border-radius: 6px;
-            overflow: hidden;
-        }
-
-        .dropdown-content a {
-            padding: 10px 16px; /* Reduced padding */
-            display: block;
-            color: var(--text-color);
-            transition: background-color 0.3s, color 0.3s;
-            font-size: 0.9rem; /* Slightly smaller font */
-            font-weight: 400;
-        }
-
-        .dropdown-content a:hover, .dropdown-content a:focus {
-            background-color: var(--accent-color);
-            color: var(--primary-color);
-            outline: none;
-        }
-
-        /* Show dropdown on hover and focus */
-        .nav__item:hover .dropdown-content,
-        .nav__item:focus-within .dropdown-content {
-            display: block;
-        }
-
-        /* Search Bar Styles */
-        .search-bar {
-            position: absolute;
-            top: 100%;
-            right: 40px;
-            background-color: var(--secondary-color);
-            padding: 8px;
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            z-index: 1001;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-        }
-
-        .search-bar input {
-            background-color: var(--primary-color);
-            border: 1px solid var(--accent-color);
-            color: var(--text-color);
-            padding: 6px;
-            border-radius: 4px;
-            outline: none;
-            width: 180px; /* Reduced width */
-            font-size: 0.9rem;
-        }
-
-        .search-bar button {
-            background-color: var(--accent-color);
-            border: none;
-            padding: 6px 10px;
-            border-radius: 4px;
-            color: var(--primary-color);
-            cursor: pointer;
-            transition: background-color 0.3s;
-            font-size: 0.9rem;
-        }
-
-        .search-bar button:hover, .search-bar button:focus {
-            background-color: #007FFF;
-            outline: none;
-        }
-
-        /* Icons Styles */
-        .nav__link i {
-            font-size: 1.1rem;
-        }
-
-        /* Shopping Cart Icon */
-        .cart-icon a {
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 8px;
-        }
-
-        .cart-icon a::after {
-            content: attr(data-count);
-            position: absolute;
-            top: -5px;
-            right: -10px;
-            background-color: var(--badge-color);
-            color: var(--primary-color);
-            border-radius: 50%;
-            padding: 2px 6px;
-            font-size: 0.7rem;
-            font-weight: bold;
-        }
-
-        /* Close Button Styles */
-        .close-menu {
-            background: none;
-            border: none;
-            color: var(--text-color);
-            font-size: 1.5rem;
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            cursor: pointer;
-            transition: color 0.3s;
-        }
-
-        .close-menu:hover, .close-menu:focus {
-            color: var(--accent-color);
-            outline: none;
-        }
-
-        /* Hamburger Menu Styles */
-        #header .hamburger {
-            display: none;
-            flex-direction: column;
-            cursor: pointer;
-            gap: 5px; /* Reduced gap */
-            transition: transform 0.3s ease;
-            padding: 10px;
-        }
-
-        #header .hamburger .bar {
-            width: 25px; /* Reduced width */
-            height: 3px; /* Reduced height */
-            background-color: var(--text-color);
-            border-radius: 4px;
-            transition: all 0.3s ease;
-        }
-
-        #header .hamburger.active .bar:nth-child(2) {
-            opacity: 0;
-        }
-
-        #header .hamburger.active .bar:nth-child(1) {
-            transform: translateY(8px) rotate(45deg);
-        }
-
-        #header .hamburger.active .bar:nth-child(3) {
-            transform: translateY(-8px) rotate(-45deg);
-        }
-
-        /* Responsive Styles */
-        @media (max-width: 1024px) {
-            .nav-left, .nav-right {
-                display: none;
-            }
-
-            #header .hamburger {
-                display: flex;
-            }
-
-            #header .search-bar {
-                right: 70px;
-            }
-        }
-
-        @media (max-width: 768px) {
-            #header {
-                padding: 8px 20px; /* Further reduced padding */
-            }
-
-            #header .logo {
-                width: 100px; /* Further reduced width */
-            }
-
-            .search-bar input {
-                width: 150px; /* Further reduced width */
-            }
-
-            .top-bar .container {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .top-bar .social-media {
-                margin-top: 10px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .nav__link {
-                padding: 10px 10px;
-                font-size: 1rem;
-            }
-
-            .search-bar input {
-                width: 120px;
-            }
-
-            .hero-content h1 {
-                font-size: 2rem; /* Further reduced font size */
-            }
-
-            .hero-content p {
-                font-size: 1rem; /* Further reduced font size */
-            }
-
-            .hero-content .cta-button {
-                padding: 8px 16px; /* Further reduced padding */
-                font-size: 0.85rem; /* Further reduced font size */
-            }
-
-            /* Adjust carousel height for smaller screens */
-            .product-carousel {
-                height: 400px;
-            }
-
-            /* Adjust footer padding */
-            .footer {
-                padding: 2rem 1rem;
-            }
-
-            .footer-section h3 {
-                font-size: 1.1rem;
-            }
-
-            .footer-section p, .footer-section a {
-                font-size: 0.9rem;
-            }
-        }
-
-        /* Mobile Navigation Menu */
-        #mobile-menu {
-            display: none;
-        }
-
-        #mobile-menu.active {
-            display: block;
-            position: fixed;
-            top: 0;
-            right: 0;
-            width: 80%;
-            height: 100%;
-            background-color: var(--secondary-color);
-            padding: 60px 20px;
-            z-index: 1000;
-            overflow-y: auto;
-            transform: translateX(100%);
-            transition: transform 0.3s ease;
-        }
-
-        #mobile-menu.active {
-            transform: translateX(0);
-        }
-
-        #mobile-menu ul {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        #mobile-menu .nav__item {
-            width: 100%;
-        }
-
-        #mobile-menu .nav__link {
-            font-size: 1.1rem; /* Slightly smaller font */
-            font-weight: 500;
-            color: var(--text-color);
-            padding: 10px 0;
-            display: block;
-            width: 100%;
-        }
-
-        #mobile-menu .dropdown-content {
-            position: static;
-            background-color: var(--secondary-color);
-            box-shadow: none;
-            padding-left: 20px;
-            display: none;
-        }
-
-        #mobile-menu .nav__item.active .dropdown-content {
-            display: block;
-        }
-
-        /* Adjust logo size on mobile */
-        @media (max-width: 768px) {
-            .search-bar input {
-                width: 150px; /* Further reduced width */
-            }
-        }
-
-        /* Hero Section Styles */
-        .hero-section {
-            position: relative;
-            width: 100%;
-            height: 100vh;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-color);
-            text-align: center;
-            background: var(--primary-color);
-            padding-top: 60px; /* Adjust for fixed header */
-            box-sizing: border-box;
-        }
-
-        /* Particles.js Container */
-        #particles-js {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-            top: 0;
-            left: 0;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 2;
-            max-width: 800px;
-            padding: 0 20px;
-            opacity: 0;
-            transform: translateY(20px);
-        }
-
-        .hero-content h1 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 2.5rem; /* Reduced font size */
-            margin-bottom: 1rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: var(--accent-color);
-            text-shadow: 0 0 10px var(--accent-color);
-        }
-
-        .hero-content p {
-            font-size: 1.1rem; /* Reduced font size */
-            margin-bottom: 1.5rem;
-            line-height: 1.6;
-            color: var(--text-color);
-        }
-
-        .hero-content .cta-button {
-            padding: 10px 20px; /* Reduced padding */
-            background: var(--accent-color);
-            color: var(--primary-color);
-            border: none;
-            border-radius: 9999px;
-            font-size: 0.95rem; /* Slightly smaller font */
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
-            box-shadow: 0 4px 15px rgba(30, 144, 255, 0.4);
-        }
-
-        .hero-content .cta-button:hover, .hero-content .cta-button:focus {
-            background: #007FFF; /* Updated hover color */
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(30, 144, 255, 0.5);
-            outline: none;
-        }
-
-        /* Carousel and Description Container */
-        #carousel-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-items: center;
-            padding: 2rem 1rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        /* Adjustments for side-by-side layout */
-        @media(min-width: 768px) {
-            #carousel-container {
-                flex-wrap: nowrap;
-            }
-
-            .product-carousel {
-                flex: 1 1 60%;
-                max-width: 600px;
-                margin-right: 20px;
-            }
-
-            .description-area {
-                flex: 1 1 35%;
-                max-width: 400px;
-                margin-top: 0;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-            }
-        }
-
-        /* Product Carousel */
-        .product-carousel {
-            position: relative;
-            width: 100%;
-            max-width: 600px;
-            height: 500px;
-            perspective: 1800px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            margin: 20px auto;
-            z-index: 1;
-        }
-
-        .carousel-item {
-            position: absolute;
-            width: 200px;
-            height: 380px;
-            transform-origin: center;
-            border-radius: 15px;
-            background: var(--secondary-color);
-            border: 2px solid var(--accent-color);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.7);
-            opacity: 0.85;
-            transition: transform 0.6s cubic-bezier(0.25,1,0.5,1), opacity 0.5s, box-shadow 0.5s;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            box-sizing: border-box;
-            cursor: pointer;
-        }
-
-        .carousel-item.active {
-            box-shadow: 0 14px 35px rgba(30, 144, 255, 0.6);
-            z-index: 2;
-            opacity: 1;
-        }
-
-        .carousel-item:hover, .carousel-item:focus {
-            transform: translateZ(220px) scale(1.25) rotateY(5deg);
-            box-shadow: 0 18px 45px rgba(30, 144, 255, 0.7);
-            outline: none;
-        }
-
-        /* Product Image */
-        .product-image {
-            width: 100%;
-            height: 180px;
-            object-fit: cover;
-            border-radius: 12px 12px 0 0;
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.7);
-            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-            background-color: rgba(255, 255, 255, 0.1);
-            margin-bottom: 0;
-            box-sizing: border-box;
-        }
-
-        .carousel-item:hover .product-image, .carousel-item:focus .product-image {
-            transform: scale(1.08);
-            border-color: var(--accent-color);
-            box-shadow: 0 8px 20px rgba(30, 144, 255, 0.5), 0 0 20px rgba(30, 144, 255, 0.7);
-            outline: none;
-        }
-
-        /* Product Info */
-        .product-info {
-            padding: 8px 12px;
-            background: var(--secondary-color);
-            text-align: center;
-            flex-grow: 1;
-            box-sizing: border-box;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            align-items: center;
-            border-top: 1px solid var(--accent-color);
-            border-radius: 0 0 15px 15px;
-        }
-
-        .product-info h3 {
-            margin: 5px 0 3px;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.2em;
-            font-weight: 400;
-            color: var(--text-color);
-            min-height: 36px;
-            line-height: 1.2;
-            text-transform: uppercase;
-        }
-
-        .product-info p.price {
-            font-size: 0.95em;
-            color: var(--accent-color);
-            font-weight: bold;
-            margin: 3px 0;
-        }
-
-        .product-info .rating {
-            color: #FFD700; /* Gold color for stars */
-            margin: 3px 0;
-            font-size: 0.85em;
-        }
-
-        .product-info .rating i {
-            margin: 0 0.3px;
-        }
-
-        .product-info .actions {
-            display: flex;
-            justify-content: center;
-            gap: 6px;
-        }
-
-        .product-info .actions button {
-            padding: 6px 10px;
-            border-radius: 6px;
-            background: var(--accent-color);
-            color: var(--primary-color);
-            font-size: 0.8em;
-            font-weight: 600;
-            box-shadow: 0 4px 10px rgba(30, 144, 255, 0.4);
-            transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
-            border: none;
-            cursor: pointer;
-        }
-
-        .product-info .actions button:hover, .product-info .actions button:focus {
-            background: #007FFF; /* Updated hover color */
-            transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(30, 144, 255, 0.5);
-            outline: none;
-        }
-
-        /* Badge Styles */
-        .product-badge {
-            position: absolute;
-            top: 8px;
-            left: 8px;
-            background: var(--badge-color);
-            color: var(--primary-color);
-            padding: 5px 7px;
-            font-size: 0.75em;
-            border-radius: 8px;
-            animation: badgePulse 1.5s infinite ease-in-out;
-            box-shadow: 0 0 10px rgba(255, 105, 180, 0.5);
-        }
-
-        @keyframes badgePulse {
-            0%, 100% { transform: scale(1); box-shadow: 0 0 5px rgba(255,105,180,0.4); }
-            50% { transform: scale(1.1); box-shadow: 0 0 15px rgba(255,105,180,0.7); }
-        }
-
-        /* Autoplay Toggle */
-        .autoplay-toggle {
-            margin-top: 15px;
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 1.5em;
-            color: var(--accent-color);
-            transition: color 0.3s, transform 0.3s;
-        }
-
-        .autoplay-toggle:hover, .autoplay-toggle:focus {
-            color: #007FFF; /* Updated hover color */
-            transform: scale(1.1);
-            outline: none;
-        }
-
-        /* Description Area */
-        .description-area {
-            width: 100%;
-            max-width: 400px;
-            background: var(--secondary-color);
-            padding: 15px; /* Reduced padding */
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.7);
-            text-align: center;
-            transition: opacity 0.5s ease, transform 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            box-sizing: border-box;
-            margin-top: 20px;
-        }
-
-        .description-area h2 {
-            margin-bottom: 8px;
-            font-size: 1.6em;
-            color: var(--accent-color);
-            font-family: 'Orbitron', sans-serif;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .description-area p {
-            font-size: 1em;
-            color: var(--text-color);
-            line-height: 1.6;
-        }
-
-        /* Category Section Styles */
-        .category-section {
-            padding: 4rem 1rem;
-            background-color: var(--primary-color);
-        }
-
-        .category-section h2 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 2rem;
-            color: var(--accent-color);
-            text-align: center;
-            margin-bottom: 2rem;
-            text-transform: uppercase;
-        }
-
-        .category-grid {
-            display: grid;
-            grid-template-columns: repeat(1, 1fr);
-            gap: 1.5rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        @media(min-width: 540px){
-            .category-grid{
-                grid-template-columns: repeat(2, 1fr); 
-            }
-        }
-
-        @media(min-width: 960px){
-            .category-grid{
-                grid-template-columns: repeat(5, 1fr); 
-            }
-        }
-
-        .category-card {
-            position: relative;
-            overflow: hidden;
-            border-radius: 1.5rem;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.7);
-            transition: transform 0.3s, box-shadow 0.3s;
-            cursor: pointer;
-        }
-
-        .category-card:hover, .category-card:focus-within {
-            transform: scale(1.05);
-            box-shadow: 0 12px 30px rgba(30, 144, 255, 0.4), 0 6px 20px rgba(0, 0, 0, 0.9);
-            outline: none;
-        }
-
-        .category-background {
-            width: 100%;
-            height: 192px;
-            background-size: cover;
-            background-position: center;
-            transition: transform 0.3s ease;
-            background-image: url('images/menscat.png'); /* Default for all screen sizes */
-        }
-
-        .category-content {
-            position: absolute;
-            inset: 0;
-            background: rgba(30, 144, 255, 0.2);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .category-card:hover .category-content,
-        .category-card:focus-within .category-content {
-            opacity: 1;
-        }
-
-        .category-name {
-            color: #ffffff;
-            font-size: 1rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 0.5rem;
-        }
-
-        .category-action {
-            color: var(--accent-color);
-            font-size: 1.125rem;
-            font-weight: 600;
-        }
-
-        /* Footer Styles */
-        .footer {
-            background-color: var(--secondary-color);
-            color: var(--text-color);
-            padding: 4rem 1rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .footer-container {
-            max-width: 1200px;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            gap: 2rem;
-        }
-
-        @media(min-width: 768px){
-            .footer-container {
-                flex-direction: row;
-                justify-content: space-between;
-            }
-        }
-
-        .footer-section {
-            flex: 1;
-            text-align: center;
-        }
-
-        @media(min-width: 768px){
-            .footer-section {
-                text-align: left;
-            }
-        }
-
-        .footer-section h3 {
-            font-size: 1.25rem;
-            margin-bottom: 1rem;
-            font-family: 'Orbitron', sans-serif;
-            color: var(--accent-color);
-            text-transform: uppercase;
-        }
-
-        .footer-section p, .footer-section a {
-            font-size: 1rem;
-            color: var(--text-color);
-            margin-bottom: 0.5rem;
-            transition: color 0.3s;
-        }
-
-        .footer-section a:hover, .footer-section a:focus {
-            color: var(--accent-color);
-            outline: none;
-        }
-
-        .social-icons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            margin-top: 1rem;
-        }
-
-        @media(min-width: 768px){
-            .social-icons {
-                justify-content: flex-start;
-            }
-        }
-
-        .social-icons a {
-            color: var(--text-color);
-            font-size: 1.2rem;
-            transition: color 0.3s, transform 0.3s;
-        }
-
-        .social-icons a:hover, .social-icons a:focus {
-            color: var(--accent-color);
-            transform: scale(1.2);
-            outline: none;
-        }
-
-        .footer-bottom {
-            margin-top: 2rem;
-            font-size: 0.9rem;
-            color: #9e9e9e;
-            text-align: center;
-        }
-
-        /* GSAP Animations */
-        .animate-fade-in {
-            opacity: 0;
-            transform: translateY(20px);
-        }
-
-        /* Product Modal Styles (Optional) */
-        .product-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.8);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 2000;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-        }
-
-        .product-modal.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .product-modal .modal-content {
-            background: var(--secondary-color);
-            padding: 20px;
-            border-radius: 10px;
-            max-width: 500px;
-            width: 90%;
-            text-align: center;
-            position: relative;
-        }
-
-        .product-modal .modal-image {
-            width: 100%;
-            height: auto;
-            border-radius: 8px;
-            margin-bottom: 15px;
-        }
-
-        .product-modal .price {
-            font-size: 1.2em;
-            color: var(--accent-color);
-            margin-bottom: 10px;
-        }
-
-        .product-modal button {
-            padding: 8px 16px;
-            background: var(--accent-color);
-            color: var(--primary-color);
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-
-        .product-modal button:hover, .product-modal button:focus {
-            background: #007FFF;
-            outline: none;
-        }
-    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div id="app-wrapper">
@@ -1074,16 +32,21 @@
                     </div>
                 </div>
             </div>
+
             <!-- Header -->
             <header id="header">
                 <!-- Left Navigation Menu -->
                 <nav class="nav-left">
                     <ul class="nav__list" role="menubar">
                         <li class="nav__item" role="none">
-                            <a href="#" class="nav__link" role="menuitem" @click="scrollToSection('#home')"><i class="fas fa-home"></i> Home</a>
+                            <a href="#" @click="scrollToSection('#home')" role="menuitem" class="nav__link">
+                                <i class="fas fa-home"></i> Home
+                            </a>
                         </li>
                         <li class="nav__item dropdown" role="none">
-                            <a href="#" class="nav__link" role="menuitem" aria-haspopup="true" aria-expanded="false"><i class="fas fa-male"></i> Mens</a>
+                            <a href="#" role="menuitem" class="nav__link" aria-expanded="false" aria-haspopup="true">
+                                <i class="fas fa-male"></i> Mens
+                            </a>
                             <div class="dropdown-content" role="menu">
                                 <a href="#" @click="scrollToSection('#mens-shirts')" role="menuitem">Shirts</a>
                                 <a href="#" @click="scrollToSection('#mens-pants')" role="menuitem">Pants</a>
@@ -1091,7 +54,9 @@
                             </div>
                         </li>
                         <li class="nav__item dropdown" role="none">
-                            <a href="#" class="nav__link" role="menuitem" aria-haspopup="true" aria-expanded="false"><i class="fas fa-female"></i> Womens</a>
+                            <a href="#" role="menuitem" class="nav__link" aria-expanded="false" aria-haspopup="true">
+                                <i class="fas fa-female"></i> Womens
+                            </a>
                             <div class="dropdown-content" role="menu">
                                 <a href="#" @click="scrollToSection('#womens-dresses')" role="menuitem">Dresses</a>
                                 <a href="#" @click="scrollToSection('#womens-tops')" role="menuitem">Tops</a>
@@ -1102,7 +67,7 @@
                 </nav>
 
                 <!-- Logo -->
-                <div class="logo" @click="scrollToTop" role="button" tabindex="0" aria-label="Home">
+                <div class="logo" role="button" @click="scrollToTop" aria-label="Home" tabindex="0">
                     <img src="images/logo2.png" alt="AZ Sports Logo" loading="lazy">
                 </div>
 
@@ -1110,7 +75,9 @@
                 <nav class="nav-right">
                     <ul class="nav__list" role="menubar">
                         <li class="nav__item dropdown" role="none">
-                            <a href="#" class="nav__link" role="menuitem" aria-haspopup="true" aria-expanded="false"><i class="fas fa-child"></i> Kids</a>
+                            <a href="#" role="menuitem" class="nav__link" aria-expanded="false" aria-haspopup="true">
+                                <i class="fas fa-child"></i> Kids
+                            </a>
                             <div class="dropdown-content" role="menu">
                                 <a href="#" @click="scrollToSection('#kids-t-shirts')" role="menuitem">T-Shirts</a>
                                 <a href="#" @click="scrollToSection('#kids-shorts')" role="menuitem">Shorts</a>
@@ -1118,18 +85,26 @@
                             </div>
                         </li>
                         <li class="nav__item" role="none">
-                            <a href="#" class="nav__link" role="menuitem" @click="scrollToSection('#sale')"><i class="fas fa-tags"></i> Sale</a>
+                            <a href="#" @click="scrollToSection('#sale')" role="menuitem" class="nav__link">
+                                <i class="fas fa-tags"></i> Sale
+                            </a>
                         </li>
                         <li class="nav__item" role="none">
-                            <a href="#" class="nav__link" role="menuitem" @click="scrollToSection('#latest')"><i class="fas fa-star"></i> Latest</a>
+                            <a href="#" @click="scrollToSection('#latest')" role="menuitem" class="nav__link">
+                                <i class="fas fa-star"></i> Latest
+                            </a>
                         </li>
                         <!-- Search Icon -->
                         <li class="nav__item search-icon" role="none">
-                            <a href="#" class="nav__link" role="menuitem" @click.prevent="toggleSearch"><i class="fas fa-search"></i></a>
+                            <a href="#" role="menuitem" class="nav__link" @click.prevent="toggleSearch">
+                                <i class="fas fa-search"></i>
+                            </a>
                         </li>
                         <!-- Shopping Cart Icon -->
                         <li class="nav__item cart-icon" role="none">
-                            <a href="#" class="nav__link" role="menuitem" data-count="0" aria-label="Shopping Cart"><i class="fas fa-shopping-cart"></i></a>
+                            <a href="#" role="menuitem" class="nav__link" aria-label="Shopping Cart" data-count="0">
+                                <i class="fas fa-shopping-cart"></i>
+                            </a>
                         </li>
                     </ul>
                 </nav>
@@ -1137,41 +112,35 @@
                 <!-- Search Bar -->
                 <div class="search-bar" v-if="searchOpen">
                     <input type="text" placeholder="Search..." v-model="searchQuery" @keyup.enter="performSearch" aria-label="Search">
-                    <button @click="performSearch" aria-label="Search Button"><i class="fas fa-search"></i></button>
+                    <button @click="performSearch" aria-label="Search Button">
+                        <i class="fas fa-search"></i>
+                    </button>
                 </div>
 
                 <!-- Hamburger Menu -->
-                <div 
-                    class="hamburger" 
-                    id="hamburger" 
-                    @click="toggleMenu" 
-                    role="button" 
-                    tabindex="0" 
-                    aria-label="Toggle Navigation Menu" 
-                    :aria-expanded="menuOpen"
-                    :class="{ active: menuOpen }"
-                >
+                <div class="hamburger" id="hamburger" role="button" @click="toggleMenu" aria-label="Toggle Navigation Menu" tabindex="0" :class="{ active: menuOpen }" :aria-expanded="menuOpen">
                     <span class="bar"></span>
                     <span class="bar"></span>
                     <span class="bar"></span>
                 </div>
             </header>
+
             <!-- Mobile Navigation Menu -->
             <nav id="mobile-menu" :class="{ 'active': menuOpen }" aria-hidden="!menuOpen">
                 <!-- Close Button -->
-                <button 
-                    class="close-menu" 
-                    @click="toggleMenu" 
-                    aria-label="Close Navigation Menu"
-                >
+                <button class="close-menu" @click="toggleMenu" aria-label="Close Navigation Menu">
                     <i class="fas fa-times"></i>
                 </button>
                 <ul>
                     <li class="nav__item" role="none">
-                        <a href="#" class="nav__link" role="menuitem" @click="scrollToSection('#home'); toggleMenu()" tabindex="0"><i class="fas fa-home"></i> Home</a>
+                        <a href="#" @click="scrollToSection('#home'); toggleMenu()" role="menuitem" tabindex="0" class="nav__link">
+                            <i class="fas fa-home"></i> Home
+                        </a>
                     </li>
                     <li class="nav__item" role="none">
-                        <a href="#" class="nav__link" role="menuitem" @click="toggleSubMenu('mens')" tabindex="0"><i class="fas fa-male"></i> Mens</a>
+                        <a href="#" @click="toggleSubMenu('mens')" role="menuitem" tabindex="0" class="nav__link">
+                            <i class="fas fa-male"></i> Mens
+                        </a>
                         <div class="dropdown-content" v-if="activeSubMenu === 'mens'">
                             <a href="#" @click="scrollToSection('#mens-shirts'); toggleMenu()" role="menuitem" tabindex="0">Shirts</a>
                             <a href="#" @click="scrollToSection('#mens-pants'); toggleMenu()" role="menuitem" tabindex="0">Pants</a>
@@ -1179,7 +148,9 @@
                         </div>
                     </li>
                     <li class="nav__item" role="none">
-                        <a href="#" class="nav__link" role="menuitem" @click="toggleSubMenu('womens')" tabindex="0"><i class="fas fa-female"></i> Womens</a>
+                        <a href="#" @click="toggleSubMenu('womens')" role="menuitem" tabindex="0" class="nav__link">
+                            <i class="fas fa-female"></i> Womens
+                        </a>
                         <div class="dropdown-content" v-if="activeSubMenu === 'womens'">
                             <a href="#" @click="scrollToSection('#womens-dresses'); toggleMenu()" role="menuitem" tabindex="0">Dresses</a>
                             <a href="#" @click="scrollToSection('#womens-tops'); toggleMenu()" role="menuitem" tabindex="0">Tops</a>
@@ -1187,7 +158,9 @@
                         </div>
                     </li>
                     <li class="nav__item dropdown" role="none">
-                        <a href="#" class="nav__link" role="menuitem" aria-haspopup="true" aria-expanded="false" tabindex="0"><i class="fas fa-child"></i> Kids</a>
+                        <a href="#" role="menuitem" tabindex="0" class="nav__link" aria-expanded="false" aria-haspopup="true">
+                            <i class="fas fa-child"></i> Kids
+                        </a>
                         <div class="dropdown-content" role="menu">
                             <a href="#" @click="scrollToSection('#kids-t-shirts'); toggleMenu()" role="menuitem" tabindex="0">T-Shirts</a>
                             <a href="#" @click="scrollToSection('#kids-shorts'); toggleMenu()" role="menuitem" tabindex="0">Shorts</a>
@@ -1195,117 +168,50 @@
                         </div>
                     </li>
                     <li class="nav__item" role="none">
-                        <a href="#" class="nav__link" role="menuitem" @click="scrollToSection('#sale'); toggleMenu()" tabindex="0"><i class="fas fa-tags"></i> Sale</a>
+                        <a href="#" @click="scrollToSection('#sale'); toggleMenu()" role="menuitem" tabindex="0" class="nav__link">
+                            <i class="fas fa-tags"></i> Sale
+                        </a>
                     </li>
                     <li class="nav__item" role="none">
-                        <a href="#" class="nav__link" role="menuitem" @click="scrollToSection('#latest'); toggleMenu()" tabindex="0"><i class="fas fa-star"></i> Latest</a>
+                        <a href="#" @click="scrollToSection('#latest'); toggleMenu()" role="menuitem" tabindex="0" class="nav__link">
+                            <i class="fas fa-star"></i> Latest
+                        </a>
                     </li>
                     <li class="nav__item search-icon" role="none">
-                        <a href="#" class="nav__link" role="menuitem" @click.prevent="toggleSearch" tabindex="0"><i class="fas fa-search"></i> Search</a>
+                        <a href="#" role="menuitem" tabindex="0" class="nav__link" @click.prevent="toggleSearch">
+                            <i class="fas fa-search"></i> Search
+                        </a>
                     </li>
                 </ul>
             </nav>
-            <!-- End of Header -->
+            <!-- End of Mobile Navigation Menu -->
 
-            <!-- Hero Section with Particles.js Animation -->
+            <!-- Hero Section -->
             <section class="hero-section" id="home">
-                <!-- Particles.js Container -->
                 <div id="particles-js"></div>
-                <!-- Hero Content -->
                 <div class="hero-content" v-cloak>
                     <h1>AZ Sports</h1>
                     <p>Where Performance Meets Style</p>
-                    <button class="cta-button" @click="scrollToSection('#carousel-container')">Explore Now</button>
+                    <button @click="scrollToSection('#carousel-container')" class="cta-button">Explore Now</button>
                 </div>
             </section>
             <!-- End of Hero Section -->
 
-            <!-- Carousel and Description Container -->
-            <main id="carousel-container" role="region" aria-label="Product Carousel and Description">
-                <!-- Carousel -->
-                <div
-                    class="product-carousel"
-                    @wheel.prevent="handleMouseWheel"
-                    @mousedown="startDrag"
-                    @mouseup="endDrag"
-                    @mousemove="onDrag"
-                    @touchstart="startDrag"
-                    @touchend="endDrag"
-                    @touchmove="onDrag"
-                    @mouseenter="pauseAutoplay"
-                    @mouseleave="resumeAutoplay"
-                >
-                    <div
-                        class="carousel-item"
-                        v-for="(product, index) in products"
-                        :key="index"
-                        :style="getItemStyle(index)"
-                        :class="{ active: index === activeIndex }"
-                        role="button"
-                        aria-label="Buy {{ product.name }}"
-                        tabindex="0"
-                        @click="buyNow(product)"
-                        @keydown.enter="buyNow(product)"
-                    >
-                        <div class="item-content">
-                            <div v-if="product.badge" class="product-badge">{{ product.badge }}</div>
-                            <img 
-                                :src="product.imageSmall" 
-                                :alt="product.name" 
-                                class="product-image" 
-                                loading="lazy">
-                            <div class="product-info">
-                                <h3>{{ product.name }}</h3>
-                                <p class="price">{{ product.price }}</p>
-                                <div class="rating">
-                                    <i class="fas fa-star" v-for="n in 5" :key="n"></i>
-                                </div>
-                                <div class="actions">
-                                    <button @click.stop="addToCart(product)" aria-label="Add {{ product.name }} to Cart">Add to Cart</button>
-                                    <button @click.stop="buyNow(product)" aria-label="Buy {{ product.name }}">Buy Now</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Description Area -->
-                <div 
-                    class="description-area visible" 
-                    v-if="selectedProduct && selectedProduct.name"
-                    aria-live="polite"
-                >
-                    <h2>{{ selectedProduct.name }}</h2>
-                    <p>{{ selectedProduct.description }}</p>
-                    <!-- Play/Pause Autoplay Button -->
-                    <button 
-                        class="autoplay-toggle" 
-                        @click="toggleAutoplay" 
-                        :aria-label="autoplay ? 'Pause Autoplay' : 'Start Autoplay'"
-                        :aria-pressed="autoplay"
-                    >
-                        <i :class="autoplay ? 'fas fa-pause' : 'fas fa-play'"></i>
-                    </button>
-                </div>
+            <!-- Main Content (Carousel Removed) -->
+            <!-- Removed the following section:
+            <main aria-label="Product Carousel and Description" id="carousel-container" role="region">
+                <div class="product-carousel" ...>...</div>
+                <div class="description-area visible" ...>...</div>
             </main>
-            <!-- End of Carousel and Description -->
+            -->
 
             <!-- Category Section -->
             <section class="category-section">
                 <h2>Explore Our Collections</h2>
                 <div class="category-grid">
                     <template v-for="(category, index) in categories" :key="index">
-                        <a 
-                            :href="'#' + category.name.toLowerCase()" 
-                            class="category-card"
-                            role="link"
-                            aria-label="Explore {{ category.name }} collection"
-                            tabindex="0"
-                        >
-                            <div 
-                                class="category-background"
-                                :style="{ backgroundImage: 'url(' + category.image + ')' }"
-                            ></div>
+                        <a href="#" class="category-card" :href="'#' + category.name.toLowerCase()" aria-label="Explore {{ category.name }} collection" tabindex="0">
+                            <div class="category-background" :style="{ backgroundImage: 'url(' + category.image + ')' }"></div>
                             <div class="category-content">
                                 <p class="category-name">{{ category.name }}</p>
                                 <h3 class="category-action">Shop {{ category.name }}</h3>
@@ -1319,12 +225,10 @@
             <!-- Footer -->
             <footer class="footer">
                 <div class="footer-container">
-                    <!-- About Us -->
                     <div class="footer-section">
                         <h3>About AZ Sports</h3>
                         <p>At AZ Sports, we are committed to providing high-quality sportswear that combines style, comfort, and performance. Join us in elevating your game.</p>
                     </div>
-                    <!-- Quick Links -->
                     <div class="footer-section">
                         <h3>Quick Links</h3>
                         <a href="#" @click="scrollToSection('#home')">Home</a>
@@ -1335,14 +239,12 @@
                         <a href="#" @click="scrollToSection('#latest')">Latest</a>
                         <a href="#" @click="scrollToSection('#contact')">Contact</a>
                     </div>
-                    <!-- Contact Information -->
                     <div class="footer-section">
                         <h3>Contact Us</h3>
                         <p>123 Sporty Lane,<br>Athletica City, AC 45678</p>
                         <p>Email: support@azsports.com</p>
                         <p>Phone: (123) 456-7890</p>
                     </div>
-                    <!-- Social Media -->
                     <div class="footer-section">
                         <h3>Follow Us</h3>
                         <div class="social-icons">
@@ -1353,17 +255,15 @@
                         </div>
                     </div>
                 </div>
-                <div class="footer-bottom">
-                    &copy; 2024 AZ Sports. All rights reserved.
-                </div>
+                <div class="footer-bottom">© 2024 AZ Sports. All rights reserved.</div>
             </footer>
             <!-- End of Footer -->
 
-            <!-- Product Modal (Optional) -->
-            <div v-if="showModal" class="product-modal active" @click="closeModal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+            <!-- Product Modal -->
+            <div class="active product-modal" role="dialog" @click="closeModal" aria-labelledby="modal-title" aria-modal="true" v-if="showModal">
                 <div class="modal-content" @click.stop>
                     <h2 id="modal-title">{{ selectedProduct.name }}</h2>
-                    <img :src="selectedProduct.image" :alt="selectedProduct.name" class="modal-image" loading="lazy">
+                    <img loading="lazy" :alt="selectedProduct.name" :src="selectedProduct.image" class="modal-image">
                     <p class="price">{{ selectedProduct.price }}</p>
                     <p>{{ selectedProduct.description }}</p>
                     <button @click="closeModal">Close</button>
@@ -1372,403 +272,66 @@
         </div>
     </div>
 
-    <!-- GSAP Script -->
+    <!-- External Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
-    <!-- Particles.js Library -->
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
-    <!-- Vue.js Script -->
     <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
-    <!-- Vue.js Application Script -->
+    <script src="script.js"></script>
+
+    <!-- Additional JavaScript Functions -->
     <script>
-        // Ensure Vue is loaded
-        if (typeof Vue === 'undefined') {
-            console.error('Vue.js is not loaded. Please check the script tag.');
+        const addHoverEffects = () => {
+            gsap.to('.product-card', {
+                scale: 1.05,
+                duration: 0.3,
+                ease: 'power2.out'
+            });
         }
 
-        const { createApp, ref, onMounted, watch, onBeforeUnmount } = Vue;
-        createApp({
-            setup() {
-                // Navigation Menu Reactive Variables
-                const menuOpen = ref(false);
-                const searchOpen = ref(false);
-                const searchQuery = ref('');
-                const activeSubMenu = ref('');
-                const showModal = ref(false);
-                const selectedProduct = ref({
-                    name: 'Loading...',
-                    price: '',
-                    description: 'Please wait while we load the product details.',
-                    image: '',
-                });
-                const autoplay = ref(true);
-                const cartCount = ref(0);
-
-                const products = ref([
-                    { 
-                        name: 'Product 1', 
-                        price: '$120', 
-                        image: 'images/car1.png', 
-                        imageSmall: 'images/car1.png', 
-                        description: 'High-performance running shoes with responsive cushioning.', 
-                        badge: 'New' 
-                    },
-                    { 
-                        name: 'Product 2', 
-                        price: '$180', 
-                        image: 'images/car2.png', 
-                        imageSmall: 'images/car2.png', 
-                        description: 'Boost cushioning technology for maximum comfort.' 
-                    },
-                    { 
-                        name: 'Product 3', 
-                        price: '$90', 
-                        image: 'images/car3.png', 
-                        imageSmall: 'images/car3.png', 
-                        description: 'Lightweight and breathable running shoes for everyday use.', 
-                        badge: 'On Sale' 
-                    },
-                    { 
-                        name: 'Product 4', 
-                        price: '$110', 
-                        image: 'images/car4.png', 
-                        imageSmall: 'images/car4.png', 
-                        description: 'Designed for high-intensity crossfit training.' 
-                    },
-                    { 
-                        name: 'Product 5', 
-                        price: '$130', 
-                        image: 'images/car5.png', 
-                        imageSmall: 'images/car5.png', 
-                        description: 'Provides a zero-gravity feel to maintain energy return.' 
-                    },
-                ]);
-
-                const categories = ref([
-                    { 
-                        name: "Mens", 
-                        image: "images/menscat.png" 
-                    },
-                    { 
-                        name: "Womens", 
-                        image: "images/womenscat.png" 
-                    },
-                    { 
-                        name: "Kids", 
-                        image: "images/kidscat.png" 
-                    },
-                    { 
-                        name: "Sale", 
-                        image: "images/salecat.png" 
-                    },
-                    { 
-                        name: "Latest", 
-                        image: "images/latestcat.png" 
-                    },
-                ]);
-
-                const rotationAngle = ref(0);
-                const activeIndex = ref(0);
-                const autoplayInterval = ref(null);
-                const isDragging = ref(false);
-                const startX = ref(0);
-                const isMobile = ref(window.innerWidth <= 768);
-
-                // Toggle Mobile Menu
-                const toggleMenu = () => {
-                    menuOpen.value = !menuOpen.value;
-                    if (menuOpen.value) {
-                        document.body.classList.add('menu-open');
-                        // Trap focus within the mobile menu
-                        const firstFocusable = document.querySelector('#mobile-menu a, #mobile-menu .close-menu');
-                        firstFocusable && firstFocusable.focus();
-                    } else {
-                        document.body.classList.remove('menu-open');
-                        // Return focus to hamburger
-                        document.getElementById('hamburger').focus();
-                    }
-                };
-
-                // Toggle Search Bar
-                const toggleSearch = () => {
-                    searchOpen.value = !searchOpen.value;
-                };
-
-                // Perform Search
-                const performSearch = () => {
-                    if (searchQuery.value.trim() !== '') {
-                        alert(`Searching for "${searchQuery.value}"`);
-                        searchQuery.value = '';
-                        searchOpen.value = false;
-                    }
-                };
-
-                // Toggle Submenu in Mobile Navigation
-                const toggleSubMenu = (menu) => {
-                    activeSubMenu.value = activeSubMenu.value === menu ? '' : menu;
-                };
-
-                // Scroll to Section Function
-                const scrollToSection = (hash) => {
-                    const element = document.querySelector(hash);
-                    if (element) {
-                        window.scrollTo({
-                            top: element.offsetTop - 60, // Adjust for fixed header height
-                            behavior: 'smooth'
-                        });
-                        if (menuOpen.value) {
-                            toggleMenu();
-                        }
-                    }
-                };
-
-                // Scroll to Top Function
-                const scrollToTop = () => {
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                    if (menuOpen.value) {
-                        toggleMenu();
-                    }
-                };
-
-                // Get Carousel Item Style Function
-                const getItemStyle = (index) => {
-                    const angle = (360 / products.value.length) * index + rotationAngle.value;
-                    const zIndex = Math.round((Math.cos(angle * Math.PI / 180) + 1) * 5);
-                    return { transform: `rotateY(${angle}deg) translateZ(300px)`, zIndex };
-                };
-
-                // Rotate Carousel Function
-                const rotateCarousel = (direction) => {
-                    rotationAngle.value += direction * (360 / products.value.length);
-                    activeIndex.value = (activeIndex.value + direction + products.value.length) % products.value.length;
-                    updateSelectedProduct();
-                };
-
-                // Handle Mouse Wheel for Carousel
-                const handleMouseWheel = (event) => {
-                    event.preventDefault();
-                    rotateCarousel(event.deltaY > 0 ? 1 : -1);
-                };
-
-                // Drag Functions for Carousel
-                const startDrag = (event) => {
-                    isDragging.value = true;
-                    startX.value = event.clientX || (event.touches && event.touches[0].clientX) || 0;
-                };
-                const endDrag = () => { isDragging.value = false; };
-                const onDrag = (event) => {
-                    if (!isDragging.value) return;
-                    const currentX = event.clientX || (event.touches && event.touches[0].clientX) || 0;
-                    const delta = currentX - startX.value;
-                    if (Math.abs(delta) > 50) {
-                        rotateCarousel(delta > 0 ? -1 : 1);
-                        startX.value = currentX;
-                    }
-                };
-
-                // Autoplay Functions
-                const startAutoplay = () => {
-                    autoplayInterval.value = setInterval(() => { rotateCarousel(1); }, 3000);
-                };
-                const pauseAutoplay = () => { clearInterval(autoplayInterval.value); };
-                const resumeAutoplay = () => { if (autoplay.value) startAutoplay(); };
-                const toggleAutoplay = () => {
-                    autoplay.value = !autoplay.value;
-                    autoplay.value ? startAutoplay() : pauseAutoplay();
-                };
-
-                // Buy Now Function
-                const buyNow = (product) => {
-                    addToCart(product);
-                    alert(`Proceeding to purchase ${product.name} for ${product.price}.`);
-                };
-
-                // Add to Cart Function
-                const addToCart = (product) => {
-                    cartCount.value += 1;
-                    // Update cart count display
-                    const cartIcon = document.querySelector('.cart-icon a');
-                    if (cartIcon) {
-                        cartIcon.setAttribute('data-count', cartCount.value);
-                    }
-                    alert(`${product.name} has been added to your cart.`);
-                };
-
-                // Open Modal Function
-                const openModal = (product) => {
-                    selectedProduct.value = product;
-                    showModal.value = true;
-                };
-
-                // Close Modal Function
-                const closeModal = () => { showModal.value = false; };
-
-                // Keyboard Navigation for Carousel
-                const handleKeyDown = (event) => {
-                    if (event.key === 'ArrowRight') {
-                        rotateCarousel(1);
-                    } else if (event.key === 'ArrowLeft') {
-                        rotateCarousel(-1);
-                    }
-                };
-
-                // Update isMobile based on window width
-                const updateIsMobile = () => {
-                    isMobile.value = window.innerWidth <= 768;
-                };
-
-                // Debounce function to optimize resize event handling
-                const debounce = (func, delay) => {
-                    let timeout;
-                    return () => {
-                        clearTimeout(timeout);
-                        timeout = setTimeout(func, delay);
-                    };
-                };
-
-                // Update Selected Product Function
-                const updateSelectedProduct = () => {
-                    if (products.value.length > 0) {
-                        selectedProduct.value = products.value[activeIndex.value];
-                    }
-                };
-
-                // Lifecycle Hooks
-                onMounted(() => {
-                    window.addEventListener('keydown', handleKeyDown);
-                    window.addEventListener('resize', debounce(updateIsMobile, 200));
-                    if (autoplay.value) startAutoplay();
-                    updateSelectedProduct();
-
-                    // GSAP Animations
-                    if (typeof gsap !== 'undefined') {
-                        gsap.to('.hero-content', { opacity: 1, y: 0, duration: 1 });
-                    } else {
-                        console.error('GSAP is not loaded.');
-                    }
-
-                    // Initialize Particles.js
-                    if (typeof particlesJS !== 'undefined') {
-                        particlesJS('particles-js', {
-                            "particles": {
-                                "number": {
-                                    "value": 80,
-                                    "density": {
-                                        "enable": true,
-                                        "value_area": 800
-                                    }
-                                },
-                                "color": {
-                                    "value": "#1E90FF" /* Updated particle color */
-                                },
-                                "shape": {
-                                    "type": "circle",
-                                    "stroke": {
-                                        "width": 0,
-                                        "color": "#000000"
-                                    }
-                                },
-                                "opacity": {
-                                    "value": 0.5,
-                                    "random": false,
-                                    "anim": {
-                                        "enable": false
-                                    }
-                                },
-                                "size": {
-                                    "value": 3,
-                                    "random": true,
-                                    "anim": {
-                                        "enable": false
-                                    }
-                                },
-                                "line_linked": {
-                                    "enable": true,
-                                    "distance": 150,
-                                    "color": "#1E90FF", /* Updated line color */
-                                    "opacity": 0.4,
-                                    "width": 1
-                                },
-                                "move": {
-                                    "enable": true,
-                                    "speed": 2,
-                                    "direction": "none",
-                                    "random": false,
-                                    "straight": false,
-                                    "out_mode": "out",
-                                    "bounce": false
-                                }
-                            },
-                            "interactivity": {
-                                "detect_on": "canvas",
-                                "events": {
-                                    "onhover": {
-                                        "enable": true,
-                                        "mode": "grab"
-                                    },
-                                    "onclick": {
-                                        "enable": true,
-                                        "mode": "push"
-                                    },
-                                    "resize": true
-                                },
-                                "modes": {
-                                    "grab": {
-                                        "distance": 140,
-                                        "line_linked": {
-                                            "opacity": 1
-                                        }
-                                    },
-                                    "push": {
-                                        "particles_nb": 4
-                                    }
-                                }
-                            },
-                            "retina_detect": true
-                        });
-                    } else {
-                        console.error('Particles.js library is not loaded.');
+        const lazyLoadImages = () => {
+            const images = document.querySelectorAll('img[loading="lazy"]');
+            const imageObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.src = entry.target.dataset.src;
                     }
                 });
+            });
+        }
 
-                onBeforeUnmount(() => {
-                    window.removeEventListener('keydown', handleKeyDown);
-                    window.removeEventListener('resize', updateIsMobile);
-                    clearInterval(autoplayInterval.value);
-                });
+        const enhanceNavigation = () => {
+            gsap.from('.nav__link', {
+                y: -20,
+                opacity: 0,
+                stagger: 0.1,
+                duration: 0.8,
+                ease: 'power2.out'
+            });
+        }
 
-                // Watch for activeIndex to update selectedProduct
-                watch(activeIndex, () => {
-                    updateSelectedProduct();
-                });
+        const smoothScroll = () => {
+            gsap.to(window, {
+                duration: 1,
+                scrollTo: { y: target, offsetY: 70 },
+                ease: "power3.inOut"
+            });
+        }
 
-                return {
-                    menuOpen,
-                    searchOpen,
-                    searchQuery,
-                    activeSubMenu,
-                    toggleMenu,
-                    toggleSearch,
-                    performSearch,
-                    toggleSubMenu,
-                    scrollToSection,
-                    scrollToTop,
-                    products,
-                    categories,
-                    getItemStyle,
-                    handleMouseWheel,
-                    startDrag,
-                    endDrag,
-                    onDrag,
-                    buyNow,
-                    addToCart,
-                    showModal,
-                    selectedProduct,
-                    autoplay,
-                    toggleAutoplay,
-                    closeModal
-                };
-            }
-        }).mount('#app');
+        const enhanceCarousel = () => {
+            gsap.to('.carousel-item', {
+                duration: 0.6,
+                scale: 1.02,
+                ease: 'power2.out',
+                paused: true
+            });
+
+            // Smooth rotation transition
+            gsap.to('.product-carousel', {
+                rotationY: rotationAngle.value,
+                duration: 0.8,
+                ease: 'power2.inOut'
+            });
+        }
     </script>
 </body>
 </html>
