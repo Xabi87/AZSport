@@ -4,26 +4,26 @@
     backface-visibility: hidden;
     border: 1px solid rgba(30, 144, 255, 0.3);
     background: linear-gradient(145deg, var(--secondary-color), var(--primary-color));
-}
+  }
+    .nav-right, .nav-left {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 15px;
+    }
+      animation: float 6s ease-in-out infinite;
+  }
 
-.nav-right, .nav-left {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 15px;
-    animation: float 6s ease-in-out infinite;
-}
+  @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+  }
 
-@keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
-}
-
-.product-info {
-    transform-style: preserve-3d;
-    perspective: 1000px;
-    box-shadow: var(--card-shadow);
-}
+  .product-info {
+      transform-style: preserve-3d;
+      perspective: 1000px;
+      box-shadow: var(--card-shadow);
+  }
 
 @media (min-width: 1024px) {
     .hero-section {
@@ -52,40 +52,3 @@
     opacity: 0;
     transition: opacity 0.3s;
 }
-  .hero-section::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 2px;
-      background: var(--accent-color);
-      box-shadow: 0 0 10px var(--accent-color);
-      animation: glowPulse 3s infinite;
-  }
-
-  @keyframes glowPulse {
-      0%, 100% { box-shadow: 0 0 10px var(--accent-color); }
-      50% { box-shadow: 0 0 20px var(--accent-color); }
-  }
-
-  .hero-content h1 {
-    font-size: 4.5rem;
-    background: linear-gradient(45deg, #fff 10%, var(--accent-color) 50%, #fff 90%);
-    background-size: 200% auto;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    text-shadow: 
-        0 0 20px var(--accent-color),
-        0 0 40px var(--accent-color),
-        2px 2px 2px rgba(0, 0, 0, 0.5);
-    letter-spacing: 4px;
-    font-weight: 800;
-    animation: shine 3s linear infinite;
-  }
-
-  @keyframes shine {
-    to {
-        background-position: 200% center;
-    }
-  }
