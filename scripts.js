@@ -20,8 +20,45 @@ createApp({
         const showModal = ref(false);
         const autoplay = ref(true);
         const cartCount = ref(0);
-        const products = ref([{name:'Product 1',price:'$120',image:'images/car1.png',imageSmall:'images/car1.png',description:'High-performance running shoes with responsive cushioning.',badge:'New'},{name:'Product 2',price:'$180',image:'images/car2.png',imageSmall:'images/car2.png',description:'Boost cushioning technology for maximum comfort.'},{name:'Product 3',price:'$90',image:'images/car3.png',imageSmall:'images/car3.png',description:'Lightweight and breathable running shoes for everyday use.',badge:'On Sale'},{name:'Product 4',price:'$110',image:'images/car4.png',imageSmall:'images/car4.png',description:'Designed for high-intensity crossfit training.'},{name:'Product 5',price:'$130',image:'images/car5.png',imageSmall:'images/car5.png',description:'Provides a zero-gravity feel to maintain energy return.'},]);
-        const categories = ref([{name:"Mens",image:"images/menscat.png"},{name:"Womens",image:"images/womenscat.png"},{name:"Kids",image:"images/kidscat.png"},{name:"Sale",image:"images/salecat.png"},{name:"Latest",image:"images/latestcat.png"},]);
+            const products = ref([
+                {
+                    name: 'Product 1',
+                    price: '$120',
+                    image: './images/car1.png',
+                    imageSmall: './images/car1.png',
+                    description: 'High-performance running shoes with responsive cushioning.',
+                    badge: 'New'
+                },
+                {
+                    name: 'Product 2',
+                    price: '$180',
+                    image: './images/car2.png',
+                    imageSmall: './images/car2.png',
+                    description: 'Boost cushioning technology for maximum comfort.'
+                },
+                {
+                    name: 'Product 3',
+                    price: '$90',
+                    image: './images/car3.png',
+                    imageSmall: './images/car3.png',
+                    description: 'Lightweight and breathable running shoes for everyday use.',
+                    badge: 'On Sale'
+                },
+                {
+                    name: 'Product 4',
+                    price: '$110',
+                    image: './images/car4.png',
+                    imageSmall: './images/car4.png',
+                    description: 'Designed for high-intensity crossfit training.'
+                },
+                {
+                    name: 'Product 5',
+                    price: '$130',
+                    image: './images/car5.png',
+                    imageSmall: './images/car5.png',
+                    description: 'Provides a zero-gravity feel to maintain energy return.'
+                },
+            ]);        const categories = ref([{name:"Mens",image:"images/menscat.png"},{name:"Womens",image:"images/womenscat.png"},{name:"Kids",image:"images/kidscat.png"},{name:"Sale",image:"images/salecat.png"},{name:"Latest",image:"images/latestcat.png"},]);
         const rotationAngle = ref(0);
         const activeIndex = ref(0);
         const autoplayInterval = ref(null);
@@ -188,19 +225,23 @@ createApp({
         };
 
         onMounted(() => {
-            window.addEventListener('keydown', handleKeyDown);
-            window.addEventListener('resize', debounce(updateIsMobile, 200));
-            if(autoplay.value) startAutoplay();
-            updateSelectedProduct();
-            if(typeof gsap !== 'undefined'){
-                gsap.to('.hero-content', {opacity:1, y:0, duration:1})
-            } else {
-                console.error('GSAP is not loaded.')
-            }
-            if(typeof particlesJS !== 'undefined'){
-                particlesJS('particles-js', {"particles":{"number":{"value":80,"density":{"enable":true,"value_area":800}},"color":{"value":"#1E90FF"},"shape":{"type":"circle","stroke":{"width":0,"color":"#000000"}},"opacity":{"value":0.5,"random":false,"anim":{"enable":false}},"size":{"value":3,"random":true,"anim":{"enable":false}},"line_linked":{"enable":true,"distance":150,"color":"#1E90FF","opacity":0.4,"width":1},"move":{"enable":true,"speed":2,"direction":"none","random":false,"straight":false,"out_mode":"out","bounce":false}},"interactivity":{"detect_on":"canvas","events":{"onhover":{"enable":true,"mode":"grab"},"onclick":{"enable":true,"mode":"push"},"resize":true},"modes":{"grab":{"distance":140,"line_linked":{"opacity":1}},"push":{"particles_nb":4}}},"retina_detect":true})
-            } else {
-                console.error('Particles.js library is not loaded.')
+            try {
+                updateSelectedProduct();
+                if (autoplay.value) startAutoplay();
+                
+                if (typeof gsap !== 'undefined') {
+                    gsap.to('.hero-content', {
+                        opacity: 1,
+                        y: 0,
+                        duration: 1
+                    });
+                }
+                
+                if (typeof particlesJS !== 'undefined') {
+                    particlesJS('particles-js', {"particles":{"number":{"value":80,"density":{"enable":true,"value_area":800}},"color":{"value":"#1E90FF"},"shape":{"type":"circle","stroke":{"width":0,"color":"#000000"}},"opacity":{"value":0.5,"random":false,"anim":{"enable":false}},"size":{"value":3,"random":true,"anim":{"enable":false}},"line_linked":{"enable":true,"distance":150,"color":"#1E90FF","opacity":0.4,"width":1},"move":{"enable":true,"speed":2,"direction":"none","random":false,"straight":false,"out_mode":"out","bounce":false}},"interactivity":{"detect_on":"canvas","events":{"onhover":{"enable":true,"mode":"grab"},"onclick":{"enable":true,"mode":"push"},"resize":true},"modes":{"grab":{"distance":140,"line_linked":{"opacity":1}},"push":{"particles_nb":4}}},"retina_detect":true});
+                }
+            } catch (error) {
+                console.warn('Component initialization:', error);
             }
         });
 
