@@ -102,7 +102,7 @@
                         </li>
                         <!-- Shopping Cart Icon -->
                         <li class="nav__item cart-icon" role="none">
-                            <a href="#" role="menuitem" class="nav__link" aria-label="Shopping Cart" data-count="0">
+                            <a href="#" role="menuitem" class="nav__link" aria-label="Shopping Cart" :data-count="cartCount">
                                 <i class="fas fa-shopping-cart"></i>
                             </a>
                         </li>
@@ -126,7 +126,7 @@
             </header>
 
             <!-- Mobile Navigation Menu -->
-            <nav id="mobile-menu" :class="{ 'active': menuOpen }" aria-hidden="!menuOpen">
+            <nav id="mobile-menu" :class="{ 'active': menuOpen }" :aria-hidden="!menuOpen">
                 <!-- Close Button -->
                 <button class="close-menu" @click="toggleMenu" aria-label="Close Navigation Menu">
                     <i class="fas fa-times"></i>
@@ -158,10 +158,10 @@
                         </div>
                     </li>
                     <li class="nav__item dropdown" role="none">
-                        <a href="#" role="menuitem" tabindex="0" class="nav__link" aria-expanded="false" aria-haspopup="true">
+                        <a href="#" @click="toggleSubMenu('kids')" role="menuitem" tabindex="0" class="nav__link">
                             <i class="fas fa-child"></i> Kids
                         </a>
-                        <div class="dropdown-content" role="menu">
+                        <div class="dropdown-content" v-if="activeSubMenu === 'kids'">
                             <a href="#" @click="scrollToSection('#kids-t-shirts'); toggleMenu()" role="menuitem" tabindex="0">T-Shirts</a>
                             <a href="#" @click="scrollToSection('#kids-shorts'); toggleMenu()" role="menuitem" tabindex="0">Shorts</a>
                             <a href="#" @click="scrollToSection('#kids-accessories'); toggleMenu()" role="menuitem" tabindex="0">Accessories</a>
@@ -196,14 +196,6 @@
                 </div>
             </section>
             <!-- End of Hero Section -->
-
-            <!-- Main Content (Carousel Removed) -->
-            <!-- Removed the following section:
-            <main aria-label="Product Carousel and Description" id="carousel-container" role="region">
-                <div class="product-carousel" ...>...</div>
-                <div class="description-area visible" ...>...</div>
-            </main>
-            -->
 
             <!-- Category Section -->
             <section class="category-section">
@@ -260,7 +252,7 @@
             <!-- End of Footer -->
 
             <!-- Product Modal -->
-            <div class="active product-modal" role="dialog" @click="closeModal" aria-labelledby="modal-title" aria-modal="true" v-if="showModal">
+            <div class="product-modal" role="dialog" @click="closeModal" aria-labelledby="modal-title" aria-modal="true" v-if="showModal">
                 <div class="modal-content" @click.stop>
                     <h2 id="modal-title">{{ selectedProduct.name }}</h2>
                     <img loading="lazy" :alt="selectedProduct.name" :src="selectedProduct.image" class="modal-image">
@@ -277,61 +269,5 @@
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
     <script src="script.js"></script>
-
-    <!-- Additional JavaScript Functions -->
-    <script>
-        const addHoverEffects = () => {
-            gsap.to('.product-card', {
-                scale: 1.05,
-                duration: 0.3,
-                ease: 'power2.out'
-            });
-        }
-
-        const lazyLoadImages = () => {
-            const images = document.querySelectorAll('img[loading="lazy"]');
-            const imageObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.src = entry.target.dataset.src;
-                    }
-                });
-            });
-        }
-
-        const enhanceNavigation = () => {
-            gsap.from('.nav__link', {
-                y: -20,
-                opacity: 0,
-                stagger: 0.1,
-                duration: 0.8,
-                ease: 'power2.out'
-            });
-        }
-
-        const smoothScroll = () => {
-            gsap.to(window, {
-                duration: 1,
-                scrollTo: { y: target, offsetY: 70 },
-                ease: "power3.inOut"
-            });
-        }
-
-        const enhanceCarousel = () => {
-            gsap.to('.carousel-item', {
-                duration: 0.6,
-                scale: 1.02,
-                ease: 'power2.out',
-                paused: true
-            });
-
-            // Smooth rotation transition
-            gsap.to('.product-carousel', {
-                rotationY: rotationAngle.value,
-                duration: 0.8,
-                ease: 'power2.inOut'
-            });
-        }
-    </script>
 </body>
 </html>
