@@ -10,20 +10,19 @@
         backdrop-filter: blur(10px);
         border: 1px solid rgba(255, 255, 255, 0.1);
         border-radius: 15px;
+        animation: float 6s ease-in-out infinite;
     }
-      animation: float 6s ease-in-out infinite;
-  }
 
-  @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
-  }
+    @keyframes float {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
+    }
 
-  .product-info {
-      transform-style: preserve-3d;
-      perspective: 1000px;
-      box-shadow: var(--card-shadow);
-  }
+    .product-info {
+        transform-style: preserve-3d;
+        perspective: 1000px;
+        box-shadow: var(--card-shadow);
+    }
 
 @media (min-width: 1024px) {
     .hero-section {
