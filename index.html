@@ -1,350 +1,116 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Meta and Title -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AZ Sports - Premium Sportswear</title>
-
-    <!-- SEO Meta Tags -->
-    <meta name="description" content="AZ Sports offers premium sportswear that combines comfort and performance to elevate your game. Explore our exclusive collection today.">
-    <meta name="keywords" content="AZ Sports, sportswear, premium sportswear, athletic clothing, performance wear">
-    <meta name="author" content="AZ Sports">
-
-    <!-- External Styles -->
-    <!-- Font Awesome -->
+    <title>AZ Sports</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts: Roboto, Orbitron -->
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
-    <!-- Tailwind CSS (Local Import Recommended for Production) -->
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <!-- Custom Styles -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div id="app-wrapper">
-        <div id="app" tabindex="0">
-            <!-- Top Bar -->
-            <div class="top-bar">
-                <div class="container">
-                    <div class="contact-info">
-                        <span><i class="fas fa-phone-alt"></i> (123) 456-7890</span>
-                        <span><i class="fas fa-envelope"></i> support@azsports.com</span>
-                    </div>
-                    <div class="social-media">
-                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                    </div>
-                </div>
+    <div id="app">
+        <header class="header">
+            <div class="header-bg">
+                <div class="particles"></div>
+                <div class="gradient-overlay"></div>
             </div>
-            <!-- Header -->
-            <header id="header">
-                <!-- Left Navigation Menu -->
-                <nav class="nav-left">
-                    <ul class="nav__list" role="menubar">
-                        <li class="nav__item" role="none">
-                            <a href="#" class="nav__link" role="menuitem" @click="scrollToSection('#home')"><i class="fas fa-home"></i> Home</a>
-                        </li>
-                        <li class="nav__item dropdown" role="none">
-                            <a href="#" class="nav__link" role="menuitem" aria-haspopup="true" aria-expanded="false"><i class="fas fa-male"></i> Mens</a>
-                            <div class="dropdown-content" role="menu">
-                                <a href="#" @click="scrollToSection('#mens-shirts')" role="menuitem">Shirts</a>
-                                <a href="#" @click="scrollToSection('#mens-pants')" role="menuitem">Pants</a>
-                                <a href="#" @click="scrollToSection('#mens-accessories')" role="menuitem">Accessories</a>
-                            </div>
-                        </li>
-                        <li class="nav__item dropdown" role="none">
-                            <a href="#" class="nav__link" role="menuitem" aria-haspopup="true" aria-expanded="false"><i class="fas fa-female"></i> Womens</a>
-                            <div class="dropdown-content" role="menu">
-                                <a href="#" @click="scrollToSection('#womens-dresses')" role="menuitem">Dresses</a>
-                                <a href="#" @click="scrollToSection('#womens-tops')" role="menuitem">Tops</a>
-                                <a href="#" @click="scrollToSection('#womens-accessories')" role="menuitem">Accessories</a>
-                            </div>
-                        </li>
-                    </ul>
-                </nav>
-
-                <!-- Logo -->
-                <div class="logo" @click="scrollToTop" role="button" tabindex="0" aria-label="Home">
-                    <img src="images/logo2.png" alt="AZ Sports Logo" loading="lazy">
-                </div>
-
-                <!-- Right Navigation Menu -->
-                <nav class="nav-right">
-                    <ul class="nav__list" role="menubar">
-                        <li class="nav__item dropdown" role="none">
-                            <a href="#" class="nav__link" role="menuitem" aria-haspopup="true" aria-expanded="false"><i class="fas fa-child"></i> Kids</a>
-                            <div class="dropdown-content" role="menu">
-                                <a href="#" @click="scrollToSection('#kids-t-shirts')" role="menuitem">T-Shirts</a>
-                                <a href="#" @click="scrollToSection('#kids-shorts')" role="menuitem">Shorts</a>
-                                <a href="#" @click="scrollToSection('#kids-accessories')" role="menuitem">Accessories</a>
-                            </div>
-                        </li>
-                        <li class="nav__item" role="none">
-                            <a href="#" class="nav__link" role="menuitem" @click="scrollToSection('#sale')"><i class="fas fa-tags"></i> Sale</a>
-                        </li>
-                        <li class="nav__item" role="none">
-                            <a href="#" class="nav__link" role="menuitem" @click="scrollToSection('#latest')"><i class="fas fa-star"></i> Latest</a>
-                        </li>
-                        <!-- Search Icon -->
-                        <li class="nav__item search-icon" role="none">
-                            <a href="#" class="nav__link" role="menuitem" @click.prevent="toggleSearch"><i class="fas fa-search"></i></a>
-                        </li>
-                        <!-- Shopping Cart Icon -->
-                        <li class="nav__item cart-icon" role="none">
-                            <a href="#" class="nav__link" role="menuitem" data-count="0" aria-label="Shopping Cart"><i class="fas fa-shopping-cart"></i></a>
-                        </li>
-                    </ul>
-                </nav>
-
-                <!-- Search Bar -->
-                <div class="search-bar" v-if="searchOpen">
-                    <input type="text" placeholder="Search..." v-model="searchQuery" @keyup.enter="performSearch" aria-label="Search">
-                    <button @click="performSearch" aria-label="Search Button"><i class="fas fa-search"></i></button>
-                </div>
-
-                <!-- Hamburger Menu -->
-                <div 
-                    class="hamburger" 
-                    id="hamburger" 
-                    @click="toggleMenu" 
-                    role="button" 
-                    tabindex="0" 
-                    aria-label="Toggle Navigation Menu" 
-                    :aria-expanded="menuOpen"
-                    :class="{ active: menuOpen }"
-                >
-                    <span class="bar"></span>
-                    <span class="bar"></span>
-                    <span class="bar"></span>
-                </div>
-            </header>
-            <!-- Mobile Navigation Menu -->
-            <nav id="mobile-menu" :class="{ 'active': menuOpen }" aria-hidden="!menuOpen">
-                <!-- Close Button -->
-                <button 
-                    class="close-menu" 
-                    @click="toggleMenu" 
-                    aria-label="Close Navigation Menu"
-                >
-                    <i class="fas fa-times"></i>
-                </button>
-                <ul>
-                    <li class="nav__item" role="none">
-                        <a href="#" class="nav__link" role="menuitem" @click="scrollToSection('#home'); toggleMenu()" tabindex="0"><i class="fas fa-home"></i> Home</a>
-                    </li>
-                    <li class="nav__item" role="none">
-                        <a href="#" class="nav__link" role="menuitem" @click="toggleSubMenu('mens')" tabindex="0"><i class="fas fa-male"></i> Mens</a>
-                        <div class="dropdown-content" v-if="activeSubMenu === 'mens'">
-                            <a href="#" @click="scrollToSection('#mens-shirts'); toggleMenu()" role="menuitem" tabindex="0">Shirts</a>
-                            <a href="#" @click="scrollToSection('#mens-pants'); toggleMenu()" role="menuitem" tabindex="0">Pants</a>
-                            <a href="#" @click="scrollToSection('#mens-accessories'); toggleMenu()" role="menuitem" tabindex="0">Accessories</a>
-                        </div>
-                    </li>
-                    <li class="nav__item" role="none">
-                        <a href="#" class="nav__link" role="menuitem" @click="toggleSubMenu('womens')" tabindex="0"><i class="fas fa-female"></i> Womens</a>
-                        <div class="dropdown-content" v-if="activeSubMenu === 'womens'">
-                            <a href="#" @click="scrollToSection('#womens-dresses'); toggleMenu()" role="menuitem" tabindex="0">Dresses</a>
-                            <a href="#" @click="scrollToSection('#womens-tops'); toggleMenu()" role="menuitem" tabindex="0">Tops</a>
-                            <a href="#" @click="scrollToSection('#womens-accessories'); toggleMenu()" role="menuitem" tabindex="0">Accessories</a>
-                        </div>
-                    </li>
-                    <li class="nav__item dropdown" role="none">
-                        <a href="#" class="nav__link" role="menuitem" aria-haspopup="true" aria-expanded="false" tabindex="0"><i class="fas fa-child"></i> Kids</a>
-                        <div class="dropdown-content" role="menu">
-                            <a href="#" @click="scrollToSection('#kids-t-shirts'); toggleMenu()" role="menuitem" tabindex="0">T-Shirts</a>
-                            <a href="#" @click="scrollToSection('#kids-shorts'); toggleMenu()" role="menuitem" tabindex="0">Shorts</a>
-                            <a href="#" @click="scrollToSection('#kids-accessories'); toggleMenu()" role="menuitem" tabindex="0">Accessories</a>
-                        </div>
-                    </li>
-                    <li class="nav__item" role="none">
-                        <a href="#" class="nav__link" role="menuitem" @click="scrollToSection('#sale'); toggleMenu()" tabindex="0"><i class="fas fa-tags"></i> Sale</a>
-                    </li>
-                    <li class="nav__item" role="none">
-                        <a href="#" class="nav__link" role="menuitem" @click="scrollToSection('#latest'); toggleMenu()" tabindex="0"><i class="fas fa-star"></i> Latest</a>
-                    </li>
-                    <li class="nav__item search-icon" role="none">
-                        <a href="#" class="nav__link" role="menuitem" @click.prevent="toggleSearch" tabindex="0"><i class="fas fa-search"></i> Search</a>
-                    </li>
-                </ul>
-            </nav>
-            <!-- End of Header -->
-
-            <!-- Hero Section with Particles.js Animation -->
-            <section class="hero-section" id="home">
-                <!-- Particles.js Container -->
-                <div id="particles-js"></div>
-                <!-- Hero Content -->
-                <div class="hero-content" v-cloak>
-                    <h1>AZ Sports</h1>
-                    <p>Where Performance Meets Style</p>
-                    <button class="cta-button" @click="scrollToSection('#carousel-container')">Explore Now</button>
-                </div>
-            </section>
-            <!-- End of Hero Section -->
-
-            <!-- Carousel and Description Container -->
-            <main id="carousel-container" role="region" aria-label="Product Carousel and Description">
-                <!-- Carousel -->
-                <div
-                    class="product-carousel"
-                    @wheel.prevent="handleMouseWheel"
-                    @mousedown="startDrag"
-                    @mouseup="endDrag"
-                    @mousemove="onDrag"
-                    @touchstart="startDrag"
-                    @touchend="endDrag"
-                    @touchmove="onDrag"
-                    @mouseenter="pauseAutoplay"
-                    @mouseleave="resumeAutoplay"
-                >
-                    <div
-                        class="carousel-item"
-                        v-for="(product, index) in products"
-                        :key="index"
-                        :style="getItemStyle(index)"
-                        :class="{ active: index === activeIndex }"
-                        role="button"
-                        aria-label="Buy {{ product.name }}"
-                        tabindex="0"
-                        @click="buyNow(product)"
-                        @keydown.enter="buyNow(product)"
-                    >
-                        <div class="item-content">
-                            <div v-if="product.badge" class="product-badge">{{ product.badge }}</div>
-                            <img 
-                                :src="product.imageSmall" 
-                                :alt="product.name" 
-                                class="product-image" 
-                                loading="lazy">
-                            <div class="product-info">
-                                <h3>{{ product.name }}</h3>
-                                <p class="price">{{ product.price }}</p>
-                                <div class="rating">
-                                    <i class="fas fa-star" v-for="n in 5" :key="n"></i>
-                                </div>
-                                <div class="actions">
-                                    <button @click.stop="addToCart(product)" aria-label="Add {{ product.name }} to Cart">Add to Cart</button>
-                                    <button @click.stop="buyNow(product)" aria-label="Buy {{ product.name }}">Buy Now</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Description Area -->
-                <div 
-                    class="description-area visible" 
-                    v-if="selectedProduct && selectedProduct.name"
-                    aria-live="polite"
-                >
-                    <h2>{{ selectedProduct.name }}</h2>
-                    <p>{{ selectedProduct.description }}</p>
-                    <!-- Play/Pause Autoplay Button -->
-                    <button 
-                        class="autoplay-toggle" 
-                        @click="toggleAutoplay" 
-                        :aria-label="autoplay ? 'Pause Autoplay' : 'Start Autoplay'"
-                        :aria-pressed="autoplay"
-                    >
-                        <i :class="autoplay ? 'fas fa-pause' : 'fas fa-play'"></i>
+                          <nav class="nav-main">
+                              <div class="nav-section">
+                                  <div class="brand">
+                                      <div class="logo-wrapper">
+                                          <img src="./images/logo2.png" alt="AZ Sports" class="logo">
+                                      </div>
+                                  </div>
+                    
+                                  <div class="nav-links">
+                                      <a href="#" class="nav-link">
+                                          <span class="link-content">T-Shirts</span>
+                                          <div class="link-hover"></div>
+                                      </a>
+                                      <a href="#" class="nav-link">
+                                          <span class="link-content">Hoodies</span>
+                                          <div class="link-hover"></div>
+                                      </a>
+                                      <a href="#" class="nav-link">
+                                          <span class="link-content">Tracksuits</span>
+                                          <div class="link-hover"></div>
+                                      </a>
+                                      <a href="#" class="nav-link">
+                                          <span class="link-content">Latest</span>
+                                          <div class="link-hover"></div>
+                                      </a>
+                                      <a href="#" class="nav-link">
+                                          <span class="link-content">Sale</span>
+                                          <div class="link-hover"></div>
+                                      </a>
+                                  </div>
+                              </div>
+                <div class="nav-actions">
+                    <button class="action-btn search">
+                        <i class="fas fa-search"></i>
+                        <div class="btn-hover"></div>
+                    </button>
+                    <button class="action-btn cart">
+                        <i class="fas fa-shopping-cart"></i>
+                        <div class="btn-hover"></div>
                     </button>
                 </div>
-            </main>
-            <!-- End of Carousel and Description -->
-
-            <!-- Category Section -->
-            <section class="category-section">
-                <h2>Explore Our Collections</h2>
-                <div class="category-grid">
-                    <template v-for="(category, index) in categories" :key="index">
-                        <a 
-                            :href="'#' + category.name.toLowerCase()" 
-                            class="category-card"
-                            role="link"
-                            aria-label="Explore {{ category.name }} collection"
-                            tabindex="0"
-                        >
-                            <div 
-                                class="category-background"
-                                :style="{ backgroundImage: 'url(' + category.image + ')' }"
-                            ></div>
-                            <div class="category-content">
-                                <p class="category-name">{{ category.name }}</p>
-                                <h3 class="category-action">Shop {{ category.name }}</h3>
-                            </div>
-                        </a>
-                    </template>
-                </div>
-            </section>
-            <!-- End of Category Section -->
-
-            <!-- Footer -->
-            <footer class="footer">
-                <div class="footer-container">
-                    <!-- About Us -->
-                    <div class="footer-section">
-                        <h3>About AZ Sports</h3>
-                        <p>At AZ Sports, we are committed to providing high-quality sportswear that combines style, comfort, and performance. Join us in elevating your game.</p>
-                    </div>
-                    <!-- Quick Links -->
-                    <div class="footer-section">
-                        <h3>Quick Links</h3>
-                        <a href="#" @click="scrollToSection('#home')">Home</a>
-                        <a href="#" @click="scrollToSection('#mens')">Mens</a>
-                        <a href="#" @click="scrollToSection('#womens')">Womens</a>
-                        <a href="#" @click="scrollToSection('#kids')">Kids</a>
-                        <a href="#" @click="scrollToSection('#sale')">Sale</a>
-                        <a href="#" @click="scrollToSection('#latest')">Latest</a>
-                        <a href="#" @click="scrollToSection('#contact')">Contact</a>
-                    </div>
-                    <!-- Contact Information -->
-                    <div class="footer-section">
-                        <h3>Contact Us</h3>
-                        <p>123 Sporty Lane,<br>Athletica City, AC 45678</p>
-                        <p>Email: support@azsports.com</p>
-                        <p>Phone: (123) 456-7890</p>
-                    </div>
-                    <!-- Social Media -->
-                    <div class="footer-section">
-                        <h3>Follow Us</h3>
-                        <div class="social-icons">
-                            <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                            <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="footer-bottom">
-                    &copy; 2024 AZ Sports. All rights reserved.
-                </div>
-            </footer>
-            <!-- End of Footer -->
-
-            <!-- Product Modal (Optional) -->
-            <div v-if="showModal" class="product-modal active" @click="closeModal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-                <div v-cloak class="modal-content" @click.stop>
-                    <h2 id="modal-title">{{ selectedProduct.name }}</h2>
-                    <img :src="selectedProduct.image" :alt="selectedProduct.name" class="modal-image" loading="lazy">
-                    <p class="price">{{ selectedProduct.price }}</p>
-                    <p>{{ selectedProduct.description }}</p>
-                    <button @click="closeModal">Close</button>
+            </nav>
+            <div class="brand">
+                <div class="logo-wrapper">
+                    <img src="images/logo2.png" alt="AZ Sports" class="logo">
+                    <div class="logo-energy"></div>
                 </div>
             </div>
-        </div>
+        </header>
     </div>
-
-    <!-- External Scripts -->
-    <!-- GSAP Script -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
-    <!-- Particles.js Library -->
-    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
-    <!-- Vue.js Script -->
-    <script src="https://unpkg.com/vue@3.3.4/dist/vue.global.prod.js"></script>
-    <!-- Custom Script -->
     <script src="script.js"></script>
+    <!-- Add before closing body tag -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 </body>
 </html>
+
+<section class="hero">
+    <div class="particle-container" id="particles-js"></div>
+    
+    <div class="hero-content">
+        <div class="hero-logo">
+            <img src="images/logo2.png" alt="AZ Sports">
+        </div>
+        <h1 class="hero-title">AZ SPORTS</h1>
+        <p class="hero-slogan">ELEVATE YOUR GAME</p>
+    </div>
+</section>
+  <section class="categories">
+    <div class="categories-grid">
+        <a href="#" class="category-card">
+            <div class="card-image">
+                <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Premium T-Shirts Collection">
+                <div class="card-overlay">
+                    <h3>T-Shirts</h3>
+                    <span class="view-collection">Explore Collection</span>
+                </div>
+            </div>
+        </a>
+        <a href="#" class="category-card">
+            <div class="card-image">
+                <img src="https://images.unsplash.com/photo-1556821840-3a63f95609a7?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Designer Hoodies Collection">
+                <div class="card-overlay">
+                    <h3>Hoodies</h3>
+                    <span class="view-collection">Explore Collection</span>
+                </div>
+            </div>
+        </a>
+        <a href="#" class="category-card">
+            <div class="card-image">
+                <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Premium Tracksuits Collection">
+                <div class="card-overlay">
+                    <h3>Tracksuits</h3>
+                    <span class="view-collection">Explore Collection</span>
+                </div>
+            </div>
+        </a>
+    </div>
+</section>
