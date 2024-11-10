@@ -12,8 +12,37 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
     <!-- Favicon -->
     <link rel="icon" href="images/favicon.ico" type="image/x-icon">
-</head>
-<body>
+    <style>
+        @media (max-width: 768px) {
+            header {
+                position: relative;
+                padding: 0.5rem;
+            }
+            
+            .menu {
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 1rem;
+                padding: 0.5rem;
+            }
+
+            main {
+                padding-top: 20px;
+            }
+
+            #logo-wrapper {
+                margin-top: 1rem;
+            }
+
+            .theme-switch-wrapper {
+                position: absolute;
+                top: 0.5rem;
+                right: 0.5rem;
+            }
+        }
+    </style>
+</head><body>
     <header>
         <nav>
             <ul class="menu">
