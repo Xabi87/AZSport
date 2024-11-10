@@ -133,26 +133,23 @@ class Particle {
 }
 
 show() {
-  // Get the current particle colors from CSS variables
   let outlineColor = getComputedStyle(document.documentElement).getPropertyValue('--particle-outline-color').trim();
   let fillColor = getComputedStyle(document.documentElement).getPropertyValue('--particle-fill-color').trim();
 
-  // Save the current drawing context
   push();
 
-  // Set the shadow properties for the glow effect
   if (this.type === 'outline') {
-    drawingContext.shadowBlur = 10;
-    drawingContext.shadowColor = outlineColor;
-    stroke(outlineColor);
+      drawingContext.shadowBlur = window.innerWidth < 768 ? 5 : 10;
+      drawingContext.shadowColor = outlineColor;
+      stroke(outlineColor);
   } else {
-    stroke(fillColor);
+      stroke(fillColor);
   }
 
-  strokeWeight(2);
+  // Adjust strokeWeight based on screen size
+  strokeWeight(window.innerWidth < 768 ? 1 : 2);
   point(this.pos.x, this.pos.y);
 
-  // Restore the previous drawing context
   pop();
 }
 }
