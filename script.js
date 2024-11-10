@@ -129,74 +129,68 @@ class Particle {
   update() {
     this.vel.add(this.acc);
     this.pos.add(this.vel);
-    this.acc.mult(0);
+  this.acc.mult(0);
+}
+
+show() {
+  // Get the current particle colors from CSS variables
+  let outlineColor = getComputedStyle(document.documentElement).getPropertyValue('--particle-outline-color').trim();
+  let fillColor = getComputedStyle(document.documentElement).getPropertyValue('--particle-fill-color').trim();
+
+  // Save the current drawing context
+  push();
+
+  // Set the shadow properties for the glow effect
+  if (this.type === 'outline') {
+    drawingContext.shadowBlur = 10;
+    drawingContext.shadowColor = outlineColor;
+    stroke(outlineColor);
+  } else {
+    stroke(fillColor);
   }
 
-  show() {
-    // Get the current particle colors from CSS variables
-    let outlineColor = getComputedStyle(document.documentElement).getPropertyValue('--particle-outline-color').trim();
-    let fillColor = getComputedStyle(document.documentElement).getPropertyValue('--particle-fill-color').trim();
+  strokeWeight(2);
+  point(this.pos.x, this.pos.y);
 
-    // Save the current drawing context
-    push();
-
-    // Set the shadow properties for the glow effect
-    if (this.type === 'outline') {
-      drawingContext.shadowBlur = 10;
-      drawingContext.shadowColor = outlineColor;
-      stroke(outlineColor);
-    } else {
-      stroke(fillColor);
-    }
-
-    strokeWeight(2);
-    point(this.pos.x, this.pos.y);
-
-    // Restore the previous drawing context
-    pop();
-  }
+  // Restore the previous drawing context
+  pop();
+}
 }
 
 function createFillParticles() {
-  // Create an offscreen graphics buffer
   pg = createGraphics(width, height);
-  pg.pixelDensity(1); // Ensure consistent pixel density
-  pg.background(0, 0, 0, 0); // Transparent background
+  pg.pixelDensity(1);
+  pg.background(0, 0, 0, 0);
   pg.fill(255);
   pg.noStroke();
 
-  // Set text properties
-  let fontSize = width / 10;
+  let fontSize = width < 768 ? width / 15 : width / 10;
   pg.textFont(font);
   pg.textSize(fontSize);
   pg.textAlign(LEFT, BASELINE);
-
-  // Draw the text onto the buffer at the same position
   pg.text('Elevate Your Game', width * 0.1, height / 2);
 
-  // Load the pixels of the graphics buffer
   pg.loadPixels();
   let d = pg.pixelDensity();
   let imgWidth = pg.width * d;
   let imgHeight = pg.height * d;
 
-  // Sample pixels to create fill particles
-  let density = 4; // Adjust this value for performance and appearance
-  for (let x = 0; x < imgWidth; x += density) {
-    for (let y = 0; y < imgHeight; y += density) {
-      let index = 4 * (x + y * imgWidth);
-      let alpha = pg.pixels[index + 3];
-      if (alpha > 128) {
-        let particleX = x / d;
-        let particleY = y / d;
-        let particle = new Particle(particleX, particleY, 'fill');
-        fillParticles.push(particle);
-      }
-    }
-  }
-}
+  // Adjust density based on screen size
+  let density = width < 768 ? 6 : 4;
 
-function windowResized() {
+  for (let x = 0; x < imgWidth; x += density) {
+      for (let y = 0; y < imgHeight; y += density) {
+          let index = 4 * (x + y * imgWidth);
+          let alpha = pg.pixels[index + 3];
+          if (alpha > 128) {
+              let particleX = x / d;
+              let particleY = y / d;
+              let particle = new Particle(particleX, particleY, 'fill');
+              fillParticles.push(particle);
+          }
+      }
+  }
+}function windowResized() {
   resizeCanvas(window.innerWidth, window.innerHeight * 0.6);
 
   // Clear existing particles and recreate them for the new size
