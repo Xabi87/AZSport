@@ -1,0 +1,171 @@
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <title>T-Shirts - AZ Sports</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="description" content="AZ Sports - Browse our collection of sports t-shirts.">
+      <!-- Bootstrap CSS -->
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+      <!-- Animate.css -->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+      <!-- External CSS -->
+      <link rel="stylesheet" href="styles.css">
+      <!-- Favicon -->
+      <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+      <style>
+          .page-title {
+              text-align: center;
+              margin: 2rem 0;
+              font-size: 3.5rem;
+              background: linear-gradient(45deg, var(--primary-color), #0077cc);
+              background-clip: text;
+              -webkit-background-clip: text;
+              -webkit-text-fill-color: transparent;
+              text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+          }
+
+          .card {
+              transition: transform 0.3s ease, box-shadow 0.3s ease;
+              overflow: hidden;
+          }
+
+          .card:hover {
+              transform: translateY(-10px);
+              box-shadow: 0 15px 30px rgba(0, 170, 255, 0.2);
+          }
+
+          .card-img-top {
+              transition: transform 0.5s ease;
+          }
+
+          .card:hover .card-img-top {
+              transform: scale(1.1);
+          }
+
+          .btn-primary {
+              background: var(--primary-color);
+              border: none;
+              transition: all 0.3s ease;
+          }
+
+          .btn-primary:hover {
+              background: var(--menu-item-hover);
+              transform: translateX(5px);
+          }
+
+          .price-tag {
+              position: absolute;
+              top: 10px;
+              right: 10px;
+              background: var(--primary-color);
+              color: white;
+              padding: 0.5rem 1rem;
+              border-radius: 20px;
+              font-weight: bold;
+              animation: pulse 2s infinite;
+          }
+
+          @keyframes pulse {
+              0% { transform: scale(1); }
+              50% { transform: scale(1.05); }
+              100% { transform: scale(1); }
+          }
+      </style>
+  </head>
+  <body>
+      <header>
+          <nav>
+              <ul class="menu">
+                  <li><a href="index.html" class="menu-item">Home</a></li>
+                  <li><a href="tshirts.html" class="menu-item">T-Shirts</a></li>
+                  <li><a href="hoodies.html" class="menu-item">Hoodies</a></li>
+                  <li><a href="tracksuits.html" class="menu-item">Tracksuits</a></li>
+                  <li><a href="latest-styles.html" class="menu-item">Latest Styles</a></li>
+              </ul>
+          </nav>
+          <!-- Theme Toggle Switch -->
+          <div class="theme-switch-wrapper">
+              <label class="theme-switch">
+                  <input type="checkbox" id="theme-toggle">
+                  <span class="slider round"></span>
+              </label>
+              <span class="theme-label">Dark Mode</span>
+          </div>
+      </header>
+      <main>
+          <h1 class="page-title animate__animated animate__fadeInDown">Premium Sports T-Shirts</h1>
+          <div class="container mt-5">
+              <div class="row g-4">
+                  <!-- Product Card 1 -->
+                  <div class="col-12 col-md-6 col-lg-4 animate__animated animate__fadeInUp">
+                      <div class="card h-100">
+                          <span class="price-tag">$29.99</span>
+                          <img src="images/tshirt1.jpg" class="card-img-top" alt="Sport T-Shirt">
+                          <div class="card-body">
+                              <h5 class="card-title">Performance Sport T-Shirt</h5>
+                              <p class="card-text">High-performance moisture-wicking fabric for maximum comfort during workouts.</p>
+                              <div class="d-flex justify-content-between align-items-center">
+                                  <div class="d-flex gap-2">
+                                      <button class="btn btn-outline-secondary btn-sm">S</button>
+                                      <button class="btn btn-outline-secondary btn-sm">M</button>
+                                      <button class="btn btn-outline-secondary btn-sm">L</button>
+                                      <button class="btn btn-outline-secondary btn-sm">XL</button>
+                                  </div>
+                                  <button class="btn btn-primary">Add to Cart</button>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+
+                  <!-- Product Card 2 -->
+                  <div class="col-12 col-md-6 col-lg-4 animate__animated animate__fadeInUp">
+                      <div class="card h-100">
+                          <span class="price-tag">$24.99</span>
+                          <img src="images/tshirt2.jpg" class="card-img-top" alt="Training T-Shirt">
+                          <div class="card-body">
+                              <h5 class="card-title">Training Essential T-Shirt</h5>
+                              <p class="card-text">Lightweight and breathable fabric perfect for intense training sessions.</p>
+                              <div class="d-flex justify-content-between align-items-center">
+                                  <div class="d-flex gap-2">
+                                      <button class="btn btn-outline-secondary btn-sm">S</button>
+                                      <button class="btn btn-outline-secondary btn-sm">M</button>
+                                      <button class="btn btn-outline-secondary btn-sm">L</button>
+                                      <button class="btn btn-outline-secondary btn-sm">XL</button>
+                                  </div>
+                                  <button class="btn btn-primary">Add to Cart</button>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+
+                  <!-- Product Card 3 -->
+                  <div class="col-12 col-md-6 col-lg-4 animate__animated animate__fadeInUp">
+                      <div class="card h-100">
+                          <span class="price-tag">$34.99</span>
+                          <img src="images/tshirt3.jpg" class="card-img-top" alt="Athletic T-Shirt">
+                          <div class="card-body">
+                              <h5 class="card-title">Pro Athletic T-Shirt</h5>
+                              <p class="card-text">Professional-grade athletic t-shirt with advanced cooling technology.</p>
+                              <div class="d-flex justify-content-between align-items-center">
+                                  <div class="d-flex gap-2">
+                                      <button class="btn btn-outline-secondary btn-sm">S</button>
+                                      <button class="btn btn-outline-secondary btn-sm">M</button>
+                                      <button class="btn btn-outline-secondary btn-sm">L</button>
+                                      <button class="btn btn-outline-secondary btn-sm">XL</button>
+                                  </div>
+                                  <button class="btn btn-primary">Add to Cart</button>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </main>
+
+      <!-- Bootstrap JS -->
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+      <!-- External JavaScript -->
+      <script src="script.js"></script>
+  </body>
+  </html>
