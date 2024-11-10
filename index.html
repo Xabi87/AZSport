@@ -1,116 +1,45 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <title>AZ Sports - Elevate Your Game</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AZ Sports</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- Meta description for SEO -->
+    <meta name="description" content="AZ Sports - Elevate Your Game with our latest sports apparel.">
+    <!-- External CSS -->
     <link rel="stylesheet" href="styles.css">
+    <!-- p5.js Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+    <!-- Favicon -->
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
 </head>
 <body>
-    <div id="app">
-        <header class="header">
-            <div class="header-bg">
-                <div class="particles"></div>
-                <div class="gradient-overlay"></div>
-            </div>
-                          <nav class="nav-main">
-                              <div class="nav-section">
-                                  <div class="brand">
-                                      <div class="logo-wrapper">
-                                          <img src="./images/logo2.png" alt="AZ Sports" class="logo">
-                                      </div>
-                                  </div>
-                    
-                                  <div class="nav-links">
-                                      <a href="#" class="nav-link">
-                                          <span class="link-content">T-Shirts</span>
-                                          <div class="link-hover"></div>
-                                      </a>
-                                      <a href="#" class="nav-link">
-                                          <span class="link-content">Hoodies</span>
-                                          <div class="link-hover"></div>
-                                      </a>
-                                      <a href="#" class="nav-link">
-                                          <span class="link-content">Tracksuits</span>
-                                          <div class="link-hover"></div>
-                                      </a>
-                                      <a href="#" class="nav-link">
-                                          <span class="link-content">Latest</span>
-                                          <div class="link-hover"></div>
-                                      </a>
-                                      <a href="#" class="nav-link">
-                                          <span class="link-content">Sale</span>
-                                          <div class="link-hover"></div>
-                                      </a>
-                                  </div>
-                              </div>
-                <div class="nav-actions">
-                    <button class="action-btn search">
-                        <i class="fas fa-search"></i>
-                        <div class="btn-hover"></div>
-                    </button>
-                    <button class="action-btn cart">
-                        <i class="fas fa-shopping-cart"></i>
-                        <div class="btn-hover"></div>
-                    </button>
-                </div>
-            </nav>
-            <div class="brand">
-                <div class="logo-wrapper">
-                    <img src="images/logo2.png" alt="AZ Sports" class="logo">
-                    <div class="logo-energy"></div>
-                </div>
-            </div>
-        </header>
-    </div>
+    <header>
+        <nav>
+            <ul class="menu">
+                <li><a href="tshirts.html" class="menu-item">T-Shirts</a></li>
+                <li><a href="hoodies.html" class="menu-item">Hoodies</a></li>
+                <li><a href="tracksuits.html" class="menu-item">Tracksuits</a></li>
+                <li><a href="Latest.html" class="menu-item">Latest Styles</a></li>
+            </ul>
+        </nav>
+        <!-- Theme Toggle Switch -->
+        <div class="theme-switch-wrapper">
+            <label class="theme-switch">
+                <input type="checkbox" id="theme-toggle">
+                <span class="slider round"></span>
+            </label>
+            <span class="theme-label">Dark Mode</span>
+        </div>
+    </header>
+    <main>
+        <div id="logo-wrapper">
+            <img src="images/logo.png" alt="AZ Sports Logo" class="center-logo">
+        </div>
+        <div id="logo-container"></div>
+    </main>
+    <!-- External JavaScript -->
     <script src="script.js"></script>
-    <!-- Add before closing body tag -->
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 </body>
 </html>
-
-<section class="hero">
-    <div class="particle-container" id="particles-js"></div>
-    
-    <div class="hero-content">
-        <div class="hero-logo">
-            <img src="images/logo2.png" alt="AZ Sports">
-        </div>
-        <h1 class="hero-title">AZ SPORTS</h1>
-        <p class="hero-slogan">ELEVATE YOUR GAME</p>
-    </div>
-</section>
-  <section class="categories">
-    <div class="categories-grid">
-        <a href="#" class="category-card">
-            <div class="card-image">
-                <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Premium T-Shirts Collection">
-                <div class="card-overlay">
-                    <h3>T-Shirts</h3>
-                    <span class="view-collection">Explore Collection</span>
-                </div>
-            </div>
-        </a>
-        <a href="#" class="category-card">
-            <div class="card-image">
-                <img src="https://images.unsplash.com/photo-1556821840-3a63f95609a7?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Designer Hoodies Collection">
-                <div class="card-overlay">
-                    <h3>Hoodies</h3>
-                    <span class="view-collection">Explore Collection</span>
-                </div>
-            </div>
-        </a>
-        <a href="#" class="category-card">
-            <div class="card-image">
-                <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Premium Tracksuits Collection">
-                <div class="card-overlay">
-                    <h3>Tracksuits</h3>
-                    <span class="view-collection">Explore Collection</span>
-                </div>
-            </div>
-        </a>
-    </div>
-</section>
+<a href="tshirts.html" class="menu-item">T-Shirts</a>
