@@ -161,7 +161,7 @@ function createFillParticles() {
   pg.fill(255);
   pg.noStroke();
 
-  let fontSize = width < 768 ? width / 15 : width / 10;
+  let fontSize = width < 768 ? width / 8 : width / 10;  // Increased from width/15
   pg.textFont(font);
   pg.textSize(fontSize);
   pg.textAlign(LEFT, BASELINE);
