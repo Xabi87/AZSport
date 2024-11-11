@@ -1,156 +1,403 @@
-  <!DOCTYPE html>
-  <html lang="en">
-  <head>
-      <meta charset="UTF-8">
-      <title>Tracksuits - AZ Sports</title>
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="description" content="AZ Sports - Browse our collection of sports tracksuits.">
-      <!-- Bootstrap CSS -->
-      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-      <!-- Animate.css -->
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
-      <!-- External CSS -->
-      <link rel="stylesheet" href="styles.css">
-      <!-- Favicon -->
-      <link rel="icon" href="images/favicon.ico" type="image/x-icon">
-      <style>
-          @media (max-width: 768px) {
-              header {
-                  position: relative;
-                  padding: 0.5rem;
-                  background: var(--nav-background);
-                  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-              }
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tracksuits - AZ Sports</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AZ Sports - Browse our collection of sports tracksuits.">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <!-- External CSS -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- Favicon -->
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+    <style>
+        @media (max-width: 768px) {
+            header {
+                position: relative;
+                padding: 0.5rem;
+                background: var(--nav-background);
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            }
             
-              .menu {
-                  flex-direction: row;
-                  flex-wrap: wrap;
-                  justify-content: center;
-                  gap: 0.8rem;
-                  padding: 0.3rem;
-                  margin-bottom: 0;
-              }
+            .menu {
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 0.8rem;
+                padding: 0.3rem;
+                margin-bottom: 0;
+            }
 
-              .menu-item {
-                  font-size: 0.9rem;
-                  padding: 0.3rem 0.6rem;
-              }
+            .menu-item {
+                font-size: 0.9rem;
+                padding: 0.3rem 0.6rem;
+            }
 
-              main {
-                  padding-top: 1rem;
-              }
+            main {
+                padding-top: 1rem;
+            }
 
-              #logo-wrapper {
-                  margin-top: 0.5rem;
-              }
+            #logo-wrapper {
+                margin-top: 0.5rem;
+            }
 
-              .theme-switch-wrapper {
-                  position: fixed;
-                  bottom: 1rem;
-                  left: 1rem;
-                  z-index: 1000;
-                  background: var(--nav-background);
-                  padding: 0.5rem;
-                  border-radius: 20px;
-                  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-              }
+            .theme-switch-wrapper {
+                position: fixed;
+                bottom: 1rem;
+                left: 1rem;
+                z-index: 1000;
+                background: var(--nav-background);
+                padding: 0.5rem;
+                border-radius: 20px;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            }
 
-              .theme-label {
-                  font-size: 0.8rem;
-              }
-          }
-      </style>
-  </head>  <body>
-      <header>
-          <nav>
-              <ul class="menu">
-                  <li><a href="index.html" class="menu-item">Home</a></li>
-                  <li><a href="tshirts.html" class="menu-item">T-Shirts</a></li>
-                  <li><a href="hoodies.html" class="menu-item">Hoodies</a></li>
-                  <li><a href="tracksuits.html" class="menu-item">Tracksuits</a></li>
-                  <li><a href="Latest.html" class="menu-item">Latest Styles</a></li>
-              </ul>
-          </nav>
-          <div class="theme-switch-wrapper">
-              <label class="theme-switch">
-                  <input type="checkbox" id="theme-toggle">
-                  <span class="slider round"></span>
-              </label>
-              <span class="theme-label">Dark Mode</span>
-          </div>
-      </header>
-      <main>
-          <h1 class="page-title animate__animated animate__fadeInDown">Premium Sports Tracksuits</h1>
-          <div class="container mt-5">
-              <div class="row g-4">
-                  <!-- Product Card 1 -->
-                  <div class="col-12 col-md-6 col-lg-4 animate__animated animate__fadeInUp">
-                      <div class="card h-100">
-                          <span class="price-tag">$79.99</span>
-                          <img src="images/tracksuit1.jpg" class="card-img-top" alt="Sport Tracksuit">
-                          <div class="card-body">
-                              <h5 class="card-title">Elite Performance Tracksuit</h5>
-                              <p class="card-text">Professional-grade tracksuit with advanced breathability and comfort.</p>
-                              <div class="d-flex justify-content-between align-items-center">
-                                  <div class="d-flex gap-2">
-                                      <button class="btn btn-outline-secondary btn-sm">S</button>
-                                      <button class="btn btn-outline-secondary btn-sm">M</button>
-                                      <button class="btn btn-outline-secondary btn-sm">L</button>
-                                      <button class="btn btn-outline-secondary btn-sm">XL</button>
-                                  </div>
-                                  <button class="btn btn-primary">Add to Cart</button>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
+            .theme-label {
+                font-size: 0.8rem;
+            }
+        }
 
-                  <!-- Product Card 2 -->
-                  <div class="col-12 col-md-6 col-lg-4 animate__animated animate__fadeInUp">
-                      <div class="card h-100">
-                          <span class="price-tag">$74.99</span>
-                          <img src="images/tracksuit2.jpg" class="card-img-top" alt="Training Tracksuit">
-                          <div class="card-body">
-                              <h5 class="card-title">Training Essential Tracksuit</h5>
-                              <p class="card-text">Lightweight and breathable tracksuit perfect for intense training sessions.</p>
-                              <div class="d-flex justify-content-between align-items-center">
-                                  <div class="d-flex gap-2">
-                                      <button class="btn btn-outline-secondary btn-sm">S</button>
-                                      <button class="btn btn-outline-secondary btn-sm">M</button>
-                                      <button class="btn btn-outline-secondary btn-sm">L</button>
-                                      <button class="btn btn-outline-secondary btn-sm">XL</button>
-                                  </div>
-                                  <button class="btn btn-primary">Add to Cart</button>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
+        .category-banner {
+            background: linear-gradient(45deg, rgba(0,0,0,0.7), rgba(0,170,255,0.3)), url('images/tracksuit-banner.jpg');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 6rem 2rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            border-bottom: 3px solid var(--primary-color);
+            position: relative;
+            overflow: hidden;
+        }
 
-                  <!-- Product Card 3 -->
-                  <div class="col-12 col-md-6 col-lg-4 animate__animated animate__fadeInUp">
-                      <div class="card h-100">
-                          <span class="price-tag">$84.99</span>
-                          <img src="images/tracksuit3.jpg" class="card-img-top" alt="Athletic Tracksuit">
-                          <div class="card-body">
-                              <h5 class="card-title">Pro Athletic Tracksuit</h5>
-                              <p class="card-text">Professional-grade athletic tracksuit with advanced cooling technology.</p>
-                              <div class="d-flex justify-content-between align-items-center">
-                                  <div class="d-flex gap-2">
-                                      <button class="btn btn-outline-secondary btn-sm">S</button>
-                                      <button class="btn btn-outline-secondary btn-sm">M</button>
-                                      <button class="btn btn-outline-secondary btn-sm">L</button>
-                                      <button class="btn btn-outline-secondary btn-sm">XL</button>
-                                  </div>
-                                  <button class="btn btn-primary">Add to Cart</button>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </main>
-      <!-- Bootstrap JS -->
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-      <!-- External JavaScript -->
-      <script src="script.js"></script>
-  </body>
-  </html>
+        .banner-content h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 20px rgba(0, 170, 255, 0.5);
+        }
+
+        .banner-text {
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .filter-section {
+            background: rgba(0, 170, 255, 0.05);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 3rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 170, 255, 0.1);
+        }
+
+        .filter-pill {
+            background: transparent;
+            border: 2px solid var(--primary-color);
+            color: var(--text-color);
+            padding: 0.8rem 1.5rem;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .filter-pill:hover, .filter-pill.active {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 170, 255, 0.3);
+        }
+
+        .card {
+            border: none;
+            background: var(--background-color);
+            box-shadow: 0 10px 30px rgba(0, 170, 255, 0.1);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            position: relative;
+        }
+
+        .card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 20px 40px rgba(0, 170, 255, 0.2);
+        }
+
+        .card-img-wrapper {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-img-top {
+            height: 300px;
+            object-fit: cover;
+            transition: transform 0.8s ease;
+        }
+
+        .card:hover .card-img-top {
+            transform: scale(1.1);
+        }
+
+        .price-tag {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--primary-color);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            box-shadow: 0 5px 15px rgba(0, 170, 255, 0.3);
+            z-index: 2;
+        }
+
+        .card-body {
+            padding: 2rem;
+        }
+
+        .card-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .size-btn {
+            width: 40px;
+            height: 40px;
+            border: 2px solid var(--primary-color);
+            background: transparent;
+            color: var(--text-color);
+            border-radius: 50%;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin: 0 5px;
+        }
+
+        .size-btn:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 170, 255, 0.3);
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            border: none;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 5px 15px rgba(0, 170, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 170, 255, 0.4);
+        }
+
+        .quick-view-btn {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.9);
+            opacity: 0;
+            background: rgba(0, 170, 255, 0.9);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            z-index: 3;
+        }
+
+        .card:hover .quick-view-btn {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .category-description {
+            background: rgba(0, 170, 255, 0.05);
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 4rem 0;
+            border: 1px solid rgba(0, 170, 255, 0.1);
+        }
+
+        .related-categories .card {
+            transform: none;
+            transition: all 0.3s ease;
+        }
+
+        .related-categories .card:hover {
+            transform: translateY(-10px);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-logo">
+            <img src="images/logo.png" alt="AZ Sports Logo">
+        </div>
+        <nav>
+            <ul class="menu">
+                <li><a href="index.html" class="menu-item">Home</a></li>
+                <li><a href="tshirts.html" class="menu-item">T-Shirts</a></li>
+                <li><a href="hoodies.html" class="menu-item">Hoodies</a></li>
+                <li><a href="tracksuits.html" class="menu-item">Tracksuits</a></li>
+                <li><a href="Latest.html" class="menu-item">Latest Styles</a></li>
+            </ul>
+        </nav>
+        <div class="theme-switch-wrapper">
+            <label class="theme-switch">
+                <input type="checkbox" id="theme-toggle">
+                <span class="slider round"></span>
+            </label>
+            <span class="theme-label">Dark Mode</span>
+        </div>
+    </header>
+
+    <main>
+        <div class="category-banner">
+            <div class="banner-content animate__animated animate__fadeInDown">
+                <h1>Elite Sport Tracksuits</h1>
+                <p class="banner-text">Complete Athletic Excellence</p>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="filter-section">
+                <div class="d-flex justify-content-between align-items-center flex-wrap">
+                    <div class="filter-pills d-flex gap-3">
+                        <button class="filter-pill active">All</button>
+                        <button class="filter-pill">New Arrivals</button>
+                        <button class="filter-pill">Best Sellers</button>
+                        <button class="filter-pill">Performance</button>
+                    </div>
+                    <select class="form-select" style="width: auto;">
+                        <option>Sort by Price: Low to High</option>
+                        <option>Sort by Price: High to Low</option>
+                        <option>Sort by Popularity</option>
+                        <option>Sort by Latest</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row g-4">
+                <!-- Product Card 1 -->
+                <div class="col-12 col-md-6 col-lg-4 animate__animated animate__fadeInUp">
+                    <div class="card h-100">
+                        <div class="card-img-wrapper">
+                            <span class="price-tag">$79.99</span>
+                            <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=800" class="card-img-top" alt="Elite Tracksuit">
+                            <button class="btn quick-view-btn">Quick View</button>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Elite Performance Tracksuit</h5>
+                            <p class="card-text">Professional-grade tracksuit with advanced breathability and comfort.</p>
+                            <div class="sizes mb-4">
+                                <button class="size-btn">S</button>
+                                <button class="size-btn">M</button>
+                                <button class="size-btn">L</button>
+                                <button class="size-btn">XL</button>
+                            </div>
+                            <button class="btn btn-primary w-100">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Card 2 -->
+                <div class="col-12 col-md-6 col-lg-4 animate__animated animate__fadeInUp">
+                    <div class="card h-100">
+                        <div class="card-img-wrapper">
+                            <span class="price-tag">$74.99</span>
+                            <img src="https://images.unsplash.com/photo-1483721310020-03333e577078?w=800" class="card-img-top" alt="Training Tracksuit">
+                            <button class="btn quick-view-btn">Quick View</button>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Training Essential Tracksuit</h5>
+                            <p class="card-text">Lightweight and breathable tracksuit perfect for intense training sessions.</p>
+                            <div class="sizes mb-4">
+                                <button class="size-btn">S</button>
+                                <button class="size-btn">M</button>
+                                <button class="size-btn">L</button>
+                                <button class="size-btn">XL</button>
+                            </div>
+                            <button class="btn btn-primary w-100">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Card 3 -->
+                <div class="col-12 col-md-6 col-lg-4 animate__animated animate__fadeInUp">
+                                    <div class="card h-100">
+                                        <div class="card-img-wrapper">
+                                            <span class="price-tag">$84.99</span>
+                                            <img src="https://images.unsplash.com/photo-1517940310602-26535839fe84?w=800" class="card-img-top" alt="Pro Tracksuit">
+                                            <button class="btn quick-view-btn">Quick View</button>
+                                        </div>
+                                        <div class="card-body">
+                                            <h5 class="card-title">Pro Athletic Tracksuit</h5>
+                                            <p class="card-text">Professional-grade athletic tracksuit with advanced cooling technology.</p>
+                                            <div class="sizes mb-4">
+                                                <button class="size-btn">S</button>
+                                                <button class="size-btn">M</button>
+                                                <button class="size-btn">L</button>
+                                                <button class="size-btn">XL</button>
+                                            </div>
+                                            <button class="btn btn-primary w-100">Add to Cart</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="category-description mt-5">
+                                <h3 class="mb-4">About Our Tracksuits</h3>
+                                <p>Experience ultimate versatility with our premium tracksuits. Designed for both training and lifestyle wear, each set features matching pieces crafted with advanced performance materials.</p>
+                            </div>
+
+                            <div class="related-categories mt-5">
+                                <h3 class="mb-4">Complete Your Athletic Wardrobe</h3>
+                                <div class="row g-4">
+                                    <div class="col-md-6">
+                                        <a href="tshirts.html" class="text-decoration-none">
+                                            <div class="card">
+                                                <img src="https://images.unsplash.com/photo-1581655353564-df123a1eb820?w=800" class="card-img-top" alt="T-Shirts">
+                                                <div class="card-body text-center">
+                                                    <h5 class="card-title">Performance T-Shirts</h5>
+                                                    <p class="card-text">Enhance your training with our premium t-shirts</p>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <a href="hoodies.html" class="text-decoration-none">
+                                            <div class="card">
+                                                <img src="https://images.unsplash.com/photo-1556172732-c661d6c899c4?w=800" class="card-img-top" alt="Hoodies">
+                                                <div class="card-body text-center">
+                                                    <h5 class="card-title">Premium Hoodies</h5>
+                                                    <p class="card-text">Stay warm and stylish with our performance hoodies</p>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </main>
+
+                    <!-- Bootstrap JS -->
+                    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+                    <!-- External JavaScript -->
+                    <script src="script.js"></script>
+</body>
+</html>

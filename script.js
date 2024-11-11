@@ -2,18 +2,17 @@ let font;
 let outlineParticles = [];
 let fillParticles = [];
 let explode = false;
-let pg; // Declare pg as a global variable
+let pg;
 
 function preload() {
   font = loadFont('https://cdnjs.cloudflare.com/ajax/libs/topcoat/0.8.0/font/SourceSansPro-Bold.otf');
 }
 
 function setup() {
-  pixelDensity(1); // Ensure consistent pixel density
+  pixelDensity(1);
   let canvas = createCanvas(window.innerWidth, window.innerHeight * 0.6);
   canvas.parent('logo-container');
 
-  // Outline particles using textToPoints
   let fontSize = width / 10;
   let outlinePoints = font.textToPoints(
     'Elevate Your Game',
@@ -30,32 +29,24 @@ function setup() {
     outlineParticles.push(particle);
   }
 
-  // Create fill particles
   createFillParticles();
-
-  // Theme Initialization
   initializeTheme();
 }
 
 function draw() {
-  clear(); // Clear the canvas each frame
+  clear();
 
-  // Update and display fill particles
   for (let particle of fillParticles) {
     particle.behaviors();
     particle.update();
     particle.show();
   }
 
-  // Update and display outline particles
   for (let particle of outlineParticles) {
     particle.behaviors();
     particle.update();
     particle.show();
   }
-
-  // For debugging purposes, you can draw the pg image to see the text alignment
-  // image(pg, 0, 0);
 }
 
 function mousePressed() {
@@ -65,7 +56,7 @@ function mousePressed() {
 
 class Particle {
   constructor(x, y, type) {
-    this.type = type; // 'outline' or 'fill'
+    this.type = type;
     this.pos = createVector(
       x + random(-50, 50),
       y + random(-50, 50)
@@ -129,29 +120,28 @@ class Particle {
   update() {
     this.vel.add(this.acc);
     this.pos.add(this.vel);
-  this.acc.mult(0);
-}
+    this.acc.mult(0);
+  }
 
-show() {
-  let outlineColor = getComputedStyle(document.documentElement).getPropertyValue('--particle-outline-color').trim();
-  let fillColor = getComputedStyle(document.documentElement).getPropertyValue('--particle-fill-color').trim();
+  show() {
+    let outlineColor = getComputedStyle(document.documentElement).getPropertyValue('--particle-outline-color').trim();
+    let fillColor = getComputedStyle(document.documentElement).getPropertyValue('--particle-fill-color').trim();
 
-  push();
+    push();
 
-  if (this.type === 'outline') {
+    if (this.type === 'outline') {
       drawingContext.shadowBlur = window.innerWidth < 768 ? 5 : 10;
       drawingContext.shadowColor = outlineColor;
       stroke(outlineColor);
-  } else {
+    } else {
       stroke(fillColor);
+    }
+
+    strokeWeight(window.innerWidth < 768 ? 1 : 2);
+    point(this.pos.x, this.pos.y);
+
+    pop();
   }
-
-  // Adjust strokeWeight based on screen size
-  strokeWeight(window.innerWidth < 768 ? 1 : 2);
-  point(this.pos.x, this.pos.y);
-
-  pop();
-}
 }
 
 function createFillParticles() {
@@ -161,7 +151,7 @@ function createFillParticles() {
   pg.fill(255);
   pg.noStroke();
 
-  let fontSize = width < 768 ? width / 8 : width / 10;  // Increased from width/15
+  let fontSize = width < 768 ? width / 8 : width / 10;
   pg.textFont(font);
   pg.textSize(fontSize);
   pg.textAlign(LEFT, BASELINE);
@@ -172,29 +162,27 @@ function createFillParticles() {
   let imgWidth = pg.width * d;
   let imgHeight = pg.height * d;
 
-  // Adjust density based on screen size
   let density = width < 768 ? 6 : 4;
 
   for (let x = 0; x < imgWidth; x += density) {
-      for (let y = 0; y < imgHeight; y += density) {
-          let index = 4 * (x + y * imgWidth);
-          let alpha = pg.pixels[index + 3];
-          if (alpha > 128) {
-              let particleX = x / d;
-              let particleY = y / d;
-              let particle = new Particle(particleX, particleY, 'fill');
-              fillParticles.push(particle);
-          }
+    for (let y = 0; y < imgHeight; y += density) {
+      let index = 4 * (x + y * imgWidth);
+      let alpha = pg.pixels[index + 3];
+      if (alpha > 128) {
+        let particleX = x / d;
+        let particleY = y / d;
+        let particle = new Particle(particleX, particleY, 'fill');
+        fillParticles.push(particle);
       }
+    }
   }
-}function windowResized() {
-  resizeCanvas(window.innerWidth, window.innerHeight * 0.6);
+}
 
-  // Clear existing particles and recreate them for the new size
+function windowResized() {
+  resizeCanvas(window.innerWidth, window.innerHeight * 0.6);
   outlineParticles = [];
   fillParticles = [];
 
-  // Recreate outline particles
   let fontSize = width / 10;
   let outlinePoints = font.textToPoints(
     'Elevate Your Game',
@@ -211,11 +199,9 @@ function createFillParticles() {
     outlineParticles.push(particle);
   }
 
-  // Recreate fill particles
   createFillParticles();
 }
 
-/* Theme Toggle Script */
 const themeToggle = document.getElementById('theme-toggle');
 
 themeToggle.addEventListener('change', function () {
@@ -238,3 +224,61 @@ function initializeTheme() {
     themeToggle.checked = false;
   }
 }
+
+// Header particle text
+class HeaderParticle {
+    constructor(x, y) {
+        this.x = x;
+        this.y = y;
+        this.size = Math.random() * 2 + 1;
+        this.baseX = x;
+        this.baseY = y;
+        this.density = Math.random() * 30 + 1;
+    }
+
+    draw(ctx) {
+        ctx.fillStyle = '#00aaff';
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.closePath();
+        ctx.fill();
+    }
+}
+
+function createHeaderParticles() {
+    const headerCanvas = document.getElementById('headerCanvas');
+    if (!headerCanvas) return;
+    
+    const ctx = headerCanvas.getContext('2d');
+    const scale = window.devicePixelRatio;
+    
+    headerCanvas.width = 60 * scale;
+    headerCanvas.height = 40 * scale;
+    
+    ctx.scale(scale, scale);
+    ctx.fillStyle = '#00aaff';
+    ctx.font = 'bold 24px Arial';
+    ctx.fillText('AZ', 10, 28);
+
+    const pixels = ctx.getImageData(0, 0, headerCanvas.width, headerCanvas.height);
+    ctx.clearRect(0, 0, headerCanvas.width, headerCanvas.height);
+
+    const particles = [];
+    for (let y = 0; y < headerCanvas.height; y += 4) {
+        for (let x = 0; x < headerCanvas.width; x += 4) {
+            if (pixels.data[(y * 4 * pixels.width) + (x * 4) + 3] > 128) {
+                particles.push(new HeaderParticle(x, y));
+            }
+        }
+    }
+
+    function animate() {
+        ctx.clearRect(0, 0, headerCanvas.width, headerCanvas.height);
+        particles.forEach(particle => particle.draw(ctx));
+        requestAnimationFrame(animate);
+    }
+
+    animate();
+}
+
+document.addEventListener('DOMContentLoaded', createHeaderParticles);
